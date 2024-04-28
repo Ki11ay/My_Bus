@@ -1,0 +1,373 @@
+import 'package:flutter/material.dart';
+import 'package:my_bus/Languagesc.dart';
+import 'package:my_bus/components/color.dart';
+import 'package:my_bus/onbording.dart';
+import 'package:my_bus/splashscreen.dart';
+
+class Started extends StatefulWidget {
+  const Started({super.key});
+
+  @override
+  State<Started> createState() => _StartedState();
+}
+
+class _StartedState extends State<Started> {
+  int currentPageIndex = 0;
+  bool notification = true;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: [home(), searchs(), null, settings()][currentPageIndex],
+      bottomNavigationBar: NavigationBar(
+        destinations: const [
+          NavigationDestination(
+              icon: Icon(
+                Icons.home,
+                size: 30,
+              ),
+              label: 'Home'),
+          NavigationDestination(icon: Icon(Icons.search,size: 30,), label: 'Search'),
+          NavigationDestination(icon: Icon(Icons.map,size: 30,), label: 'Map'),
+          NavigationDestination(icon: Icon(Icons.settings,size: 30,), label: 'Settings'),
+        ],
+        selectedIndex: currentPageIndex,
+        onDestinationSelected: (int index) {
+          setState(() {
+            currentPageIndex = index;
+          });
+        },
+        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+        //indicatorColor: primaryColor,
+        //backgroundColor: Colors.white,
+        //shadowColor: Colors.white,
+      ),
+    );
+  }
+
+  Widget home() {
+    void toggleNotification() {
+      setState(() {
+        notification = true;
+      });
+    }
+
+    void toggleSchedule() {
+      setState(() {
+        notification = false;
+      });
+    }
+
+    double sh = MediaQuery.of(context).size.height;
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: const EdgeInsets.all(30),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                notification ? 'Find your' : 'NEVER',
+                style:
+                    const TextStyle(fontWeight: FontWeight.w500, fontSize: 40),
+              ),
+              Text(
+                notification ? 'way' : 'MISS',
+                style:
+                    const TextStyle(fontWeight: FontWeight.w700, fontSize: 40),
+              ),
+              Text(
+                notification ? 'Effectively' : 'YOUR RIDE',
+                style: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFFFFC107),
+                    fontSize: 40),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        // the border between the buttons and the container
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            TextButton(
+                style: const ButtonStyle(
+                    elevation: MaterialStatePropertyAll(30),
+                    visualDensity: VisualDensity.comfortable),
+                onPressed: () {
+                  toggleNotification();
+                },
+                child: Text(
+                  'Notifications',
+                  style: TextStyle(
+                      color: notification ? primaryColor : Colors.grey,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800),
+                )),
+            TextButton(
+                onPressed: () {
+                  toggleSchedule();
+                },
+                style:
+                    const ButtonStyle(visualDensity: VisualDensity.comfortable),
+                child: Text(
+                  'Bus schedule',
+                  style: TextStyle(
+                      color: notification ? Colors.grey : primaryColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800),
+                )),
+          ],
+        ),
+
+        const SizedBox(
+          height: 20,
+        ),
+        // the border between the buttons and the container
+        notification
+            ? Container(
+                padding: const EdgeInsets.all(8),
+                height: sh / 3,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      height: 100,
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(182, 209, 212, 220),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Icon(Icons.announcement),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Flexible(
+                            fit: FlexFit.loose,
+                            child: Text(
+                              'New road for line 3 due to the closure of AL-Salamis road .....',
+                              style: TextStyle(color: primaryColor),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      height: 100,
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(182, 209, 212, 220),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Icon(Icons.announcement),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Flexible(
+                            fit: FlexFit.loose,
+                            child: Text(
+                              'New road for line 3 due to the closure of AL-Salamis road .....',
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            : Container(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/images/Schedule.png',
+                      height: 300,
+                      width: MediaQuery.of(context).size.width,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: primaryColor),
+                      child: TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          "Download the PDF",
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+      ],
+    );
+  }
+
+  Widget settings() {
+    return Padding(
+      padding: const EdgeInsets.all(15),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          InkWell(
+            //TODO: navigate to the notifications page
+            onTap: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const Splash()));
+            },
+            child: Ink(
+              padding: const EdgeInsets.all(20),
+              color: const Color.fromARGB(255, 248, 247, 247),
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Icon(
+                    Icons.notifications,
+                    color: Colors.amber,
+                  ),
+                  Text(
+                    'Notifications',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  Icon(Icons.arrow_forward_ios, color: Colors.amber)
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const Languagesc()));
+            },
+            child: Ink(
+              padding: const EdgeInsets.all(20),
+              color: const Color.fromARGB(255, 248, 247, 247),
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Icon(
+                    Icons.language,
+                    color: Colors.amber,
+                  ),
+                  Text(
+                    'Languages',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  Icon(Icons.arrow_forward_ios, color: Colors.amber)
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          InkWell(
+            //TODO: navigate to the help page
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const OnboardingPage()));
+            },
+            child: Ink(
+              padding: const EdgeInsets.all(20),
+              color: const Color.fromARGB(255, 248, 247, 247),
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Icon(
+                    Icons.live_help_sharp,
+                    color: Colors.amber,
+                  ),
+                  Text(
+                    'Help Center',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  Icon(Icons.arrow_forward_ios, color: Colors.amber)
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          InkWell(
+            //TODO: navigate to the about us page
+            onTap: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const Started()));
+            },
+            child: Ink(
+              padding: const EdgeInsets.all(20),
+              color: const Color.fromARGB(255, 248, 247, 247),
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Icon(
+                    Icons.person,
+                    color: Colors.amber,
+                  ),
+                  Text(
+                    'About us',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  Icon(Icons.arrow_forward_ios, color: Colors.amber)
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 90,
+          ),
+          const Text(
+            'MYBUS 0.1',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget searchs() {
+    return  Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(14),
+        child: Container(
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),color: Color.fromARGB(99, 221, 170, 170)),
+          padding: const EdgeInsets.all(8),
+          child: const TextField(
+            showCursor: true,
+            decoration: InputDecoration(
+              icon: Icon(Icons.search,size: 30,),
+              ),
+          )
+          ),
+      ),
+    );
+  }
+}

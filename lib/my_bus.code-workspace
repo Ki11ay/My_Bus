@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"name": "mohammedali @ 8cc2e39",
+			"uri": "gitlens://7b22726566223a2238636332653339316338333331626230653432373633313961626138373966353362363734653932222c227265706f50617468223a222f55736572732f6d6f68616d6d6564616c69227d/Users/mohammedali?{\"ref\":\"8cc2e39\"}"
+		}
+	],
+	"settings": {
+		"workbench.activityBar.iconClickBehavior": "toggle"
+	}
+}

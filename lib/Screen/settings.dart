@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_bus/Languagesc.dart';
+import 'package:my_bus/Screen/Languagesc.dart';
 import 'package:my_bus/home.dart';
 import 'package:my_bus/Screen/onbording.dart';
 import 'package:my_bus/Screen/splashscreen.dart';

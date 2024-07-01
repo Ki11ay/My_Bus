@@ -13,17 +13,21 @@ class _MapScreenState extends State<MapScreen> {
 
   final LatLng _center = const LatLng(35.1407311, 33.9155663);
 
-  final List<BusStop> busStops = [
+final List<BusStop> busStops = [
     BusStop(const LatLng(35.131138, 33.917726), 'kaliland'),
     BusStop(const LatLng(35.1321055, 33.9229364), 'Stop 2'),
-    BusStop(const LatLng(35.1403, 33.9130), 'Stop 3'),
-    BusStop(const LatLng(35.1417, 33.9145), 'Stop 4'),
-    BusStop(const LatLng(35.1421, 33.9152), 'Stop 5'),
-    BusStop(const LatLng(35.1425, 33.9165), 'Stop 6'),
-    BusStop(const LatLng(35.1430, 33.9175), 'Stop 7'),
-    BusStop(const LatLng(35.1435, 33.9185), 'Stop 8'),
-    BusStop(const LatLng(35.1440, 33.9195), 'Stop 9'),
-    BusStop(const LatLng(35.1445, 33.9205), 'Stop 10'),
+    BusStop(const LatLng(35.1277599, 33.9224228), 'Gazi'),
+    BusStop(const LatLng(35.1261780, 33.9251674), 'Sanayi'),
+    BusStop(const LatLng(35.1226413, 33.9320308), 'intercity bus station'),
+    BusStop(const LatLng(35.1206592, 33.9361933), 'Baykal'),
+    BusStop(const LatLng(35.1193872, 33.9415275), 'NKL'),
+    BusStop(const LatLng(35.1125562, 33.9448451), 'Mahkeme'),
+    BusStop(const LatLng(35.1036794, 33.9471303), 'Canbulat'),
+    BusStop(const LatLng(35.1006281, 33.9453198), 'Maksim'),
+    BusStop(const LatLng(35.1006281, 33.9453198), 'Harika Mahallesi'),
+    BusStop(const LatLng(35.0985327, 33.9443814), 'Tarlabaşı'),
+    BusStop(const LatLng(35.0975237, 33.9425102), 'Çimen Sokak'),
+    BusStop(const LatLng(35.0955934, 33.9346812), 'Kurtalan'),
   ];
 
   final List<BusRoute> busRoutes = [

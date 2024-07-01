@@ -99,7 +99,7 @@ class _StartedState extends State<Started> {
             children: [
               TextButton(
                   style: const ButtonStyle(
-                      elevation: MaterialStatePropertyAll(30),
+                      elevation: WidgetStatePropertyAll(30),
                       visualDensity: VisualDensity.comfortable),
                   onPressed: () {
                     toggleNotification();

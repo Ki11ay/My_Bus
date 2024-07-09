@@ -17,7 +17,7 @@ final List<BusStop> busStops = [
     BusStop(const LatLng(35.131138, 33.917726), 'kaliland'),
     BusStop(const LatLng(35.1321055, 33.9229364), 'Stop 2'),
     BusStop(const LatLng(35.1277599, 33.9224228), 'Gazi'),
-    BusStop(const LatLng(35.1261780, 33.9251674), 'Sanayi'),
+    // BusStop(const LatLng(35.1261780, 33.9251674), 'Sanayi'),
     BusStop(const LatLng(35.1226413, 33.9320308), 'intercity bus station'),
     BusStop(const LatLng(35.1206592, 33.9361933), 'Baykal'),
     BusStop(const LatLng(35.1193872, 33.9415275), 'NKL'),

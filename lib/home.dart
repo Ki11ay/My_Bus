@@ -187,6 +187,7 @@ class _StartedState extends State<Started> {
                               fit: FlexFit.loose,
                               child: Text(
                                 'New road for line 3 due to the closure of AL-Salamis road .....',
+                                style: TextStyle(color: primaryColor),
                               ),
                             ),
                           ],

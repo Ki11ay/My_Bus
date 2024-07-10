@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:my_bus/Screen/Languagesc.dart';
@@ -16,6 +17,7 @@ class Started extends StatefulWidget {
 class _StartedState extends State<Started> {
   int currentPageIndex = 0;
   bool notification = true;
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,6 +67,7 @@ class _StartedState extends State<Started> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
+            height: sh/4,
             padding: const EdgeInsets.all(30),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -132,68 +135,49 @@ class _StartedState extends State<Started> {
           ),
           // the border between the buttons and the container
           notification
-              ? Container(
-                  padding: const EdgeInsets.all(8),
-                  height: sh / 3,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(
-                        height: 100,
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(182, 209, 212, 220),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            SizedBox(
-                              width: 10,
+              ? Expanded(
+                  child: StreamBuilder<QuerySnapshot>(
+                    stream: _db
+                        .collection('notifications')
+                        .orderBy('time', descending: true)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                      if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                        return const Center(child: Text('No notifications found.'));
+                      }
+                      var notifications = snapshot.data!.docs;
+                      return ListView.builder(
+                        itemCount: notifications.length,
+                        itemBuilder: (context, index) {
+                          var data = notifications[index].data() as Map<String, dynamic>;
+                          return Container(
+                            margin: const EdgeInsets.symmetric(vertical: 10),
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(182, 209, 212, 220),
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                            Icon(Icons.announcement),
-                            SizedBox(
-                              width: 10,
+                            child: Row(
+                              children: [
+                                const SizedBox(width: 10),
+                                const Icon(Icons.announcement),
+                                const SizedBox(width: 10),
+                                Flexible(
+                                  fit: FlexFit.loose,
+                                  child: Text(
+                                    data['info'] ?? 'No info available',
+                                    style: const TextStyle(color: primaryColor),
+                                  ),
+                                ),
+                              ],
                             ),
-                            Flexible(
-                              fit: FlexFit.loose,
-                              child: Text(
-                                'New road for line 3 due to the closure of AL-Salamis road .....',
-                                style: TextStyle(color: primaryColor),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        height: 100,
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(182, 209, 212, 220),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Icon(Icons.announcement),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Flexible(
-                              fit: FlexFit.loose,
-                              child: Text(
-                                'New road for line 3 due to the closure of AL-Salamis road .....',
-                                style: TextStyle(color: primaryColor),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                          );
+                        },
+                      );
+                    },
                   ),
                 )
               : Container(

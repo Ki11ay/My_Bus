@@ -6,22 +6,34 @@ class FirestoreService {
   Stream<List<Notification>> getNotifications() {
     return _db
         .collection('notifications')
-        .orderBy('timestamp', descending: false) // Sorting by timestamp
+        .orderBy('time', descending: false) // Sorting by timestamp
         .snapshots()
         .map((snapshot) => snapshot.docs
             .map((doc) => Notification.fromFirestore(doc.data()))
             .toList());
   }
+
+  void printFirstNotification() {
+    getNotifications().listen((notifications) {
+      if (notifications.isNotEmpty) {
+        print('First Notification: ${notifications.first.info}');
+      } else {
+        print('No notifications found.');
+      }
+    }, onError: (error) {
+      print('Error: $error');
+    });
+  }
 }
 
 class Notification {
-  final String message;
+  final String info;
 
-  Notification({required this.message});
+  Notification({required this.info});
 
   factory Notification.fromFirestore(Map<String, dynamic> data) {
     return Notification(
-      message: data['info'] ?? '',
+      info: data['info'] ?? 'No info',
     );
   }
 }

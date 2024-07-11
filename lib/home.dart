@@ -63,7 +63,7 @@ class _StartedState extends State<Started> {
     return Padding(
       padding: const EdgeInsets.only(top: 50),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
@@ -154,6 +154,7 @@ class _StartedState extends State<Started> {
                         itemBuilder: (context, index) {
                           var data = notifications[index].data() as Map<String, dynamic>;
                           return Container(
+                            height:70,
                             margin: const EdgeInsets.symmetric(vertical: 10),
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(

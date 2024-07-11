@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -10,53 +11,34 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   late GoogleMapController mapController;
-
   final LatLng _center = const LatLng(35.1407311, 33.9155663);
+  Set<Marker> _markers = {};
 
-final List<BusStop> busStops = [
-    BusStop(const LatLng(35.131138, 33.917726), 'kaliland'),
-    BusStop(const LatLng(35.1321055, 33.9229364), 'Stop 2'),
-    BusStop(const LatLng(35.1277599, 33.9224228), 'Gazi'),
-    BusStop(const LatLng(35.1261780, 33.9251674), 'Sanayi'),
-    BusStop(const LatLng(35.1226413, 33.9320308), 'intercity bus station'),
-    BusStop(const LatLng(35.1206592, 33.9361933), 'Baykal'),
-    BusStop(const LatLng(35.1193872, 33.9415275), 'NKL'),
-    BusStop(const LatLng(35.1125562, 33.9448451), 'Mahkeme'),
-    BusStop(const LatLng(35.1036794, 33.9471303), 'Canbulat'),
-    BusStop(const LatLng(35.1006281, 33.9453198), 'Maksim'),
-    BusStop(const LatLng(35.1006281, 33.9453198), 'Harika Mahallesi'),
-    BusStop(const LatLng(35.0985327, 33.9443814), 'Tarlabaşı'),
-    BusStop(const LatLng(35.0975237, 33.9425102), 'Çimen Sokak'),
-    BusStop(const LatLng(35.0955934, 33.9346812), 'Kurtalan'),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _fetchBusStops();
+  }
 
-  final List<BusRoute> busRoutes = [
-    BusRoute([
-      const LatLng(35.141695, 33.907058),
-      const LatLng(35.131138, 33.917726),
-      const LatLng(35.127284, 33.923281),
-      const LatLng(35.120484, 33.938396),
-    ], Colors.red),
-    BusRoute([
-      const LatLng(35.141695, 33.907058),
-      const LatLng(35.1403, 33.9130),
-      const LatLng(35.1417, 33.9145),
-    ], Colors.purpleAccent),
-    BusRoute([
-      const LatLng(35.141695, 33.907058),
-      const LatLng(35.1421, 33.9152),
-      const LatLng(35.1425, 33.9165),
-    ], Colors.blue),
-    BusRoute([
-      const LatLng(35.141695, 33.907058),
-      const LatLng(35.1321055, 33.9229364),
-      const LatLng(35.1313740, 33.9255536),
-      const LatLng(35.1293248, 33.9293013),
-      const LatLng(35.120484, 33.938396),
-    ], Colors.orange),
-  ];
+  Future<void> _fetchBusStops() async {
+    try {
+      final QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('Bus-stations').get();
+      final List<BusStop> busStops = snapshot.docs.map((doc) {
+        final data = doc.data() as Map<String, dynamic>;
+        final GeoPoint loc = data['loc'];
+        final String name = data['name'];
+        return BusStop(LatLng(loc.latitude, loc.longitude), name);
+      }).toList();
 
-  Set<Marker> _createMarkers() {
+      setState(() {
+        _markers = _createMarkers(busStops);
+      });
+    } catch (e) {
+      print('Error fetching bus stops: $e');
+    }
+  }
+
+  Set<Marker> _createMarkers(List<BusStop> busStops) {
     return busStops.map((busStop) {
       return Marker(
         markerId: MarkerId(busStop.position.toString()),
@@ -71,6 +53,32 @@ final List<BusStop> busStops = [
   }
 
   Set<Polyline> _createPolylines() {
+    final List<BusRoute> busRoutes = [
+      BusRoute([
+        const LatLng(35.141695, 33.907058),
+        const LatLng(35.131138, 33.917726),
+        const LatLng(35.127284, 33.923281),
+        const LatLng(35.120484, 33.938396),
+      ], Colors.red),
+      BusRoute([
+        const LatLng(35.141695, 33.907058),
+        const LatLng(35.1403, 33.9130),
+        const LatLng(35.1417, 33.9145),
+      ], Colors.purpleAccent),
+      BusRoute([
+        const LatLng(35.141695, 33.907058),
+        const LatLng(35.1421, 33.9152),
+        const LatLng(35.1425, 33.9165),
+      ], Colors.blue),
+      BusRoute([
+        const LatLng(35.141695, 33.907058),
+        const LatLng(35.1321055, 33.9229364),
+        const LatLng(35.1313740, 33.9255536),
+        const LatLng(35.1293248, 33.9293013),
+        const LatLng(35.120484, 33.938396),
+      ], Colors.orange),
+    ];
+
     return busRoutes.asMap().entries.map((entry) {
       int idx = entry.key;
       BusRoute route = entry.value;
@@ -97,7 +105,7 @@ final List<BusStop> busStops = [
           target: _center,
           zoom: 15.0,
         ),
-        markers: _createMarkers(),
+        markers: _markers,
         polylines: _createPolylines(),
       ),
     );

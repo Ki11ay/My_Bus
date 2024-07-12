@@ -52,7 +52,7 @@ class _MapScreenState extends State<MapScreen> {
   void initState() {
     super.initState();
     _fetchBusStops();
-    _busLocationRef = FirebaseDatabase.instance.ref().child('gps_locations/location1');
+    _busLocationRef = FirebaseDatabase.instance.ref().child('gps_locations/bus');
     _busLocationRef.onValue.listen((event) {
       final data = Map<String, dynamic>.from(event.snapshot.value as Map);
       final double lat = data['latitude'];
@@ -209,9 +209,9 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   Widget _buildBusStateIndicator(int passengerCount) {
-    Color seatedColor = passengerCount < 35 ? Colors.green : Colors.grey;
-    Color standingColor = (passengerCount >= 35 && passengerCount < 70) ? Colors.yellow.shade700 : Colors.grey;
-    Color fullColor = passengerCount >= 70 ? Colors.red : Colors.grey;
+    Color seatedColor = passengerCount < 35 ? primaryColor : Colors.grey;
+    Color standingColor = (passengerCount >= 35 && passengerCount < 70) ? primaryColor : Colors.grey;
+    Color fullColor = passengerCount >= 70 ? primaryColor : Colors.grey;
 
     return Row(
       children: [
@@ -234,7 +234,7 @@ class _MapScreenState extends State<MapScreen> {
         Expanded(
           child: Column(
             children: [
-              Icon(Icons.block, size: 30, color: fullColor),
+              Icon(Icons.block, color: fullColor),
               const Text('Full'),
             ],
           ),

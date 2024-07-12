@@ -29,11 +29,12 @@ class _StartedState extends State<Started> {
               icon: Icon(
                 Icons.home,
                 size: 30,
+                color: primaryColor,
               ),
               label: 'Home'),
-          NavigationDestination(icon: Icon(Icons.search,size: 30,), label: 'Search'),
-          NavigationDestination(icon: Icon(Icons.map,size: 30,), label: 'Map'),
-          NavigationDestination(icon: Icon(Icons.settings,size: 30,), label: 'Settings'),
+          NavigationDestination(icon: Icon(Icons.search,size: 30,color: primaryColor,), label: 'Search'),
+          NavigationDestination(icon: Icon(Icons.map,size: 30,color: primaryColor,), label: 'Map'),
+          NavigationDestination(icon: Icon(Icons.settings,size: 30,color: primaryColor,), label: 'Settings'),
         ],
         selectedIndex: currentPageIndex,
         onDestinationSelected: (int index) {

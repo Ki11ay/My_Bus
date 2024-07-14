@@ -19,6 +19,7 @@ class _MapScreenState extends State<MapScreen> {
   late DatabaseReference _busLocationRef;
   int? _selectedRouteIndex;
   late int people;
+  late BitmapDescriptor _busIcon;
 
   final List<String> routeNames = ["Lefkosa", "Military GuestHouse", "Varosha", "Salamis"];
 
@@ -52,14 +53,24 @@ class _MapScreenState extends State<MapScreen> {
   void initState() {
     super.initState();
     _fetchBusStops();
-    _busLocationRef = FirebaseDatabase.instance.ref().child('gps_locations/location1');
+    _loadBusIcon();
+    _busLocationRef =
+        FirebaseDatabase.instance.ref().child('gps_locations/location1');
     _busLocationRef.onValue.listen((event) {
       final data = Map<String, dynamic>.from(event.snapshot.value as Map);
       final double lat = data['latitude'];
       final double lng = data['longitude'];
-      people = data['passengers'];
+      setState(() {
+        people = data['passengers'];
+      });
       _updateBusLocation(LatLng(lat, lng));
     });
+  }
+  Future<void> _loadBusIcon() async {
+    _busIcon = await BitmapDescriptor.fromAssetImage(
+      const ImageConfiguration(size: Size(48, 48)),
+      'assets/images/bus.png',
+    );
   }
 
   void _updateBusLocation(LatLng position) {
@@ -67,7 +78,7 @@ class _MapScreenState extends State<MapScreen> {
       _busMarker = Marker(
         markerId: const MarkerId('bus'),
         position: position,
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+        icon: _busIcon
       );
     });
     mapController.animateCamera(CameraUpdate.newLatLng(position));
@@ -75,7 +86,8 @@ class _MapScreenState extends State<MapScreen> {
 
   Future<void> _fetchBusStops() async {
     try {
-      final QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('Bus-stations').get();
+      final QuerySnapshot snapshot =
+          await FirebaseFirestore.instance.collection('Bus-stations').get();
       final List<BusStop> busStops = snapshot.docs.map((doc) {
         final data = doc.data() as Map<String, dynamic>;
         final GeoPoint loc = data['loc'];
@@ -98,7 +110,8 @@ class _MapScreenState extends State<MapScreen> {
         position: busStop.position,
         infoWindow: InfoWindow(
           title: busStop.name,
-          snippet: 'Bus Stop at ${busStop.position.latitude}, ${busStop.position.longitude}',
+          snippet:
+              'Bus Stop at ${busStop.position.latitude}, ${busStop.position.longitude}',
         ),
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
       );
@@ -155,10 +168,14 @@ class _MapScreenState extends State<MapScreen> {
                                 Navigator.pop(context);
                               },
                               child: Container(
-                                margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 8),
-                                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
+                                margin: const EdgeInsets.symmetric(
+                                    vertical: 0, horizontal: 8),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 8.0, horizontal: 10.0),
                                 decoration: BoxDecoration(
-                                  color: _selectedRouteIndex == index ? primaryColor : Colors.grey[300],
+                                  color: _selectedRouteIndex == index
+                                      ? primaryColor
+                                      : Colors.grey[300],
                                   borderRadius: BorderRadius.circular(16.0),
                                 ),
                                 child: Row(
@@ -184,7 +201,9 @@ class _MapScreenState extends State<MapScreen> {
                                     Text(
                                       routeNames[index],
                                       style: TextStyle(
-                                        color: _selectedRouteIndex == index ? Colors.white : Colors.black,
+                                        color: _selectedRouteIndex == index
+                                            ? Colors.white
+                                            : Colors.black,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -209,33 +228,63 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   Widget _buildBusStateIndicator(int passengerCount) {
-    Color seatedColor = passengerCount < 35 ? Colors.green : Colors.grey;
-    Color standingColor = (passengerCount >= 35 && passengerCount < 70) ? Colors.yellow.shade700 : Colors.grey;
-    Color fullColor = passengerCount >= 70 ? Colors.red : Colors.grey;
-
+    Color seatedColor = passengerCount < 35 ? primaryColor : Colors.grey;
+    Color standingColor = (passengerCount >= 35 && passengerCount < 70)
+        ? primaryColor
+        : Colors.grey;
+    Color fullColor = passengerCount >= 70 ? primaryColor : Colors.grey;
+    double seatsize = passengerCount < 35 ? 35 : 20;
+    double standingsize =
+        (passengerCount >= 35 && passengerCount < 70) ? 30 : 20;
+    double fullsize = passengerCount >= 70 ? 35 : 20;
     return Row(
       children: [
+        // Text("people on the bus: $people",style: const TextStyle(
+        //   color: primaryColor,
+        //   fontWeight: FontWeight.bold
+        // ),),
         Expanded(
           child: Column(
             children: [
-              Icon(Icons.event_seat, color: seatedColor),
-              const Text('Seated'),
+              Icon(
+                Icons.event_seat,
+                color: seatedColor,
+                size: seatsize,
+              ),
+              Text(
+                'Seated',
+                style: TextStyle(color: seatedColor),
+              ),
             ],
           ),
         ),
         Expanded(
           child: Column(
             children: [
-              Icon(Icons.directions_walk, color: standingColor),
-              const Text('Standing'),
+              Icon(
+                Icons.directions_walk,
+                color: standingColor,
+                size: standingsize,
+              ),
+              Text(
+                'Standing',
+                style: TextStyle(color: standingColor),
+              ),
             ],
           ),
         ),
         Expanded(
           child: Column(
             children: [
-              Icon(Icons.block, size: 30, color: fullColor),
-              const Text('Full'),
+              Icon(
+                Icons.block,
+                size: fullsize,
+                color: fullColor,
+              ),
+              Text(
+                'Full',
+                style: TextStyle(color: fullColor),
+              ),
             ],
           ),
         ),
@@ -255,7 +304,7 @@ class _MapScreenState extends State<MapScreen> {
               target: _center,
               zoom: 15.0,
             ),
-            markers: _busMarker != null ? {..._markers, _busMarker!} : _markers,           
+            markers: _busMarker != null ? {..._markers, _busMarker!} : _markers,
             polylines: _createPolylines(),
           ),
           if (_selectedRouteIndex == null)

@@ -20,8 +20,14 @@ class _MapScreenState extends State<MapScreen> {
   int? _selectedRouteIndex;
   late int people;
   late BitmapDescriptor _busIcon;
+  late BitmapDescriptor _busStopIcon;
 
-  final List<String> routeNames = ["Lefkosa", "Military GuestHouse", "Varosha", "Salamis"];
+  final List<String> routeNames = [
+    "Lefkosa",
+    "Military GuestHouse",
+    "Varosha",
+    "Salamis"
+  ];
 
   final List<BusRoute> busRoutes = [
     BusRoute([
@@ -53,6 +59,7 @@ class _MapScreenState extends State<MapScreen> {
   void initState() {
     super.initState();
     _fetchBusStops();
+    _loadBusStopIcon();
     _loadBusIcon();
     _busLocationRef =
         FirebaseDatabase.instance.ref().child('gps_locations/location1');
@@ -66,6 +73,7 @@ class _MapScreenState extends State<MapScreen> {
       _updateBusLocation(LatLng(lat, lng));
     });
   }
+
   Future<void> _loadBusIcon() async {
     _busIcon = await BitmapDescriptor.fromAssetImage(
       const ImageConfiguration(size: Size(48, 48)),
@@ -73,13 +81,17 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
+  Future<void> _loadBusStopIcon() async {
+    _busStopIcon = await BitmapDescriptor.fromAssetImage(
+      const ImageConfiguration(size: Size(40, 40)),
+      'assets/images/bsustop.png',
+    );
+  }
+
   void _updateBusLocation(LatLng position) {
     setState(() {
       _busMarker = Marker(
-        markerId: const MarkerId('bus'),
-        position: position,
-        icon: _busIcon
-      );
+          markerId: const MarkerId('bus'), position: position, icon: _busIcon);
     });
     mapController.animateCamera(CameraUpdate.newLatLng(position));
   }
@@ -113,7 +125,7 @@ class _MapScreenState extends State<MapScreen> {
           snippet:
               'Bus Stop at ${busStop.position.latitude}, ${busStop.position.longitude}',
         ),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+        icon: _busStopIcon
       );
     }).toSet();
   }

@@ -19,6 +19,9 @@ class _MapScreenState extends State<MapScreen> {
   late DatabaseReference _busLocationRef;
   int? _selectedRouteIndex;
   late int people;
+  late String next;
+  late String current;
+  late String time;
   late BitmapDescriptor _busIcon;
   late BitmapDescriptor _busStopIcon;
 
@@ -61,14 +64,16 @@ class _MapScreenState extends State<MapScreen> {
     _fetchBusStops();
     _loadBusStopIcon();
     _loadBusIcon();
-    _busLocationRef =
-        FirebaseDatabase.instance.ref().child('gps_locations/location1');
+    _busLocationRef = FirebaseDatabase.instance.ref().child('gps_locations');
     _busLocationRef.onValue.listen((event) {
       final data = Map<String, dynamic>.from(event.snapshot.value as Map);
       final double lat = data['latitude'];
       final double lng = data['longitude'];
       setState(() {
+        next = data['next_stop'];
+        current = data['current_stop'];
         people = data['passengers'];
+        time = data['estimated'];
       });
       _updateBusLocation(LatLng(lat, lng));
     });
@@ -118,15 +123,14 @@ class _MapScreenState extends State<MapScreen> {
   Set<Marker> _createMarkers(List<BusStop> busStops) {
     return busStops.map((busStop) {
       return Marker(
-        markerId: MarkerId(busStop.position.toString()),
-        position: busStop.position,
-        infoWindow: InfoWindow(
-          title: busStop.name,
-          snippet:
-              'Bus Stop at ${busStop.position.latitude}, ${busStop.position.longitude}',
-        ),
-        icon: _busStopIcon
-      );
+          markerId: MarkerId(busStop.position.toString()),
+          position: busStop.position,
+          infoWindow: InfoWindow(
+            title: busStop.name,
+            snippet:
+                'Bus Stop at ${busStop.position.latitude}, ${busStop.position.longitude}',
+          ),
+          icon: _busStopIcon);
     }).toSet();
   }
 
@@ -264,7 +268,7 @@ class _MapScreenState extends State<MapScreen> {
                 size: seatsize,
               ),
               Text(
-                'Seated',
+                'Motakil',
                 style: TextStyle(color: seatedColor),
               ),
             ],
@@ -279,7 +283,7 @@ class _MapScreenState extends State<MapScreen> {
                 size: standingsize,
               ),
               Text(
-                'Standing',
+                'Shma3a',
                 style: TextStyle(color: standingColor),
               ),
             ],
@@ -294,7 +298,7 @@ class _MapScreenState extends State<MapScreen> {
                 color: fullColor,
               ),
               Text(
-                'Full',
+                'Shof lek shgala',
                 style: TextStyle(color: fullColor),
               ),
             ],
@@ -424,20 +428,56 @@ class _MapScreenState extends State<MapScreen> {
                         const SizedBox(height: 16),
                         if (_selectedRouteIndex != null) ...[
                           const Divider(),
-                          const Text(
-                            'Current Station:           Gazi',
-                            style: TextStyle(
-                                fontSize: 16.0, fontWeight: FontWeight.bold),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Current Station:',
+                                style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                current,
+                                style: const TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold),
+                              )
+                            ],
                           ),
-                          const Text(
-                            'Next Station:         Kali Land',
-                            style: TextStyle(
-                                fontSize: 16.0, fontWeight: FontWeight.bold),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Next Station:',
+                                style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                next,
+                                style: const TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold),
+                              )
+                            ],
                           ),
-                          const Text(
-                            'Estimated time:          3:07',
-                            style: TextStyle(
-                                fontSize: 16.0, fontWeight: FontWeight.bold),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Estimated time:',
+                                style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                time,
+                                style: const TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold),
+                              )
+                            ],
                           ),
                           const Divider(),
                           _buildBusStateIndicator(people),

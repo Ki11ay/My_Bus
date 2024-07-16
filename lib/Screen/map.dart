@@ -268,7 +268,7 @@ class _MapScreenState extends State<MapScreen> {
                 size: seatsize,
               ),
               Text(
-                'Motakil',
+                'seated',
                 style: TextStyle(color: seatedColor),
               ),
             ],
@@ -283,7 +283,7 @@ class _MapScreenState extends State<MapScreen> {
                 size: standingsize,
               ),
               Text(
-                'Shma3a',
+                'standing',
                 style: TextStyle(color: standingColor),
               ),
             ],
@@ -298,7 +298,7 @@ class _MapScreenState extends State<MapScreen> {
                 color: fullColor,
               ),
               Text(
-                'Shof lek shgala',
+                'Full',
                 style: TextStyle(color: fullColor),
               ),
             ],

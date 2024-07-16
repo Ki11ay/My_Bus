@@ -16,12 +16,12 @@ class FirestoreService {
   void printFirstNotification() {
     getNotifications().listen((notifications) {
       if (notifications.isNotEmpty) {
-        print('First Notification: ${notifications.first.info}');
+        // print('First Notification: ${notifications.first.info}');
       } else {
-        print('No notifications found.');
+        // print('No notifications found.');
       }
     }, onError: (error) {
-      print('Error: $error');
+      // print('Error: $error');
     });
   }
 }

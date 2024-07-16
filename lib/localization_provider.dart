@@ -1,4 +1,3 @@
-// localization_provider.dart
 import 'package:flutter/material.dart';
 
 class LocalizationProvider with ChangeNotifier {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_bus/components/color.dart';
 import 'package:my_bus/components/onboarding_data.dart';
 import 'package:my_bus/home.dart';
@@ -141,8 +142,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
         },
         child: Text(
           currentIndex == controller.items.length - 1
-              ? "Get started"
-              : "Continue",
+              ? AppLocalizations.of(context)!.getstarted
+              : AppLocalizations.of(context)!.continuet,
           style: const TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
         ),
       ),

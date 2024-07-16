@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-// import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:my_bus/Screen/Languagesc.dart';
 import 'package:my_bus/Screen/map.dart';
 import 'package:my_bus/components/color.dart';
 import 'package:my_bus/Screen/onbording.dart';
 import 'package:my_bus/Screen/splashscreen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Started extends StatefulWidget {
   const Started({super.key});
@@ -24,17 +24,11 @@ class _StartedState extends State<Started> {
       // appBar: AppBar(),
       body: [home(), searchs(), const MapScreen(), settings()][currentPageIndex],
       bottomNavigationBar: NavigationBar(
-        destinations: const [
-          NavigationDestination(
-              icon: Icon(
-                Icons.home,
-                size: 30,
-                color: primaryColor,
-              ),
-              label: 'Home'),
-          NavigationDestination(icon: Icon(Icons.search,size: 30,color: primaryColor,), label: 'Search'),
-          NavigationDestination(icon: Icon(Icons.map,size: 30,color: primaryColor,), label: 'Map'),
-          NavigationDestination(icon: Icon(Icons.settings,size: 30,color: primaryColor,), label: 'Settings'),
+        destinations: [
+          NavigationDestination(icon: const Icon(Icons.home,size: 30,color: primaryColor, ),label: AppLocalizations.of(context)!.home),
+          NavigationDestination(icon: const Icon(Icons.search,size: 30,color: primaryColor,), label: AppLocalizations.of(context)!.search),
+          NavigationDestination(icon: const Icon(Icons.map,size: 30,color: primaryColor,), label: AppLocalizations.of(context)!.map),
+          NavigationDestination(icon: const Icon(Icons.settings,size: 30,color: primaryColor,), label: AppLocalizations.of(context)!.settings),
         ],
         selectedIndex: currentPageIndex,
         onDestinationSelected: (int index) {
@@ -75,17 +69,17 @@ class _StartedState extends State<Started> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  notification ? 'Find your' : 'NEVER',
+                  notification ? AppLocalizations.of(context)!.findyour : AppLocalizations.of(context)!.never,
                   style:
                       const TextStyle(fontWeight: FontWeight.w500, fontSize: 40),
                 ),
                 Text(
-                  notification ? 'way' : 'MISS',
+                  notification ? AppLocalizations.of(context)!.way : AppLocalizations.of(context)!.miss,
                   style:
                       const TextStyle(fontWeight: FontWeight.w700, fontSize: 40),
                 ),
                 Text(
-                  notification ? 'Effectively' : 'YOUR RIDE',
+                  notification ? AppLocalizations.of(context)!.effectively : AppLocalizations.of(context)!.urride,
                   style: const TextStyle(
                       fontWeight: FontWeight.w700,
                       color: Color(0xFFFFC107),
@@ -109,7 +103,7 @@ class _StartedState extends State<Started> {
                     toggleNotification();
                   },
                   child: Text(
-                    'Notifications',
+                    AppLocalizations.of(context)!.notifications,
                     style: TextStyle(
                         color: notification ? primaryColor : Colors.grey,
                         fontSize: 20,
@@ -122,7 +116,7 @@ class _StartedState extends State<Started> {
                   style:
                       const ButtonStyle(visualDensity: VisualDensity.comfortable),
                   child: Text(
-                    'Bus schedule',
+                    AppLocalizations.of(context)!.busschedule,
                     style: TextStyle(
                         color: notification ? Colors.grey : primaryColor,
                         fontSize: 20,
@@ -199,9 +193,9 @@ class _StartedState extends State<Started> {
                             color: primaryColor),
                         child: TextButton(
                           onPressed: () {},
-                          child: const Text(
-                            "Download the PDF",
-                            style: TextStyle(
+                          child: Text(
+                            AppLocalizations.of(context)!.downloadthepdf,
+                            style: const TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255),
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20),
@@ -231,18 +225,18 @@ class _StartedState extends State<Started> {
             child: Ink(
               padding: const EdgeInsets.all(20),
               color: const Color.fromARGB(255, 248, 247, 247),
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.notifications,
                     color: Colors.amber,
                   ),
                   Text(
-                    'Notifications',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    AppLocalizations.of(context)!.notifications,
+                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  Icon(Icons.arrow_forward_ios, color: Colors.amber)
+                  const Icon(Icons.arrow_forward_ios, color: Colors.amber)
                 ],
               ),
             ),
@@ -258,18 +252,18 @@ class _StartedState extends State<Started> {
             child: Ink(
               padding: const EdgeInsets.all(20),
               color: const Color.fromARGB(255, 248, 247, 247),
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.language,
                     color: Colors.amber,
                   ),
                   Text(
-                    'Languages',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    AppLocalizations.of(context)!.languages,
+                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  Icon(Icons.arrow_forward_ios, color: Colors.amber)
+                  const Icon(Icons.arrow_forward_ios, color: Colors.amber)
                 ],
               ),
             ),
@@ -286,18 +280,18 @@ class _StartedState extends State<Started> {
             child: Ink(
               padding: const EdgeInsets.all(20),
               color: const Color.fromARGB(255, 248, 247, 247),
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.live_help_sharp,
                     color: Colors.amber,
                   ),
                   Text(
-                    'Help Center',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    AppLocalizations.of(context)!.helpcenter,
+                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  Icon(Icons.arrow_forward_ios, color: Colors.amber)
+                  const Icon(Icons.arrow_forward_ios, color: Colors.amber)
                 ],
               ),
             ),
@@ -314,18 +308,18 @@ class _StartedState extends State<Started> {
             child: Ink(
               padding: const EdgeInsets.all(20),
               color: const Color.fromARGB(255, 248, 247, 247),
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.person,
                     color: Colors.amber,
                   ),
                   Text(
-                    'About us',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    AppLocalizations.of(context)!.abtus,
+                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  Icon(Icons.arrow_forward_ios, color: Colors.amber)
+                  const Icon(Icons.arrow_forward_ios, color: Colors.amber)
                 ],
               ),
             ),

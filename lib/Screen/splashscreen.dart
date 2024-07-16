@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_bus/Screen/onbording.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -44,8 +45,8 @@ class _SplashState extends State<Splash> {
               const SizedBox(
                 height: 2,
               ),
-              const Positioned(
-                  top: 400, child: Text("Your journey's just a tap away"))
+              Positioned(
+                  top: 400, child: Text(AppLocalizations.of(context)!.splash))
             ]),
       ),
     );

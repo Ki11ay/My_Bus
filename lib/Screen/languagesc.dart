@@ -1,6 +1,6 @@
-// ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:my_bus/components/color.dart';
+import 'package:my_bus/main.dart';
 
 class Languagesc extends StatelessWidget {
   const Languagesc({super.key});
@@ -23,7 +23,7 @@ class Languagesc extends StatelessWidget {
                 ],
               ),
             ),
-            Container( //TODO: change the languages
+            Container(
               padding: const EdgeInsets.all(10),
               child: Column(
                 children: [
@@ -34,8 +34,10 @@ class Languagesc extends StatelessWidget {
                         color: primaryColor),
                     child: TextButton(
                       onPressed: () {
+                        Locale newLocale = const Locale('tr');
+                        MyApp.setLocale(context, newLocale);
                         Navigator.pop(context);
-                        },
+                      },
                       child: const Text(
                         "Turkish",
                         style: TextStyle(
@@ -53,6 +55,8 @@ class Languagesc extends StatelessWidget {
                         color: primaryColor),
                     child: TextButton(
                       onPressed: () {
+                        Locale newLocale = const Locale('en');
+                        MyApp.setLocale(context, newLocale);
                         Navigator.pop(context);
                       },
                       child: const Text(
@@ -70,7 +74,6 @@ class Languagesc extends StatelessWidget {
           ],
         ),
       ),
-      
     );
   }
 }

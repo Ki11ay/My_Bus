@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:my_bus/components/color.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -98,14 +99,14 @@ class _MapScreenState extends State<MapScreen> {
 
   Future<void> _loadBusIcon() async {
     _busIcon = await BitmapDescriptor.fromAssetImage(
-      const ImageConfiguration(size: Size(48, 48)),
+       const ImageConfiguration(size: Size(48, 48)),
       'assets/images/bus.png',
     );
   }
 
   Future<void> _loadBusStopIcon() async {
-    _busStopIcon = await BitmapDescriptor.fromAssetImage(
-      const ImageConfiguration(size: Size(40, 40)),
+    _busStopIcon = await BitmapDescriptor.asset(
+       const ImageConfiguration(size: Size(40, 40)),
       'assets/images/bsustop.png',
     );
   }
@@ -285,7 +286,7 @@ class _MapScreenState extends State<MapScreen> {
                 size: seatsize,
               ),
               Text(
-                'seated',
+                AppLocalizations.of(context)!.seated,
                 style: TextStyle(color: seatedColor),
               ),
             ],
@@ -300,7 +301,7 @@ class _MapScreenState extends State<MapScreen> {
                 size: standingsize,
               ),
               Text(
-                'standing',
+                AppLocalizations.of(context)!.standing,
                 style: TextStyle(color: standingColor),
               ),
             ],
@@ -315,7 +316,7 @@ class _MapScreenState extends State<MapScreen> {
                 color: fullColor,
               ),
               Text(
-                'Full',
+                AppLocalizations.of(context)!.full,
                 style: TextStyle(color: fullColor),
               ),
             ],
@@ -350,17 +351,17 @@ class _MapScreenState extends State<MapScreen> {
                 child: Container(
                   // height: 30,
                   color: Colors.white,
-                  child: const Column(
+                  child: Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(
-                        "Choose the Line",
-                        style: TextStyle(
+                        AppLocalizations.of(context)!.chooseLine,
+                        style: const TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                     ],
@@ -448,9 +449,9 @@ class _MapScreenState extends State<MapScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
-                                'Current Station:',
-                                style: TextStyle(
+                              Text(
+                                AppLocalizations.of(context)!.currentStation,
+                                style: const TextStyle(
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -465,9 +466,9 @@ class _MapScreenState extends State<MapScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
-                                'Next Station:',
-                                style: TextStyle(
+                              Text(
+                                AppLocalizations.of(context)!.nextStation,
+                                style: const TextStyle(
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -482,9 +483,9 @@ class _MapScreenState extends State<MapScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
-                                'Estimated time:',
-                                style: TextStyle(
+                              Text(
+                                AppLocalizations.of(context)!.estimatedTime,
+                                style: const TextStyle(
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.bold),
                               ),

@@ -23,28 +23,124 @@ class _MapScreenState extends State<MapScreen> {
   late String next;
   late String current;
   late String time;
+  // late String id;
   late BitmapDescriptor _busIcon;
   late BitmapDescriptor _busStopIcon;
 
-  final List<String> routeNames = [
-    "Lefkosa",
-    "Military GuestHouse",
-    "Varosha",
-    "Salamis"
-  ];
+  final List<String> routeNames = ["Salamis","Varosha","Military GuestHouse","Lefkosa"];
 
   final List<BusRoute> busRoutes = [
     BusRoute([
       const LatLng(35.141695, 33.907058),
-      const LatLng(35.131138, 33.917726),
-      const LatLng(35.127284, 33.923281),
-      const LatLng(35.1226413, 33.9320308),
-      const LatLng(35.1206592, 33.9361933),
+      const LatLng(35.1413521, 33.9067915),
+      const LatLng(35.1410285, 33.9079375),
+      const LatLng(35.1411117, 33.9093016),
+      const LatLng(35.1412717, 33.9094250),
+      const LatLng(35.1413954, 33.9096082),
+      const LatLng(35.1433140, 33.9095636),
+      const LatLng(35.1443407, 33.9097638),
+      const LatLng(35.1446982, 33.9097567),
+      const LatLng(35.1466625, 33.9087918),
+      const LatLng(35.1468399, 33.9086567),
+      const LatLng(35.1471700, 33.9091063),
+      const LatLng(35.1467798, 33.9096380),
+      const LatLng(35.1447048, 33.9115474),
+      const LatLng(35.1445740, 33.9116215),
+      const LatLng(35.1440241, 33.9118810),
+      const LatLng(35.1436079, 33.9120819),
+      const LatLng(35.1432273, 33.9124228),
+      const LatLng(35.1426686, 33.9130186),
+      const LatLng(35.1418382, 33.9135849),
+      const LatLng(35.1402214, 33.9106284),
+      const LatLng(35.1392752, 33.9118492),
+      const LatLng(35.1381725, 33.9125942),
+      const LatLng(35.1344140, 33.9175090),
+      const LatLng(35.1346953, 33.9178785),
+      const LatLng(35.1342023, 33.9188270),
+      const LatLng(35.1341738, 33.9190177),
+      const LatLng(35.1321055, 33.9229364),
+      const LatLng(35.1313956, 33.9245639),
+      const LatLng(35.1312220, 33.9253331),
+      const LatLng(35.1313740, 33.9255536),
+      const LatLng(35.1293248, 33.9293013),
+      const LatLng(35.1293248, 33.9293013),
+      const LatLng(35.1287929, 33.9302468),
+      const LatLng(35.1231097, 33.9353698),
+      const LatLng(35.1215811, 33.9376591),
       const LatLng(35.120484, 33.938396),
-    ], Colors.red),
+    ], Colors.orange),
     BusRoute([
       const LatLng(35.141695, 33.907058),
+      const LatLng(35.1413521, 33.9067915),
+      const LatLng(35.1410285, 33.9079375),
+      const LatLng(35.1411117, 33.9093016),
+      const LatLng(35.1412717, 33.9094250),
+      const LatLng(35.1413954, 33.9096082),
+      const LatLng(35.1433140, 33.9095636),
+      const LatLng(35.1443407, 33.9097638),
+      const LatLng(35.1446982, 33.9097567),
+      const LatLng(35.1466625, 33.9087918),
+      const LatLng(35.1468399, 33.9086567),
+      const LatLng(35.1471700, 33.9091063),
+      const LatLng(35.1467798, 33.9096380),
+      const LatLng(35.1447048, 33.9115474),
+      const LatLng(35.1445740, 33.9116215),
+      const LatLng(35.1440241, 33.9118810),
+      const LatLng(35.1436079, 33.9120819),
+      const LatLng(35.1432273, 33.9124228),
+      const LatLng(35.1426686, 33.9130186),
+      const LatLng(35.1418382, 33.9135849),
+      const LatLng(35.1399634, 33.9100977),
+      const LatLng(35.1375433, 33.9119763),
+      const LatLng(35.1373881, 33.9119079),
+      const LatLng(35.1308256, 33.9180729),
+      const LatLng(35.1281413, 33.9213475),
+      const LatLng(35.1255865, 33.9264658),
+      const LatLng(35.1209087, 33.9354221),
+      const LatLng(35.1205763, 33.9366184),
+      const LatLng(35.1204658, 33.9380882),
+      const LatLng(35.1206649, 33.9396389),
+      const LatLng(35.1205438, 33.9407558),
+      const LatLng(35.1199546, 33.9409475),
+      const LatLng(35.1173296, 33.9433755),
+      const LatLng(35.1147867, 33.9459771),
+      const LatLng(35.1132701, 33.9444796),
+      const LatLng(35.1126357, 33.9447049),
+      const LatLng(35.1122419, 33.9454459),
+      const LatLng(35.1109789, 33.9463773),
+      const LatLng(35.1090845, 33.9474153),
+    ], Colors.blue),
+    BusRoute([
+      const LatLng(35.141695, 33.907058),
+      const LatLng(35.1413521, 33.9067915),
+      const LatLng(35.1410285, 33.9079375),
+      const LatLng(35.1411117, 33.9093016),
+      const LatLng(35.1412717, 33.9094250),
+      const LatLng(35.1413954, 33.9096082),
+      const LatLng(35.1433140, 33.9095636),
+      const LatLng(35.1443407, 33.9097638),
+      const LatLng(35.1446982, 33.9097567),
+      const LatLng(35.1466625, 33.9087918),
+      const LatLng(35.1468399, 33.9086567),
+      const LatLng(35.1471700, 33.9091063),
+      const LatLng(35.1467798, 33.9096380),
+      const LatLng(35.1447048, 33.9115474),
+      const LatLng(35.1445740, 33.9116215),
+      const LatLng(35.1440241, 33.9118810),
+      const LatLng(35.1436079, 33.9120819),
+      const LatLng(35.1432273, 33.9124228),
+      const LatLng(35.1426686, 33.9130186),
+      const LatLng(35.1418382, 33.9135849),
+      const LatLng(35.1402214, 33.9106284),
+      const LatLng(35.1392752, 33.9118492),
+      const LatLng(35.1381725, 33.9125942),
+      const LatLng(35.1344140, 33.9175090),
+      const LatLng(35.1346953, 33.9178785),
+      const LatLng(35.1342023, 33.9188270),
+      const LatLng(35.1341738, 33.9190177),
       const LatLng(35.1321055, 33.9229364),
+      const LatLng(35.1313956, 33.9245639),
+      const LatLng(35.1312220, 33.9253331),
       const LatLng(35.1313740, 33.9255536),
       const LatLng(35.1293248, 33.9293013),
       const LatLng(35.1293248, 33.9293013),
@@ -60,20 +156,35 @@ class _MapScreenState extends State<MapScreen> {
     ], Colors.purpleAccent),
     BusRoute([
       const LatLng(35.141695, 33.907058),
-      const LatLng(35.1421, 33.9152),
-      const LatLng(35.1425, 33.9165),
-    ], Colors.blue),
-    BusRoute([
-      const LatLng(35.141695, 33.907058),
-      const LatLng(35.1321055, 33.9229364),
-      const LatLng(35.1313740, 33.9255536),
-      const LatLng(35.1293248, 33.9293013),
-      const LatLng(35.1293248, 33.9293013),
-      const LatLng(35.1287929, 33.9302468),
-      const LatLng(35.1231097, 33.9353698),
-      const LatLng(35.1215811, 33.9376591),
-      const LatLng(35.120484, 33.938396),
-    ], Colors.orange),
+      const LatLng(35.1413521, 33.9067915),
+      const LatLng(35.1410285, 33.9079375),
+      const LatLng(35.1411117, 33.9093016),
+      const LatLng(35.1412717, 33.9094250),
+      const LatLng(35.1413954, 33.9096082),
+      const LatLng(35.1433140, 33.9095636),
+      const LatLng(35.1443407, 33.9097638),
+      const LatLng(35.1446982, 33.9097567),
+      const LatLng(35.1466625, 33.9087918),
+      const LatLng(35.1468399, 33.9086567),
+      const LatLng(35.1471700, 33.9091063),
+      const LatLng(35.1467798, 33.9096380),
+      const LatLng(35.1447048, 33.9115474),
+      const LatLng(35.1445740, 33.9116215),
+      const LatLng(35.1440241, 33.9118810),
+      const LatLng(35.1436079, 33.9120819),
+      const LatLng(35.1432273, 33.9124228),
+      const LatLng(35.1426686, 33.9130186),
+      const LatLng(35.1418382, 33.9135849),
+      const LatLng(35.1399634, 33.9100977),
+      const LatLng(35.1375433, 33.9119763),
+      const LatLng(35.1373881, 33.9119079),
+      const LatLng(35.1308256, 33.9180729),
+      const LatLng(35.1281413, 33.9213475),
+      const LatLng(35.1255865, 33.9264658),
+      const LatLng(35.1209087, 33.9354221),
+      const LatLng(35.1205763, 33.9366184),
+      const LatLng(35.1204658, 33.9380882),
+    ], Colors.red),
   ];
 
   @override
@@ -92,6 +203,7 @@ class _MapScreenState extends State<MapScreen> {
         current = data['current_stop'];
         people = data['passengers'];
         time = data['estimated'];
+        // id = data['id'];
       });
       _updateBusLocation(LatLng(lat, lng));
     });
@@ -99,14 +211,14 @@ class _MapScreenState extends State<MapScreen> {
 
   Future<void> _loadBusIcon() async {
     _busIcon = await BitmapDescriptor.fromAssetImage(
-       const ImageConfiguration(size: Size(48, 48)),
+      const ImageConfiguration(size: Size(48, 48)),
       'assets/images/bus.png',
     );
   }
 
   Future<void> _loadBusStopIcon() async {
     _busStopIcon = await BitmapDescriptor.asset(
-       const ImageConfiguration(size: Size(40, 40)),
+      const ImageConfiguration(size: Size(40, 40)),
       'assets/images/bsustop.png',
     );
   }
@@ -356,10 +468,17 @@ class _MapScreenState extends State<MapScreen> {
                       const SizedBox(
                         height: 10,
                       ),
-                      Text(
-                        AppLocalizations.of(context)!.chooseLine,
-                        style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const Icon(Icons.arrow_back_ios_new),
+                          Text(
+                            AppLocalizations.of(context)!.chooseLine,
+                            style: const TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          const Icon(Icons.arrow_forward_ios_outlined)
+                        ],
                       ),
                       const SizedBox(
                         height: 10,

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_bus/Screen/Languagesc.dart';
 import 'package:my_bus/Screen/map.dart';
@@ -165,7 +166,7 @@ class _StartedState extends State<Started> {
                                   fit: FlexFit.loose,
                                   child: Text(
                                     data['info'] ?? 'No info available',
-                                    style: const TextStyle(color: primaryColor),
+                                    style: const TextStyle(color: primaryColor, fontWeight: FontWeight.bold, fontSize: 18),
                                   ),
                                 ),
                               ],
@@ -217,6 +218,7 @@ class _StartedState extends State<Started> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           InkWell(
+            highlightColor: primaryColor,
             //TODO: navigate to the notifications page
             onTap: () {
               Navigator.of(context).push(
@@ -226,7 +228,7 @@ class _StartedState extends State<Started> {
               padding: const EdgeInsets.all(20),
               color: const Color.fromARGB(255, 248, 247, 247),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Icon(
                     Icons.notifications,
@@ -245,6 +247,7 @@ class _StartedState extends State<Started> {
             height: 30,
           ),
           InkWell(
+            highlightColor: primaryColor,
             onTap: () {
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => const Languagesc()));
@@ -253,7 +256,7 @@ class _StartedState extends State<Started> {
               padding: const EdgeInsets.all(20),
               color: const Color.fromARGB(255, 248, 247, 247),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Icon(
                     Icons.language,
@@ -272,6 +275,7 @@ class _StartedState extends State<Started> {
             height: 30,
           ),
           InkWell(
+            highlightColor: primaryColor,
             //TODO: navigate to the help page
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
@@ -281,7 +285,7 @@ class _StartedState extends State<Started> {
               padding: const EdgeInsets.all(20),
               color: const Color.fromARGB(255, 248, 247, 247),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Icon(
                     Icons.live_help_sharp,
@@ -300,6 +304,7 @@ class _StartedState extends State<Started> {
             height: 30,
           ),
           InkWell(
+            highlightColor: primaryColor,
             //TODO: navigate to the about us page
             onTap: () {
               Navigator.of(context).push(
@@ -309,7 +314,7 @@ class _StartedState extends State<Started> {
               padding: const EdgeInsets.all(20),
               color: const Color.fromARGB(255, 248, 247, 247),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Icon(
                     Icons.person,

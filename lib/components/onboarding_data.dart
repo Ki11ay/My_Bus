@@ -10,13 +10,13 @@ class OnboardingData{
         image: "assets/images/media.png"),
 
     OnboardingInfo(
-        title: "Interesting stories",
-        description: "Reading top stories to learn and enhance your knowledge",
+        title: "Who are we?",
+        description: "We are a 4th year electrical and electronics engineering students who developed and tested this application",
         image: "assets/images/media.png"),
 
     OnboardingInfo(
-        title: "Reading Books",
-        description: "Reading new books with top content and excellent stories""Reading new books with top content and excellent stories",
+        title: "The vision",
+        description: "To improve the bus experience around the city and provide a better user experience",
         image: "assets/images/media.png"),
 
   ];

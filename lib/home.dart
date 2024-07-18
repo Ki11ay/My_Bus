@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_bus/Screen/Languagesc.dart';
 import 'package:my_bus/Screen/map.dart';
+import 'package:my_bus/Screen/serachscreen.dart';
 import 'package:my_bus/components/color.dart';
 import 'package:my_bus/Screen/onbording.dart';
 import 'package:my_bus/Screen/splashscreen.dart';
@@ -23,7 +23,7 @@ class _StartedState extends State<Started> {
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: AppBar(),
-      body: [home(), searchs(), const MapScreen(), settings()][currentPageIndex],
+      body: [home(),const SearchScreen(), const MapScreen(), settings()][currentPageIndex],
       bottomNavigationBar: NavigationBar(
         destinations: [
           NavigationDestination(icon: const Icon(Icons.home,size: 30,color: primaryColor, ),label: AppLocalizations.of(context)!.home),

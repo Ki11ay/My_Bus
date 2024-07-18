@@ -31,7 +31,10 @@ dependencies:
   flutter:
     sdk: flutter
   provider: ^6.0.3
-  google_maps_flutter: ^2.6.1
+  google_maps_flutter: ^2.7.0
+  geolocator: ^12.0.0
+  geocoding: ^3.0.0
+  flutter_geocoder: ^0.2.2-nullsafety
   dio: ^5.5.0+1
   # location: ^5.0.0
   # firebase_core: ^2.5.0
@@ -42,13 +45,14 @@ dependencies:
   cupertino_icons: ^1.0.6
   flutter_svg: ^2.0.10+1
   shared_preferences: ^2.2.3
-  http: ^1.2.1
+  http: ^1.2.2
   firebase_core: ^3.1.1
   cloud_firestore: ^5.1.0
   firebase_database: ^11.0.3
   flutter_localizations:
     sdk: flutter
   intl: ^0.19.0
+  google_geocoding_api: ^1.5.2
 
 dev_dependencies:
   flutter_test:

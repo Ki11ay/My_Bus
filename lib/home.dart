@@ -23,7 +23,7 @@ class _StartedState extends State<Started> {
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: AppBar(),
-      body: [home(),const SearchScreen(), const MapScreen(), settings()][currentPageIndex],
+      body: [home(),  const SearchScreen(), const MapScreen(), settings()][currentPageIndex],
       bottomNavigationBar: NavigationBar(
         destinations: [
           NavigationDestination(icon: const Icon(Icons.home,size: 30,color: primaryColor, ),label: AppLocalizations.of(context)!.home),

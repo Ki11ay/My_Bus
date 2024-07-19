@@ -32,5 +32,12 @@
     "settings": "Settings",
     "languages": "Languages",
     "helpcenter": "Help Center",
-    "abtus": "About us"
+    "abtus": "About us",
+    "plsenterurfeedback": "Please enter your feedback",
+    "submit": "Submit", 
+    "feedback": "Feedback",
+    "thxforfeedback": "Thank you for your feedback!",
+    "entercomplaint": "Enter your complaint",
+    "enterlocname": "Enter location name",
+    "plsenterlocnameerror": "Please enter location name"
   }

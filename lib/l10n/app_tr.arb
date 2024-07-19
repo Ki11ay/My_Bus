@@ -32,5 +32,12 @@
     "settings": "Ayarlar",
     "languages": "Diller",
     "helpcenter": "Yardım Merkezi",
-    "abtus": "Hakkımızda"
+    "abtus": "Hakkımızda",
+    "plsenterurfeedback": "Geri bildiriminizi yazın",
+    "submit": "göndermek",
+    "feedback": "Geri bildirim",
+    "thxforfeedback": "geri bildiriminiz için teşekkür ederiz!",
+    "entercomplaint": "şikayetinizi girin",
+    "enterlocname": "Konum adını girin",
+    "plsenterlocnameerror": "Lokasyon adı girmelisiniz"
   }

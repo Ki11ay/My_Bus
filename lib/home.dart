@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:my_bus/Screen/Languagesc.dart';
 import 'package:my_bus/Screen/map.dart';
 import 'package:my_bus/Screen/serachscreen.dart';
+import 'package:my_bus/Screen/settings.dart';
 import 'package:my_bus/components/color.dart';
-import 'package:my_bus/Screen/onbording.dart';
-import 'package:my_bus/Screen/splashscreen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Started extends StatefulWidget {
@@ -22,8 +20,7 @@ class _StartedState extends State<Started> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(),
-      body: [home(),  const SearchScreen(), const MapScreen(), settings()][currentPageIndex],
+      body: [home(),  const SearchScreen(), const MapScreen(), const Setting()][currentPageIndex],
       bottomNavigationBar: NavigationBar(
         destinations: [
           NavigationDestination(icon: const Icon(Icons.home,size: 30,color: primaryColor, ),label: AppLocalizations.of(context)!.home),
@@ -210,154 +207,4 @@ class _StartedState extends State<Started> {
       ),
     );
   }
-
-  Widget settings() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 50,horizontal: 15),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          InkWell(
-            highlightColor: primaryColor,
-            //TODO: navigate to the notifications page
-            onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const Splash()));
-            },
-            child: Ink(
-              padding: const EdgeInsets.all(20),
-              color: const Color.fromARGB(255, 248, 247, 247),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Icon(
-                    Icons.notifications,
-                    color: Colors.amber,
-                  ),
-                  Text(
-                    AppLocalizations.of(context)!.notifications,
-                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  const Icon(Icons.arrow_forward_ios, color: Colors.amber)
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          InkWell(
-            highlightColor: primaryColor,
-            onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const Languagesc()));
-            },
-            child: Ink(
-              padding: const EdgeInsets.all(20),
-              color: const Color.fromARGB(255, 248, 247, 247),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Icon(
-                    Icons.language,
-                    color: Colors.amber,
-                  ),
-                  Text(
-                    AppLocalizations.of(context)!.languages,
-                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  const Icon(Icons.arrow_forward_ios, color: Colors.amber)
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          InkWell(
-            highlightColor: primaryColor,
-            //TODO: navigate to the help page
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const OnboardingPage()));
-            },
-            child: Ink(
-              padding: const EdgeInsets.all(20),
-              color: const Color.fromARGB(255, 248, 247, 247),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Icon(
-                    Icons.live_help_sharp,
-                    color: Colors.amber,
-                  ),
-                  Text(
-                    AppLocalizations.of(context)!.helpcenter,
-                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  const Icon(Icons.arrow_forward_ios, color: Colors.amber)
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          InkWell(
-            highlightColor: primaryColor,
-            //TODO: navigate to the about us page
-            onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const Started()));
-            },
-            child: Ink(
-              padding: const EdgeInsets.all(20),
-              color: const Color.fromARGB(255, 248, 247, 247),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Icon(
-                    Icons.person,
-                    color: Colors.amber,
-                  ),
-                  Text(
-                    AppLocalizations.of(context)!.abtus,
-                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  const Icon(Icons.arrow_forward_ios, color: Colors.amber)
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 90,
-          ),
-          const Text(
-            'MYBUS 0.1',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget searchs() {
-    return  Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.only(top: 100),
-        child: Container(
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),color: const Color.fromARGB(99, 221, 170, 170)),
-          padding: const EdgeInsets.all(8),
-          child: const TextField(
-            onTap: null,
-            showCursor: true,
-            decoration: InputDecoration(
-              icon: Icon(Icons.search,size: 30,),
-              ),
-          )
-          ),
-      ),
-    );
-  }
-
 }

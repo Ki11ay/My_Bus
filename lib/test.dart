@@ -1,56 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_webservice/places.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class SearchWidget extends StatefulWidget {
+class GeocodingWidget extends StatefulWidget {
+  const GeocodingWidget({super.key});
+
   @override
-  _SearchWidgetState createState() => _SearchWidgetState();
+  _GeocodingState createState() => _GeocodingState();
 }
 
-class _SearchWidgetState extends State<SearchWidget> {
-  final _places = GoogleMapsPlaces(apiKey: 'YOUR_GOOGLE_API_KEY');
-  TextEditingController _controller = TextEditingController();
-  String _nearestBusStop = '';
+class _GeocodingState extends State<GeocodingWidget> {
+  final TextEditingController _locationController = TextEditingController();
+  LatLng? _location;
 
-  void _searchLocation(String query) async {
-    PlacesSearchResponse response = await _places.searchByText(query);
-    if (response.results.isNotEmpty) {
-      final location = response.results.first.geometry.location;
-      final latitude = location.lat;
-      final longitude = location.lng;
-      _findNearestBusStop(latitude, longitude);
-    }
-  }
+  Future<void> _geocode() async {
+    final locationName = _locationController.text;
+    if (locationName.isEmpty) return;
 
-  void _findNearestBusStop(double latitude, double longitude) async {
-    CollectionReference busStops = FirebaseFirestore.instance.collection('Bus-stations');
+    try {
+      List<Location> locations = await locationFromAddress(locationName);
 
-    QuerySnapshot querySnapshot = await busStops.get();
-    List<QueryDocumentSnapshot> documents = querySnapshot.docs;
-
-    QueryDocumentSnapshot? nearestBusStop;
-    double nearestDistance = double.infinity;
-
-    for (var doc in documents) {
-      GeoPoint busStopLocation = doc['location'];
-      double distance = Geolocator.distanceBetween(
-        latitude,
-        longitude,
-        busStopLocation.latitude,
-        busStopLocation.longitude,
-      );
-
-      if (distance < nearestDistance) {
-        nearestDistance = distance;
-        nearestBusStop = doc;
+      if (locations.isNotEmpty) {
+        setState(() {
+          _location = LatLng(locations.first.latitude, locations.first.longitude);
+        });
       }
-    }
-
-    if (nearestBusStop != null) {
-      setState(() {
-        _nearestBusStop = 'Nearest bus stop: ${nearestBusStop['name']} at ${nearestBusStop['location']}';
-      });
+    } catch (e) {
+      print('Error: $e');
     }
   }
 
@@ -58,37 +34,19 @@ class _SearchWidgetState extends State<SearchWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.only(top: 100),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
-            color: const Color.fromARGB(99, 221, 170, 170),
-          ),
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            children: [
-              TextField(
-                controller: _controller,
-                showCursor: true,
-                decoration: InputDecoration(
-                  icon: Icon(Icons.search, size: 30),
-                  hintText: 'Enter location',
-                  suffixIcon: IconButton(
-                    icon: Icon(Icons.search),
-                    onPressed: () => _searchLocation(_controller.text),
-                  ),
-                ),
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextField(
+              controller: _locationController,
+              decoration: const InputDecoration(
+                labelText: 'Enter Location Name',
               ),
-              if (_nearestBusStop.isNotEmpty)
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Text(
-                    _nearestBusStop,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                ),
-            ],
-          ),
+              onSubmitted: (_) => _geocode(),
+            ),
+            if (_location != null)
+              Text('Geopoint: (${_location!.latitude}, ${_location!.longitude})'),
+          ],
         ),
       ),
     );

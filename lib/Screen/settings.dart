@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_bus/Screen/Languagesc.dart';
 import 'package:my_bus/Screen/helpcentersc.dart';
+import 'package:my_bus/add_data.dart';
 import 'package:my_bus/components/color.dart';
 import 'package:my_bus/home.dart';
 import 'package:my_bus/Screen/splashscreen.dart';
@@ -116,7 +117,7 @@ class _SettingState extends State<Setting> {
             //TODO: navigate to the about us page
             onTap: () {
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const Started()));
+                  MaterialPageRoute(builder: (context) =>  AddBusStopPage()));
             },
             child: Ink(
               padding: const EdgeInsets.all(20),

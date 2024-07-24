@@ -23,6 +23,7 @@ class _SplashState extends State<Splash> {
 
   Future<void> _initializeApp() async {
     await Firebase.initializeApp();
+    await Future.delayed(const Duration(seconds: 1));
     SharedPreferences prefs = await SharedPreferences.getInstance();
     isFirstTime = prefs.getBool('isFirstTime') ?? true;
 

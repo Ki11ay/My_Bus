@@ -27,7 +27,7 @@ class _MapScreenState extends State<MapScreen> {
   late BitmapDescriptor _busIcon;
   late BitmapDescriptor _busStopIcon;
 
-  final List<String> routeNames = ["Salamis","Varosha","Military GuestHouse","Lefkosa"];
+  final List<String> routeNames = ["SALAMIS ROAD","MARAS","EMU BEACH CLUB","MILITARY HOUSES","NICOSIA ROAD"];
 
   final List<BusRoute> busRoutes = [
     BusRoute([
@@ -110,6 +110,31 @@ class _MapScreenState extends State<MapScreen> {
       const LatLng(35.1109789, 33.9463773),
       const LatLng(35.1090845, 33.9474153),
     ], Colors.blue),
+    BusRoute([
+      const LatLng(35.1414035, 33.9129289), 
+      const LatLng(35.1402225, 33.9106070),
+      const LatLng(35.1410612, 33.9096090),
+      const LatLng(35.1413482, 33.9096035),
+      const LatLng(35.1432803, 33.9095566),
+      const LatLng(35.1445743, 33.9097822),
+      const LatLng(35.1466726, 33.9088032),
+      const LatLng(35.1468355, 33.9086513),
+      const LatLng(35.1473037, 33.9092495),
+      const LatLng(35.1475321, 33.9091784),
+      const LatLng(35.1481127, 33.9088351),
+      const LatLng(35.1483800, 33.9089843),
+      const LatLng(35.1487767, 33.9085809),
+      const LatLng(35.1496504, 33.9079385),
+      const LatLng(35.1546568, 33.9050028),
+      const LatLng(35.1576231, 33.9029060),
+      const LatLng(35.1619789, 33.9011924),
+      const LatLng(35.1648834, 33.8998131),
+      const LatLng(35.1650451, 33.9004947),
+      const LatLng(35.1653628, 33.9021761),
+      const LatLng(35.1654848, 33.9029858),
+      const LatLng(35.1657608, 33.9055772),
+      const LatLng(35.1668905, 33.9077649),
+      ],Colors.green),
     BusRoute([
       const LatLng(35.141695, 33.907058),
       const LatLng(35.1413521, 33.9067915),

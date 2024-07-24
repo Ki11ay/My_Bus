@@ -54,6 +54,7 @@ dependencies:
   intl: ^0.19.0
   google_geocoding_api: ^1.5.2
   uuid: ^4.4.2
+  url_launcher: ^6.1.7
   
 
 dev_dependencies:

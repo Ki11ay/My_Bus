@@ -1,67 +1,115 @@
+import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+// import 'package:geoflutterfire/geoflutterfire.dart';
 
+class AddBusStopPage extends StatefulWidget {
+  @override
+  _AddBusStopPageState createState() => _AddBusStopPageState();
+}
 
-Future<void> addRoute({
-  required List<GeoPoint> points,
-  required String color,
-  required int id,
-  required List<String> busStations,
-  required String name,
-}) async {
-  try {
-    // Reference to the Firestore instance
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
+class _AddBusStopPageState extends State<AddBusStopPage> {
+  final TextEditingController idController = TextEditingController();
+  final TextEditingController latController = TextEditingController();
+  final TextEditingController lonController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController linesController = TextEditingController();
 
-    // Creating a document in the 'Routes' collection
-    await firestore.collection('Routes').add({
-      'points': [
-      const LatLng(35.141695, 33.907058),
-      const LatLng(35.1413521, 33.9067915),
-      const LatLng(35.1410285, 33.9079375),
-      const LatLng(35.1411117, 33.9093016),
-      const LatLng(35.1412717, 33.9094250),
-      const LatLng(35.1413954, 33.9096082),
-      const LatLng(35.1433140, 33.9095636),
-      const LatLng(35.1443407, 33.9097638),
-      const LatLng(35.1446982, 33.9097567),
-      const LatLng(35.1466625, 33.9087918),
-      const LatLng(35.1468399, 33.9086567),
-      const LatLng(35.1471700, 33.9091063),
-      const LatLng(35.1467798, 33.9096380),
-      const LatLng(35.1447048, 33.9115474),
-      const LatLng(35.1445740, 33.9116215),
-      const LatLng(35.1440241, 33.9118810),
-      const LatLng(35.1436079, 33.9120819),
-      const LatLng(35.1432273, 33.9124228),
-      const LatLng(35.1426686, 33.9130186),
-      const LatLng(35.1418382, 33.9135849),
-      const LatLng(35.1402214, 33.9106284),
-      const LatLng(35.1392752, 33.9118492),
-      const LatLng(35.1381725, 33.9125942),
-      const LatLng(35.1344140, 33.9175090),
-      const LatLng(35.1346953, 33.9178785),
-      const LatLng(35.1342023, 33.9188270),
-      const LatLng(35.1341738, 33.9190177),
-      const LatLng(35.1321055, 33.9229364),
-      const LatLng(35.1313956, 33.9245639),
-      const LatLng(35.1312220, 33.9253331),
-      const LatLng(35.1313740, 33.9255536),
-      const LatLng(35.1293248, 33.9293013),
-      const LatLng(35.1293248, 33.9293013),
-      const LatLng(35.1287929, 33.9302468),
-      const LatLng(35.1231097, 33.9353698),
-      const LatLng(35.1215811, 33.9376591),
-      const LatLng(35.120484, 33.938396),
-    ],
-      'color': "orange",
-      'id': 1,
-      'bus_stations': ["uni bus station","registeration","civil","main gate","library","M/Sa Arena Durağı","Yeni İzmir","Dumlupinar","anit"],
-      'name': "Salamis",
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  // final geo = Geoflutterfire();
+
+  void addBusStop() async {
+    String id = idController.text;
+    double lat = double.parse(latController.text);
+    double lon = double.parse(lonController.text);
+    String name = nameController.text;
+    List<int> lines = linesController.text.split(',').map((s) => int.parse(s.trim())).toList();
+
+    final loc = GeoPoint(lat, lon);
+
+    await firestore.runTransaction((transaction) async {
+      final busStationsRef = firestore.collection('Bus-stations');
+
+      // Check for existing bus stop with the same ID
+      final querySnapshot = await busStationsRef.where('id', isEqualTo: id).get();
+      final existingIds = querySnapshot.docs.map((doc) => doc['id'] as String).toList();
+
+      if (existingIds.isNotEmpty) {
+        // Find bus stops with the same first character and order by 'id' descending
+        final sameFirstCharQuery = await busStationsRef
+            .where('id', isGreaterThanOrEqualTo: id[0])
+            .where('id', isLessThan: String.fromCharCode(id.codeUnitAt(0) + 1))
+            .orderBy('id', descending: true)
+            .get();
+
+        for (final doc in sameFirstCharQuery.docs) {
+          final oldId = doc['id'] as String;
+          if (oldId.compareTo(id) >= 0) {
+            final newIdNumber = int.parse(oldId.substring(1)) + 1;
+            final newId = '${oldId[0]}$newIdNumber';
+            transaction.update(doc.reference, {'id': newId});
+          }
+        }
+      }
+
+      // Add the new bus stop
+      transaction.set(busStationsRef.doc(), {
+        'id': id,
+        'loc': loc,
+        'name': name,
+        'lines': lines,
+      });
     });
 
-    print('Route added successfully');
-  } catch (e) {
-    print('Failed to add route: $e');
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Bus stop added successfully!')));
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Add Bus Stop'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextField(
+              controller: idController,
+              decoration: InputDecoration(labelText: 'ID'),
+            ),
+            TextField(
+              controller: latController,
+              decoration: InputDecoration(labelText: 'Latitude'),
+              keyboardType: TextInputType.number,
+            ),
+            TextField(
+              controller: lonController,
+              decoration: InputDecoration(labelText: 'Longitude'),
+              keyboardType: TextInputType.number,
+            ),
+            TextField(
+              controller: nameController,
+              decoration: InputDecoration(labelText: 'Name'),
+            ),
+            TextField(
+              controller: linesController,
+              decoration: InputDecoration(labelText: 'Lines (comma-separated)'),
+              keyboardType: TextInputType.number,
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: addBusStop,
+              child: Text('Add Bus Stop'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+void main() {
+  runApp(MaterialApp(
+    home: AddBusStopPage(),
+  ));
 }

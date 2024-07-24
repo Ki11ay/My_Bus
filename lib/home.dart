@@ -5,6 +5,7 @@ import 'package:my_bus/Screen/serachscreen.dart';
 import 'package:my_bus/Screen/settings.dart';
 import 'package:my_bus/components/color.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Started extends StatefulWidget {
   const Started({super.key});
@@ -16,7 +17,45 @@ class Started extends StatefulWidget {
 class _StartedState extends State<Started> {
   int currentPageIndex = 0;
   bool notification = true;
+  String? _url;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
+  @override
+  void initState() {
+    super.initState();
+    _fetchUrl();
+  }
+
+  Future<void> _fetchUrl() async {
+    try {
+      DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
+          .collection('assets')
+          .doc('oFIACntJW2i86wrk6T4H')
+          .get();
+
+      if (mounted) {
+        setState(() {
+          _url = documentSnapshot.get('url');
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          print('Error fetching url: $e');
+        });
+      }
+    }
+  }
+
+  void _launchURL(BuildContext context) async {
+    if (_url != null && await canLaunch(_url!)) {
+      await launch(_url!);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Could not launch $_url')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +99,7 @@ class _StartedState extends State<Started> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            height: sh/4,
+            height: sh / 4,
             padding: const EdgeInsets.all(30),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -89,7 +128,6 @@ class _StartedState extends State<Started> {
           const SizedBox(
             height: 20,
           ),
-          // the border between the buttons and the container
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -122,11 +160,9 @@ class _StartedState extends State<Started> {
                   )),
             ],
           ),
-      
           const SizedBox(
             height: 20,
           ),
-          // the border between the buttons and the container
           notification
               ? Expanded(
                   child: StreamBuilder<QuerySnapshot>(
@@ -147,7 +183,7 @@ class _StartedState extends State<Started> {
                         itemBuilder: (context, index) {
                           var data = notifications[index].data() as Map<String, dynamic>;
                           return Container(
-                            height:70,
+                            height: 70,
                             margin: const EdgeInsets.symmetric(vertical: 10),
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
@@ -175,8 +211,10 @@ class _StartedState extends State<Started> {
                   ),
                 )
               : Container(
+                  height: sh * 0.48,
                   padding: const EdgeInsets.all(8),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Image.asset(
@@ -190,7 +228,9 @@ class _StartedState extends State<Started> {
                             borderRadius: BorderRadius.circular(8),
                             color: primaryColor),
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            _launchURL(context);
+                          },
                           child: Text(
                             AppLocalizations.of(context)!.downloadthepdf,
                             style: const TextStyle(

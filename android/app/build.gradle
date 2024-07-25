@@ -1,4 +1,6 @@
 plugins {
+    sourceCompatibility = 11
+    targetCompatibility = 11
     id "com.android.application"
     // START: FlutterFire Configuration
     id 'com.google.gms.google-services'
@@ -49,7 +51,7 @@ android {
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
 
-        minSdkVersion 20                      // Set to 20
+        minSdkVersion flutter.minSdkVersion                      // Set to 20
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

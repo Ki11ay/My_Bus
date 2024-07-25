@@ -3,7 +3,6 @@ import 'package:my_bus/Screen/Languagesc.dart';
 import 'package:my_bus/Screen/helpcentersc.dart';
 import 'package:my_bus/add_data.dart';
 import 'package:my_bus/components/color.dart';
-import 'package:my_bus/home.dart';
 import 'package:my_bus/Screen/splashscreen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

@@ -29,8 +29,11 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.example.my_bus"
-    compileSdk flutter.compileSdkVersion
-    ndkVersion flutter.ndkVersion
+    minSdkVersion 21
+    targetSdkVersion 33
+    versionCode 1
+    versionName "1.0"
+    multiDexEnabled true
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

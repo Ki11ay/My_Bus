@@ -33,6 +33,8 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
 
     _showSuccess(AppLocalizations.of(context)!.thxforfeedback);
     _feedbackController.clear();
+    // ignore: use_build_context_synchronously
+    Navigator.pop(context);
   }
 
   void _showError(String message) {

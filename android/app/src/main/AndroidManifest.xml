@@ -1,4 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION">
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION">
     <uses-permission android:name="android.permission.INTERNET"/>
         <queries>
         <intent>
@@ -9,7 +11,7 @@
         </queries>
     <application
         android:label="my_bus"
-        android:name="${applicationName}"
+        android:name="com.example.myapp.mybus"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

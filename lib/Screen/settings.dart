@@ -35,7 +35,7 @@ class _SettingState extends State<Setting> {
             },
             child: Ink(
               padding: const EdgeInsets.all(20),
-              color: const Color.fromARGB(255, 248, 247, 247),
+              color: const Color.fromARGB(255, 243, 245, 255),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -63,7 +63,7 @@ class _SettingState extends State<Setting> {
             },
             child: Ink(
               padding: const EdgeInsets.all(20),
-              color: const Color.fromARGB(255, 248, 247, 247),
+              color: const Color.fromARGB(255, 243, 245, 255),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -91,7 +91,7 @@ class _SettingState extends State<Setting> {
             },
             child: Ink(
               padding: const EdgeInsets.all(20),
-              color: const Color.fromARGB(255, 248, 247, 247),
+              color: const Color.fromARGB(255, 243, 245, 255),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -120,7 +120,7 @@ class _SettingState extends State<Setting> {
             },
             child: Ink(
               padding: const EdgeInsets.all(20),
-              color: const Color.fromARGB(255, 248, 247, 247),
+              color: const Color.fromARGB(255, 243, 245, 255),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

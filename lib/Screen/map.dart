@@ -23,11 +23,18 @@ class _MapScreenState extends State<MapScreen> {
   late String next;
   late String current;
   late String time;
-  // late String id;
+  late String id;
+  late int num;
   late BitmapDescriptor _busIcon;
   late BitmapDescriptor _busStopIcon;
 
-  final List<String> routeNames = ["SALAMIS ROAD","MARAS","EMU BEACH CLUB","MILITARY HOUSES","NICOSIA ROAD"];
+  final List<String> routeNames = [
+    "SALAMIS ROAD",
+    "MARAS",
+    "EMU BEACH CLUB",
+    "MILITARY HOUSES",
+    "NICOSIA ROAD"
+  ];
 
   final List<BusRoute> busRoutes = [
     BusRoute([
@@ -111,7 +118,7 @@ class _MapScreenState extends State<MapScreen> {
       const LatLng(35.1090845, 33.9474153),
     ], Colors.blue),
     BusRoute([
-      const LatLng(35.1414035, 33.9129289), 
+      const LatLng(35.1414035, 33.9129289),
       const LatLng(35.1402225, 33.9106070),
       const LatLng(35.1410612, 33.9096090),
       const LatLng(35.1413482, 33.9096035),
@@ -134,7 +141,7 @@ class _MapScreenState extends State<MapScreen> {
       const LatLng(35.1654848, 33.9029858),
       const LatLng(35.1657608, 33.9055772),
       const LatLng(35.1668905, 33.9077649),
-      ],Colors.green),
+    ], Colors.green),
     BusRoute([
       const LatLng(35.141695, 33.907058),
       const LatLng(35.1413521, 33.9067915),
@@ -228,10 +235,31 @@ class _MapScreenState extends State<MapScreen> {
         current = data['current_stop'];
         people = data['passengers'];
         time = data['estimated'];
-        // id = data['id'];
+        id = data['bus_id'];
+        num = int.parse(id);
       });
       _updateBusLocation(LatLng(lat, lng));
     });
+  }
+  void _updateBusLocation(LatLng position) {
+    // only show the info of the selected bus route
+    // if (num - 1 == _selectedRouteIndex) {
+    //   print('object');
+    // } else {
+    //   print('fail');
+    // }
+    setState(() {
+      _busMarker = Marker(
+          onTap: () {
+            _selectedRouteIndex = num - 1;
+            _showBottomSheet();
+          },
+          markerId: const MarkerId('bus'),
+          position: position,
+          icon: _busIcon,
+          infoWindow: InfoWindow(title: 'line $id'));
+    });
+    mapController.animateCamera(CameraUpdate.newLatLng(position));
   }
 
   Future<void> _loadBusIcon() async {
@@ -248,14 +276,6 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
-  void _updateBusLocation(LatLng position) {
-    setState(() {
-      _busMarker = Marker(
-          markerId: const MarkerId('bus'), position: position, icon: _busIcon);
-    });
-    mapController.animateCamera(CameraUpdate.newLatLng(position));
-  }
-
   Future<void> _fetchBusStops() async {
     try {
       final QuerySnapshot snapshot =
@@ -264,7 +284,8 @@ class _MapScreenState extends State<MapScreen> {
         final data = doc.data() as Map<String, dynamic>;
         final GeoPoint loc = data['loc'];
         final String name = data['name'];
-        return BusStop(LatLng(loc.latitude, loc.longitude), name);
+        final List<int> lines = List<int>.from(data['lines']);
+        return BusStop(LatLng(loc.latitude, loc.longitude), name, lines);
       }).toList();
 
       setState(() {
@@ -277,13 +298,20 @@ class _MapScreenState extends State<MapScreen> {
 
   Set<Marker> _createMarkers(List<BusStop> busStops) {
     return busStops.map((busStop) {
+      String linesSnippet = busStop.lines.join(', ');
       return Marker(
+          onTap: () {
+            setState(() {
+              _selectedRouteIndex = busStop.lines.first - 1;
+              _showBottomSheet();
+            });
+            // _buildBusStateIndicator(busStop.lines.first);
+          },
           markerId: MarkerId(busStop.position.toString()),
           position: busStop.position,
           infoWindow: InfoWindow(
             title: busStop.name,
-            snippet:
-                'Bus Stop at ${busStop.position.latitude}, ${busStop.position.longitude}',
+            snippet: 'Lines going through this station: $linesSnippet',
           ),
           icon: _busStopIcon);
     }).toSet();
@@ -316,9 +344,15 @@ class _MapScreenState extends State<MapScreen> {
       builder: (BuildContext context) {
         return DraggableScrollableSheet(
           expand: false,
+          initialChildSize: 0.3,
           builder: (BuildContext context, ScrollController scrollController) {
             return Container(
-              color: Colors.white,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(18.0),
+                ),
+                color: Colors.transparent,
+              ),
               child: SingleChildScrollView(
                 controller: scrollController,
                 child: Padding(
@@ -418,7 +452,7 @@ class _MapScreenState extends State<MapScreen> {
           child: Column(
             children: [
               Icon(
-                Icons.event_seat,
+                Icons.airline_seat_recline_normal,
                 color: seatedColor,
                 size: seatsize,
               ),
@@ -433,7 +467,7 @@ class _MapScreenState extends State<MapScreen> {
           child: Column(
             children: [
               Icon(
-                Icons.directions_walk,
+                Icons.directions_walk_sharp,
                 color: standingColor,
                 size: standingsize,
               ),
@@ -470,7 +504,7 @@ class _MapScreenState extends State<MapScreen> {
         children: [
           GoogleMap(
             myLocationButtonEnabled: false,
-            myLocationEnabled: false,
+            myLocationEnabled: true,
             onMapCreated: _onMapCreated,
             initialCameraPosition: CameraPosition(
               target: _center,
@@ -487,8 +521,12 @@ class _MapScreenState extends State<MapScreen> {
               child: GestureDetector(
                 onTap: _showBottomSheet,
                 child: Container(
-                  // height: 30,
-                  color: Colors.white,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(18.0),
+                        topRight: Radius.circular(18.0)),
+                  ),
                   child: Column(
                     children: [
                       const SizedBox(
@@ -497,13 +535,17 @@ class _MapScreenState extends State<MapScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          const Icon(Icons.arrow_back_ios_new),
+                          const Icon(Icons.arrow_back_ios_new,
+                              color: primaryColor),
                           Text(
                             AppLocalizations.of(context)!.chooseLine,
                             style: const TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: primaryColor),
                           ),
-                          const Icon(Icons.arrow_forward_ios_outlined)
+                          const Icon(Icons.arrow_forward_ios_outlined,
+                              color: primaryColor),
                         ],
                       ),
                       const SizedBox(
@@ -523,7 +565,10 @@ class _MapScreenState extends State<MapScreen> {
                 onTap: _showBottomSheet,
                 child: Container(
                   // height: 200,
-                  color: Colors.white,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(18.0)),
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
@@ -567,6 +612,7 @@ class _MapScreenState extends State<MapScreen> {
                                             style: const TextStyle(
                                               color: Colors.white,
                                               fontWeight: FontWeight.bold,
+                                              fontSize: 20.0,
                                             ),
                                           ),
                                         ),
@@ -660,8 +706,9 @@ class _MapScreenState extends State<MapScreen> {
 class BusStop {
   final LatLng position;
   final String name;
+  final List<int> lines;
 
-  BusStop(this.position, this.name);
+  BusStop(this.position, this.name, this.lines);
 }
 
 class BusRoute {

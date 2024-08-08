@@ -1,0 +1,156 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.mybus"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+9        android:targetSdkVersion="33" />
+10    <!--
+11         The INTERNET permission is required for development. Specifically,
+12         the Flutter tool needs it to communicate with the running application
+13         to allow setting breakpoints, to provide hot reload, etc.
+14    -->
+15    <uses-permission android:name="android.permission.INTERNET" />
+15-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:2:5-66
+15-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:2:22-64
+16
+17    <queries>
+17-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:3:9-9:19
+18        <intent>
+18-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:4:9-8:18
+19            <action android:name="android.intent.action.VIEW" />
+19-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:5:13-65
+19-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:5:21-62
+20
+21            <data android:scheme="http" />
+21-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:6:13-43
+21-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:6:19-40
+22            <data android:scheme="https" />
+22-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:6:13-43
+22-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:6:19-40
+23        </intent>
+24    </queries>
+25    <!--
+26 Required to query activities that can process text, see:
+27         https://developer.android.com/training/package-visibility?hl=en and
+28         https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.
+29
+30         In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin.
+31    -->
+32    <queries>
+32-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:3:9-9:19
+33        <intent>
+34            <action android:name="android.intent.action.PROCESS_TEXT" />
+35
+36            <data android:mimeType="text/plain" />
+36-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:6:13-43
+37        </intent>
+38    </queries>
+39
+40    <permission
+40-->[androidx.core:core:1.9.0] /Users/mohammedali/.gradle/caches/8.9/transforms/a3a97568439d94728cf65db912de4071/transformed/core-1.9.0/AndroidManifest.xml:22:5-24:47
+41        android:name="com.example.mybus.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+41-->[androidx.core:core:1.9.0] /Users/mohammedali/.gradle/caches/8.9/transforms/a3a97568439d94728cf65db912de4071/transformed/core-1.9.0/AndroidManifest.xml:23:9-81
+42        android:protectionLevel="signature" />
+42-->[androidx.core:core:1.9.0] /Users/mohammedali/.gradle/caches/8.9/transforms/a3a97568439d94728cf65db912de4071/transformed/core-1.9.0/AndroidManifest.xml:24:9-44
+43
+44    <uses-permission android:name="com.example.mybus.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+44-->[androidx.core:core:1.9.0] /Users/mohammedali/.gradle/caches/8.9/transforms/a3a97568439d94728cf65db912de4071/transformed/core-1.9.0/AndroidManifest.xml:26:5-97
+44-->[androidx.core:core:1.9.0] /Users/mohammedali/.gradle/caches/8.9/transforms/a3a97568439d94728cf65db912de4071/transformed/core-1.9.0/AndroidManifest.xml:26:22-94
+45
+46    <application
+46-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:10:5-43:19
+47        android:name="com.example.myapp.mybus"
+47-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:12:9-47
+48        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+48-->[androidx.core:core:1.9.0] /Users/mohammedali/.gradle/caches/8.9/transforms/a3a97568439d94728cf65db912de4071/transformed/core-1.9.0/AndroidManifest.xml:28:18-86
+49        android:debuggable="true"
+50        android:extractNativeLibs="true"
+51        android:icon="@mipmap/ic_launcher"
+51-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:13:9-43
+52        android:label="my_bus" >
+52-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:11:9-31
+53        <activity
+53-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:14:9-34:20
+54            android:name="com.example.mybus.MainActivity"
+54-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:15:13-41
+55            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+55-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:19:13-163
+56            android:exported="true"
+56-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:16:13-36
+57            android:hardwareAccelerated="true"
+57-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:20:13-47
+58            android:launchMode="singleTop"
+58-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:17:13-43
+59            android:theme="@style/LaunchTheme"
+59-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:18:13-47
+60            android:windowSoftInputMode="adjustResize" >
+60-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:21:13-55
+61
+62            <!--
+63                 Specifies an Android theme to apply to this Activity as soon as
+64                 the Android process has started. This theme is visible to the user
+65                 while the Flutter UI initializes. After that, this theme continues
+66                 to determine the Window background behind the Flutter UI.
+67            -->
+68            <meta-data
+68-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:26:13-29:17
+69                android:name="io.flutter.embedding.android.NormalTheme"
+69-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:27:15-70
+70                android:resource="@style/NormalTheme" />
+70-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:28:15-52
+71
+72            <intent-filter>
+72-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:30:13-33:29
+73                <action android:name="android.intent.action.MAIN" />
+73-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:31:17-68
+73-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:31:25-66
+74
+75                <category android:name="android.intent.category.LAUNCHER" />
+75-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:32:17-76
+75-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:32:27-74
+76            </intent-filter>
+77        </activity>
+78        <!--
+79             Don't delete the meta-data below.
+80             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+81        -->
+82        <meta-data
+82-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:37:9-39:33
+83            android:name="flutterEmbedding"
+83-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:38:13-44
+84            android:value="2" />
+84-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:39:13-30
+85        <meta-data
+85-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:40:13-42:70
+86            android:name="com.google.android.geo.API_KEY"
+86-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:41:13-58
+87            android:value="AIzaSyD3J6LhrZeyiWyKUuWl_H6GgZvZZGtwRXQ" />
+87-->/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/AndroidManifest.xml:42:13-68
+88
+89        <provider
+89-->[androidx.emoji2:emoji2:1.2.0] /Users/mohammedali/.gradle/caches/8.9/transforms/20c0851bfe76487e70d39f67c776abfb/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
+90            android:name="androidx.startup.InitializationProvider"
+90-->[androidx.emoji2:emoji2:1.2.0] /Users/mohammedali/.gradle/caches/8.9/transforms/20c0851bfe76487e70d39f67c776abfb/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:25:13-67
+91            android:authorities="com.example.mybus.androidx-startup"
+91-->[androidx.emoji2:emoji2:1.2.0] /Users/mohammedali/.gradle/caches/8.9/transforms/20c0851bfe76487e70d39f67c776abfb/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:26:13-68
+92            android:exported="false" >
+92-->[androidx.emoji2:emoji2:1.2.0] /Users/mohammedali/.gradle/caches/8.9/transforms/20c0851bfe76487e70d39f67c776abfb/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:27:13-37
+93            <meta-data
+93-->[androidx.emoji2:emoji2:1.2.0] /Users/mohammedali/.gradle/caches/8.9/transforms/20c0851bfe76487e70d39f67c776abfb/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+94                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+94-->[androidx.emoji2:emoji2:1.2.0] /Users/mohammedali/.gradle/caches/8.9/transforms/20c0851bfe76487e70d39f67c776abfb/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:30:17-75
+95                android:value="androidx.startup" />
+95-->[androidx.emoji2:emoji2:1.2.0] /Users/mohammedali/.gradle/caches/8.9/transforms/20c0851bfe76487e70d39f67c776abfb/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:31:17-49
+96            <meta-data
+96-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/mohammedali/.gradle/caches/8.9/transforms/88a0be354cf3333f9506c1d691055385/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:31:13-33:52
+97                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+97-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/mohammedali/.gradle/caches/8.9/transforms/88a0be354cf3333f9506c1d691055385/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:32:17-78
+98                android:value="androidx.startup" />
+98-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/mohammedali/.gradle/caches/8.9/transforms/88a0be354cf3333f9506c1d691055385/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:33:17-49
+99        </provider>
+100    </application>
+101
+102</manifest>

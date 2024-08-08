@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:my_bus/Screen/map.dart';
@@ -61,6 +63,7 @@ class _StartedState extends State<Started> {
     return Scaffold(
       body: [home(),  const SearchScreen(), const MapScreen(), const Setting()][currentPageIndex],
       bottomNavigationBar: NavigationBar(
+        backgroundColor: Colors.white,
         destinations: [
           NavigationDestination(icon: const Icon(Icons.home,size: 30,color: primaryColor, ),label: AppLocalizations.of(context)!.home),
           NavigationDestination(icon: const Icon(Icons.search,size: 30,color: primaryColor,), label: AppLocalizations.of(context)!.search),
@@ -73,6 +76,7 @@ class _StartedState extends State<Started> {
             currentPageIndex = index;
           });
         },
+        indicatorColor: Colors.white,
         labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
       ),
     );
@@ -187,7 +191,7 @@ class _StartedState extends State<Started> {
                             margin: const EdgeInsets.symmetric(vertical: 10),
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: const Color.fromARGB(182, 209, 212, 220),
+                              color: const Color.fromARGB(255, 243, 245, 255),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: Row(

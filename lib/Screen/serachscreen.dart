@@ -19,8 +19,9 @@ class _SearchScreenState extends State<SearchScreen> {
   LatLng? _location;
   LatLng? _nearestBusStopLocation;
   late GoogleMapController _mapController;
+  late BitmapDescriptor _busStopIcon;
 
-final List<BusRoute> busRoutes = [
+  final List<BusRoute> busRoutes = [
   BusRoute([
     const LatLng(35.141695, 33.907058),
     const LatLng(35.1413521, 33.9067915),
@@ -203,7 +204,37 @@ final List<BusRoute> busRoutes = [
   ], Colors.red),
 ];
 
-Set<Polyline> _createPolylines() {
+  @override
+  void initState() {
+    super.initState();
+    _loadBusStopIcon();
+  }
+
+  Future<Position> _getCurrentPosition() async {
+  bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  if (!serviceEnabled) {
+    return Future.error('Location services are disabled.');
+  }
+  LocationPermission permission = await Geolocator.checkPermission();
+  if (permission == LocationPermission.denied) {
+    permission = await Geolocator.requestPermission();
+    if (permission == LocationPermission.denied) {
+      return Future.error('Location permissions are denied');
+    }
+  }
+  if (permission == LocationPermission.deniedForever) {
+    return Future.error(
+        'Location permissions are permanently denied, we cannot request permissions.');
+  }
+  return await Geolocator.getCurrentPosition();
+}
+Future<void> _loadBusStopIcon() async {
+    _busStopIcon = await BitmapDescriptor.asset(
+      const ImageConfiguration(size: Size(40, 40)),
+      'assets/images/bsustop.png',
+    );
+  }
+  Set<Polyline> _createPolylines() {
     return busRoutes.asMap().entries.map((entry) {
       int idx = entry.key;
       BusRoute route = entry.value;
@@ -215,6 +246,7 @@ Set<Polyline> _createPolylines() {
       );
     }).toSet();
   }
+
   Future<void> _geocode() async {
     final locationName = _locationController.text;
     if (locationName.isEmpty) {
@@ -226,7 +258,7 @@ Set<Polyline> _createPolylines() {
       List<Location> locations = await locationFromAddress(locationName);
       if (locations.isNotEmpty) {
         setState(() {
-          _location = LatLng(locations.first.latitude, locations.first.longitude);
+          _location = LatLng(locations.last.latitude, locations.last.longitude);
         });
         _findNearestBusStop(_location!.latitude, _location!.longitude);
       } else {
@@ -301,15 +333,28 @@ Set<Polyline> _createPolylines() {
                   ),
                   if (_location != null)
                     Text('Geopoint: (${_location!.latitude}, ${_location!.longitude})'),
-                  if (_nearestBusStop.isNotEmpty)
-                    Text(_nearestBusStop),
                 ],
               ),
             ),
+            if (_nearestBusStop.isNotEmpty)
+              GestureDetector(
+                onTap: () {
+                  // Handle the press action here
+                },
+                child: Container(
+                  padding: EdgeInsets.all(8.0),
+                  color: Colors.blueAccent,
+                  child: Text(
+                    _nearestBusStop,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
             Expanded(
               child: GoogleMap(
+                myLocationEnabled: true,
                 polylines: _createPolylines(),
-                myLocationButtonEnabled: false,
+                myLocationButtonEnabled: true,
                 onMapCreated: (controller) {
                   _mapController = controller;
                 },
@@ -329,9 +374,7 @@ Set<Polyline> _createPolylines() {
                       markerId: const MarkerId('nearestBusStop'),
                       position: _nearestBusStopLocation!,
                       infoWindow: InfoWindow(title: _nearestBusStop),
-                      icon: BitmapDescriptor.defaultMarkerWithHue(
-                        BitmapDescriptor.hueBlue,
-                      )
+                      icon: _busStopIcon,
                     ),
                 },
               ),

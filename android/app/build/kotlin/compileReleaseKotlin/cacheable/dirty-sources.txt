@@ -1,1 +1,0 @@
-/Users/mohammedali/Desktop/programming/capstone/My_Bus/android/app/src/main/kotlin/com/example/my_bus/MainActivity.kt

@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:geoflutterfire/geoflutterfire.dart';
 
 class AddBusStopPage extends StatefulWidget {
+  const AddBusStopPage({super.key});
+
   @override
   _AddBusStopPageState createState() => _AddBusStopPageState();
 }
@@ -60,14 +62,14 @@ class _AddBusStopPageState extends State<AddBusStopPage> {
       });
     });
 
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Bus stop added successfully!')));
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Bus stop added successfully!')));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Bus Stop'),
+        title: const Text('Add Bus Stop'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -75,31 +77,31 @@ class _AddBusStopPageState extends State<AddBusStopPage> {
           children: [
             TextField(
               controller: idController,
-              decoration: InputDecoration(labelText: 'ID'),
+              decoration: const InputDecoration(labelText: 'ID'),
             ),
             TextField(
               controller: latController,
-              decoration: InputDecoration(labelText: 'Latitude'),
+              decoration: const InputDecoration(labelText: 'Latitude'),
               keyboardType: TextInputType.number,
             ),
             TextField(
               controller: lonController,
-              decoration: InputDecoration(labelText: 'Longitude'),
+              decoration: const InputDecoration(labelText: 'Longitude'),
               keyboardType: TextInputType.number,
             ),
             TextField(
               controller: nameController,
-              decoration: InputDecoration(labelText: 'Name'),
+              decoration: const InputDecoration(labelText: 'Name'),
             ),
             TextField(
               controller: linesController,
-              decoration: InputDecoration(labelText: 'Lines (comma-separated)'),
+              decoration: const InputDecoration(labelText: 'Lines (comma-separated)'),
               keyboardType: TextInputType.number,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: addBusStop,
-              child: Text('Add Bus Stop'),
+              child: const Text('Add Bus Stop'),
             ),
           ],
         ),
@@ -109,7 +111,7 @@ class _AddBusStopPageState extends State<AddBusStopPage> {
 }
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: AddBusStopPage(),
   ));
 }

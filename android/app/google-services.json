@@ -17,6 +17,31 @@
       "api_key": [
         {
           "current_key": "AIzaSyD3J6LhrZeyiWyKUuWl_H6GgZvZZGtwRXQ"
+        },
+        {
+          "current_key": "AIzaSyDGs8e0xbTKYfO6QXPmZ69NAQdHKb4tjYk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:424227336727:android:e7602f5206a39b1aa96252",
+        "android_client_info": {
+          "package_name": "com.myapp.mybus"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3J6LhrZeyiWyKUuWl_H6GgZvZZGtwRXQ"
+        },
+        {
+          "current_key": "AIzaSyDGs8e0xbTKYfO6QXPmZ69NAQdHKb4tjYk"
         }
       ],
       "services": {

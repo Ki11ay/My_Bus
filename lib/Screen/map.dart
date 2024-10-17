@@ -263,8 +263,8 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   Future<void> _loadBusIcon() async {
-    _busIcon = await BitmapDescriptor.fromAssetImage(
-      const ImageConfiguration(size: Size(48, 48)),
+    _busIcon = await BitmapDescriptor.asset(
+      const ImageConfiguration(size: Size(40, 40)),
       'assets/images/bus.png',
     );
   }
@@ -444,10 +444,6 @@ class _MapScreenState extends State<MapScreen> {
     double fullsize = passengerCount >= 70 ? 35 : 20;
     return Row(
       children: [
-        // Text("people on the bus: $people",style: const TextStyle(
-        //   color: primaryColor,
-        //   fontWeight: FontWeight.bold
-        // ),),
         Expanded(
           child: Column(
             children: [

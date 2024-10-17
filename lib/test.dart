@@ -342,11 +342,11 @@ Future<void> _loadBusStopIcon() async {
                   // Handle the press action here
                 },
                 child: Container(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   color: Colors.blueAccent,
                   child: Text(
                     _nearestBusStop,
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ),
               ),

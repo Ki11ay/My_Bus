@@ -248,7 +248,7 @@ Future<void> _loadBusStopIcon() async {
   }
 
   Future<void> _geocode() async {
-    final locationName = _locationController.text;
+    final locationName = "Cyprus Magusa," + _locationController.text;
     if (locationName.isEmpty) {
       _showError('Please enter a location name.');
       return;
@@ -327,10 +327,6 @@ Future<void> _loadBusStopIcon() async {
                     ),
                     onSubmitted: (_) => _geocode(),
                   ),
-                  ElevatedButton(
-                    onPressed: _geocode,
-                    child: Text(AppLocalizations.of(context)!.submit),
-                  ),
                   if (_location != null)
                     Text('Geopoint: (${_location!.latitude}, ${_location!.longitude})'),
                 ],
@@ -342,11 +338,11 @@ Future<void> _loadBusStopIcon() async {
                   // Handle the press action here
                 },
                 child: Container(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   color: Colors.blueAccent,
                   child: Text(
                     _nearestBusStop,
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ),
               ),
@@ -360,7 +356,7 @@ Future<void> _loadBusStopIcon() async {
                 },
                 initialCameraPosition: CameraPosition(
                   target: _location ?? const LatLng(35.1407311, 33.9155663),
-                  zoom: 13,
+                  zoom: 14,
                 ),
                 markers: {
                   if (_location != null)

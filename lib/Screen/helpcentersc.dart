@@ -53,7 +53,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.feedback),
+        title: Text(AppLocalizations.of(context)!.feedback,
+            style: const TextStyle(color: Colors.white)),
+        backgroundColor: primaryColor,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -72,13 +74,15 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
             Container(
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: primaryColor),
+                        borderRadius: BorderRadius.circular(30),
+                        color: Colors.transparent,
+                        border: Border.all(color: primaryColor, width: 3),
+                        ),
               child: TextButton(
                 onPressed: _submitFeedback,
                 child: Text(AppLocalizations.of(context)!.submit,
                   style: const TextStyle(
-                      color: Color.fromARGB(255, 255, 255, 255),
+                      color: primaryColor,
                       fontWeight: FontWeight.bold,
                       fontSize: 20),
                 ),

@@ -50,7 +50,7 @@ class _StartedState extends State<Started> {
 
   void _launchURL(BuildContext context) async {
     if (_url != null && await canLaunch(_url!)) {
-      await launch(_url!);
+      await launchUrl(Uri.parse(_url!), mode: LaunchMode.externalApplication);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Could not launch $_url')),
@@ -146,7 +146,7 @@ class _StartedState extends State<Started> {
                     AppLocalizations.of(context)!.notifications,
                     style: TextStyle(
                         color: notification ? primaryColor : Colors.grey,
-                        fontSize: 20,
+                        fontSize: 25,
                         fontWeight: FontWeight.w800),
                   )),
               TextButton(
@@ -159,7 +159,7 @@ class _StartedState extends State<Started> {
                     AppLocalizations.of(context)!.busschedule,
                     style: TextStyle(
                         color: notification ? Colors.grey : primaryColor,
-                        fontSize: 20,
+                        fontSize: 25,
                         fontWeight: FontWeight.w800),
                   )),
             ],
@@ -169,49 +169,79 @@ class _StartedState extends State<Started> {
           ),
           notification
               ? Expanded(
-                  child: StreamBuilder<QuerySnapshot>(
-                    stream: _db
-                        .collection('notifications')
-                        .orderBy('time', descending: true)
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      }
-                      if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                        return const Center(child: Text('No notifications found.'));
-                      }
-                      var notifications = snapshot.data!.docs;
-                      return ListView.builder(
-                        itemCount: notifications.length,
-                        itemBuilder: (context, index) {
-                          var data = notifications[index].data() as Map<String, dynamic>;
-                          return Container(
-                            height: 70,
-                            margin: const EdgeInsets.symmetric(vertical: 10),
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 243, 245, 255),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Row(
-                              children: [
-                                const SizedBox(width: 10),
-                                const Icon(Icons.announcement),
-                                const SizedBox(width: 10),
-                                Flexible(
-                                  fit: FlexFit.loose,
-                                  child: Text(
-                                    data['info'] ?? 'No info available',
-                                    style: const TextStyle(color: primaryColor, fontWeight: FontWeight.bold, fontSize: 18),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
+                    child: StreamBuilder<QuerySnapshot>(
+                      stream: _db
+                          .collection('notifications')
+                          .orderBy('time', descending: true)
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return const Center(child: CircularProgressIndicator());
+                        }
+                        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                          return const Center(child: Text('No notifications found.'));
+                        }
+                        var notifications = snapshot.data!.docs;
+                        return ListView.builder(
+                          itemCount: notifications.length,
+                          itemBuilder: (context, index) {
+                            var data = notifications[index].data() as Map<String, dynamic>;
+                            return Container(
+                              margin: const EdgeInsets.symmetric(vertical: 10),
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                // color: Colors.white,
+                                // border: Border.all(color: primaryColor, width: 2),
+                                color: Colors.transparent,
+                                borderRadius: BorderRadius.circular(16),
+                                // boxShadow: [
+                                //   BoxShadow(
+                                //     color: Colors.grey.withOpacity(0.5),
+                                //     spreadRadius: 3,
+                                //     blurRadius: 4,
+                                //     offset: const Offset(0, 3),
+                                //   ),
+                                // ],
+                              ),
+                              child: Row(
+                                children: [
+                                  const SizedBox(width: 10),
+                                  const Icon(Icons.announcement ,size: 30,color: primaryColor,),
+                                  const SizedBox(width: 10),
+                                  Flexible(
+                                    fit: FlexFit.loose,
+                                    child: RichText(
+                                      text: TextSpan(
+                                        children: [
+                                          TextSpan(
+                                            text: '${data['title'] ?? 'No title'}\n',
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: primaryColor,
+                                              fontSize: 20,
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text: data['info'] ?? 'No info available',
+                                            style: const TextStyle(
+                                              color: Colors.grey,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      );
-                    },
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
                   ),
                 )
               : Container(
@@ -229,16 +259,18 @@ class _StartedState extends State<Started> {
                       Container(
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: primaryColor),
+                            borderRadius: BorderRadius.circular(30),
+                            color: Colors.transparent,
+                            border: Border.all(color: primaryColor, width: 3)),
                         child: TextButton(
+                          
                           onPressed: () {
                             _launchURL(context);
                           },
                           child: Text(
                             AppLocalizations.of(context)!.downloadthepdf,
                             style: const TextStyle(
-                                color: Color.fromARGB(255, 255, 255, 255),
+                                color: primaryColor,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20),
                           ),

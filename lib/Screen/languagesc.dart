@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_bus/components/color.dart';
 import 'package:my_bus/main.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Languagesc extends StatelessWidget {
   const Languagesc({super.key});
@@ -8,6 +9,10 @@ class Languagesc extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: primaryColor,
+        title: Text(AppLocalizations.of(context)!.languages,style: const TextStyle(color: Colors.white),),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -30,8 +35,10 @@ class Languagesc extends StatelessWidget {
                   Container(
                     width: MediaQuery.of(context).size.width * .9,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: primaryColor),
+                        borderRadius: BorderRadius.circular(30),
+                        color: Colors.transparent,
+                        border: Border.all(color: primaryColor, width: 3),
+                        ),
                     child: TextButton(
                       onPressed: () {
                         Locale newLocale = const Locale('tr');
@@ -41,7 +48,7 @@ class Languagesc extends StatelessWidget {
                       child: const Text(
                         "Turkish",
                         style: TextStyle(
-                            color: Color.fromARGB(255, 255, 255, 255),
+                            color: primaryColor,
                             fontWeight: FontWeight.bold,
                             fontSize: 20),
                       ),
@@ -51,8 +58,10 @@ class Languagesc extends StatelessWidget {
                     margin: const EdgeInsets.fromLTRB(0, 20, 0, 50),
                     width: MediaQuery.of(context).size.width * .9,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: primaryColor),
+                        borderRadius: BorderRadius.circular(30),
+                        color: Colors.transparent,
+                        border: Border.all(color: primaryColor, width: 3),
+                        ),
                     child: TextButton(
                       onPressed: () {
                         Locale newLocale = const Locale('en');
@@ -62,7 +71,7 @@ class Languagesc extends StatelessWidget {
                       child: const Text(
                         "English",
                         style: TextStyle(
-                            color: Color.fromARGB(255, 255, 255, 255),
+                            color: primaryColor,
                             fontWeight: FontWeight.bold,
                             fontSize: 20),
                       ),

@@ -31,6 +31,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
       'time': time,
     });
 
+    // ignore: use_build_context_synchronously
     _showSuccess(AppLocalizations.of(context)!.thxforfeedback);
     _feedbackController.clear();
     // ignore: use_build_context_synchronously
@@ -53,9 +54,15 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.feedback,
-            style: const TextStyle(color: Colors.white)),
         backgroundColor: primaryColor,
+        title: Text(
+          AppLocalizations.of(context)!.helpcenter,
+            style: const TextStyle(color: Colors.white)),
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -68,6 +75,12 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
               decoration: InputDecoration(
                 labelText: AppLocalizations.of(context)!.entercomplaint,
                 border: const OutlineInputBorder(),
+                filled: true,
+                fillColor: Colors.transparent,
+                contentPadding: const EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 10,
+                ),
               ),
             ),
             const SizedBox(height: 20),

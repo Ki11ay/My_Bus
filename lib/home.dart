@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:my_bus/Screen/map.dart';
 import 'package:my_bus/Screen/serachscreen.dart';
@@ -21,12 +22,30 @@ class _StartedState extends State<Started> {
   bool notification = true;
   String? _url;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
+  final storage = FirebaseStorage.instance;
+  String? scheduleUrl = '';
   @override
   void initState() {
     super.initState();
     _fetchUrl();
+    _fetchScheduleUrl();
   }
 
+  Future<void> _fetchScheduleUrl() async {
+    try {
+      final ref = storage.ref().child('images/schedule2.png');
+      final url = await ref.getDownloadURL();
+      setState(() {
+        scheduleUrl = url;
+      });
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          // print('Error fetching schedule url: $e');
+        });
+      }
+    }
+  }
   Future<void> _fetchUrl() async {
     try {
       DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
@@ -42,7 +61,7 @@ class _StartedState extends State<Started> {
     } catch (e) {
       if (mounted) {
         setState(() {
-          print('Error fetching url: $e');
+          // print('Error fetching url: $e');
         });
       }
     }
@@ -52,6 +71,7 @@ class _StartedState extends State<Started> {
     if (_url != null && await canLaunch(_url!)) {
       await launchUrl(Uri.parse(_url!), mode: LaunchMode.externalApplication);
     } else {
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Could not launch $_url')),
       );
@@ -61,9 +81,11 @@ class _StartedState extends State<Started> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: [home(),  const SearchScreen(), const MapScreen(), const Setting()][currentPageIndex],
       bottomNavigationBar: NavigationBar(
-        backgroundColor: Colors.white,
+        // shadowColor: Colors.black,
+        backgroundColor: Colors.transparent,
         destinations: [
           NavigationDestination(icon: const Icon(Icons.home,size: 30,color: primaryColor, ),label: AppLocalizations.of(context)!.home),
           NavigationDestination(icon: const Icon(Icons.search,size: 30,color: primaryColor,), label: AppLocalizations.of(context)!.search),
@@ -97,13 +119,14 @@ class _StartedState extends State<Started> {
 
     double sh = MediaQuery.of(context).size.height;
     return Padding(
+      
       padding: const EdgeInsets.only(top: 50),
       child: Column(
         // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            height: sh / 4,
+          SingleChildScrollView(
+            // height: sh / 5,
             padding: const EdgeInsets.all(30),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -244,17 +267,18 @@ class _StartedState extends State<Started> {
                     ),
                   ),
                 )
-              : Container(
-                  height: sh * 0.48,
+              : SingleChildScrollView(
+                  // height: sh * 0.48,
                   padding: const EdgeInsets.all(8),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Image.asset(
-                        'assets/images/Schedule.png',
-                        height: 300,
-                        width: MediaQuery.of(context).size.width,
+                      scheduleUrl != ''
+                      ?Image(image: NetworkImage(scheduleUrl!),width: sh * 0.8,)
+                      : const CircularProgressIndicator(),
+                      const SizedBox(
+                        height: 20,
                       ),
                       Container(
                         width: MediaQuery.of(context).size.width,

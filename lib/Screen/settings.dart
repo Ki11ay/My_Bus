@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:my_bus/Screen/languagesc.dart';
 import 'package:my_bus/Screen/helpcentersc.dart';
 import 'package:my_bus/Screen/notificationsc.dart';
-import 'package:my_bus/add_data.dart';
 import 'package:my_bus/components/color.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -17,6 +16,7 @@ class _SettingState extends State<Setting> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: settings(),
     );
   }
@@ -126,6 +126,9 @@ class _SettingState extends State<Setting> {
             highlightColor: Colors.transparent,
             //TODO: navigate to the about us page
             onTap: () {
+              // Navigator.of(context).push(MaterialPageRoute(
+              //   builder: (context) => const testscreen(),
+              // ));
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text('Coming Soon'),

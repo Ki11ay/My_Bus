@@ -15,12 +15,12 @@
         android:label="My Bus"
         android:name="${applicationName}"
         android:enableOnBackInvokedCallback="true"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
 
         <!-- Added map API key -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="YOUR_API_KEY_HERE"/>
+            android:value="AIzaSyD3J6LhrZeyiWyKUuWl_H6GgZvZZGtwRXQ"/>
 
         <activity
             android:name=".MainActivity"
@@ -49,8 +49,8 @@
     </application>
 
     <!-- Added required permissions -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET"/>
 
 </manifest>

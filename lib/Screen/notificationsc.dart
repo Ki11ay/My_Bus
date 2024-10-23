@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field
+
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:my_bus/components/color.dart';
@@ -5,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Notificationscreen extends StatefulWidget {
   const Notificationscreen({super.key});
@@ -15,9 +18,12 @@ class Notificationscreen extends StatefulWidget {
 
 class _NotificationscreenState extends State<Notificationscreen> {
   String? _selectedBusStop;
-  bool _notificationsEnabled = true;
+  bool _notificationsEnabled = false;
   List<String> _busStops = [];
   late DatabaseReference _busStopRef;
+  late DatabaseReference nextStopRef;
+  late String next = '';
+  late String es;
 
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -25,11 +31,19 @@ class _NotificationscreenState extends State<Notificationscreen> {
   @override
   void initState() {
     super.initState();
-    _checkNextStop(); 
+    // _checkNextStop();
     _initializeFirebaseMessaging(); // Initialize FCM
     _initializeNotifications();
     _fetchBusStops();
     _loadPreferences();
+    nextStopRef = FirebaseDatabase.instance.ref().child('gps_locations');
+    nextStopRef.onValue.listen((event) {
+      final data = Map<String, dynamic>.from(event.snapshot.value as Map);
+      setState(() {
+        next = data['next_stop'];
+        es = data['estimated'];
+      });
+    });
   }
 
   // Initialize Firebase Messaging for notifications
@@ -52,14 +66,13 @@ class _NotificationscreenState extends State<Notificationscreen> {
         );
       }
     });
-
     // Optional: Fetch FCM token (if required for sending push notifications)
-    try {
-      String? token = await messaging.getToken();
-      print("FCM Token: $token");
-    } catch (e) {
-      print("Error fetching FCM token: $e");
-    }
+    // try {
+    //   String? token = await messaging.getToken();
+    //   // print("FCM Token: $token");
+    // } catch (e) {
+    //   print("Error fetching FCM token: $e");
+    // }
   }
 
   // Initialize the local notification settings
@@ -123,7 +136,7 @@ class _NotificationscreenState extends State<Notificationscreen> {
         _busStops = documents.map((doc) => doc['name'].toString()).toList();
       });
     } catch (e) {
-      print("Error fetching bus stops: $e");
+      // print("Error fetching bus stops: $e");
     }
   }
 
@@ -148,36 +161,14 @@ class _NotificationscreenState extends State<Notificationscreen> {
     await prefs.setBool('notificationsEnabled', status);
   }
 
-  // Check if the selected bus stop matches the next stop from the real-time database
-  void _checkNextStop() async {
-    DatabaseReference nextStopRef =
-        FirebaseDatabase.instance.ref().child('gps_locations');
-        nextStopRef.onValue.listen((event) {
-      if (event.snapshot.exists) {
-        final data = Map<String, dynamic>.from(event.snapshot.value as Map);
-        final String nextStop = data['next_stop'] ?? '';
-        final int estimatedTime = data['estimated'] ?? 0;
-        print("################################Next stop: $nextStop");
-        // Trigger notification if the selected bus stop matches the next bus stop
-        if (_notificationsEnabled &&
-            _selectedBusStop != null &&
-            _selectedBusStop == nextStop) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text('The bus will arrive in $estimatedTime minutes.'),
-          ));
-          // _showNotification(
-          //   'Arriving at $_selectedBusStop!',
-          //   'The bus will arrive in $estimatedTime minutes.',
-          // );
-        }
-      } else {
-        print("No next stop data found");
-      }
-    }, onError: (error) {
-      print("Error reading next stop data: $error");
-    });
+  void checking() {
+    if (_selectedBusStop != null && _notificationsEnabled && _selectedBusStop == next) {
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('The bus will arrive to $next in $es minutes.'),
+      ));
+    }
   }
-
   // Show bus stop selection
   void _showBusStopSelector() {
     showModalBottomSheet(
@@ -205,7 +196,12 @@ class _NotificationscreenState extends State<Notificationscreen> {
   // Toggle notifications on/off
   void _toggleNotifications(bool status) {
     setState(() {
-      _notificationsEnabled = status;
+      _notificationsEnabled = !_notificationsEnabled;
+      _saveNotificationStatus(status);
+      _showNotification(
+        'Arriving at $_selectedBusStop!',
+        'The bus will arrive in $es minutes.',
+      );
     });
     _saveNotificationStatus(status);
   }
@@ -215,22 +211,30 @@ class _NotificationscreenState extends State<Notificationscreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryColor,
-        title: const Text('Notification Settings', style: TextStyle(
-          color: Colors.white
-        ),),
+        title: Text(
+          AppLocalizations.of(context)!.notifications,
+            style: const TextStyle(color: Colors.white)),
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
       ),
       body: Column(
         children: [
-          ListTile(
-            title: const Text('Select your bus stop'),
-            subtitle: Text(_selectedBusStop ?? 'No bus stop selected'),
-            onTap: _showBusStopSelector,
-          ),
           SwitchListTile(
             title: const Text('Enable notifications'),
             value: _notificationsEnabled,
             onChanged: _toggleNotifications,
           ),
+          ListTile(
+            title: const Text('Select your bus stop'),
+            subtitle: Text(_selectedBusStop ?? 'No bus stop selected'),
+            onTap: _showBusStopSelector,
+          ),
+          
+          // Text(next),
+          // Text(es),
         ],
       ),
     );

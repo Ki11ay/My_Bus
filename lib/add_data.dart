@@ -6,6 +6,7 @@ class AddBusStopPage extends StatefulWidget {
   const AddBusStopPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _AddBusStopPageState createState() => _AddBusStopPageState();
 }
 

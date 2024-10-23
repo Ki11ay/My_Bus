@@ -248,7 +248,7 @@ Future<void> _loadBusStopIcon() async {
   }
 
   Future<void> _geocode() async {
-    final locationName = "Cyprus Magusa," + _locationController.text;
+    final locationName = "Cyprus Magusa,${_locationController.text}";
     if (locationName.isEmpty) {
       _showError('Please enter a location name.');
       return;

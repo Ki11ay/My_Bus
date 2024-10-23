@@ -31,7 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
   provider: ^6.0.3
-  google_maps_flutter: ^2.7.0
+  google_maps_flutter: ^2.9.0
   geolocator: ^13.0.1
   geocoding: ^3.0.0
   dio: ^5.5.0+1
@@ -56,11 +56,26 @@ dependencies:
   uuid: ^4.4.2
   url_launcher: ^6.1.7
   flutter_local_notifications: ^17.2.3
+  firebase_storage: ^12.3.3
+  permission_handler: ^10.2.0
+  flutter_lints: ^4.0.0
   
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  
+  flutter_launcher_icons: "^0.14.1"
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/bus_icon.png"
+  remove_alpha_ios: true
+  flutter_icons:
+    android: true
+    ios: true
+    image_path: "assets/icons/bus_icon.png"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

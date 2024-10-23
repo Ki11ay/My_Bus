@@ -19,10 +19,10 @@ class _MapScreenState extends State<MapScreen> {
   Marker? _busMarker;
   late DatabaseReference _busLocationRef;
   int? _selectedRouteIndex;
-  late int people;
-  late String next;
-  late String current;
-  late String time;
+  late int people = 0;
+  late String next = '';
+  late String current = '';
+  late String time = '';
   late String id;
   late int num;
   late BitmapDescriptor _busIcon;
@@ -241,6 +241,15 @@ class _MapScreenState extends State<MapScreen> {
       _updateBusLocation(LatLng(lat, lng));
     });
   }
+
+  // void _onMapInitialized(GoogleMapController mapController) async {
+  //   mapController = mapController;
+  //   await Future.delayed(const Duration(seconds: 1)); // Wait for map to render
+  //   setState(() {
+  //     // update or change markers
+  //   });
+  // }
+
   void _updateBusLocation(LatLng position) {
     // only show the info of the selected bus route
     // if (num - 1 == _selectedRouteIndex) {
@@ -292,7 +301,7 @@ class _MapScreenState extends State<MapScreen> {
         _markers = _createMarkers(busStops);
       });
     } catch (e) {
-      print('Error fetching bus stops: $e');
+      // print('Error fetching bus stops: $e');
     }
   }
 
@@ -330,8 +339,12 @@ class _MapScreenState extends State<MapScreen> {
     };
   }
 
-  void _onMapCreated(GoogleMapController controller) {
+  Future<void> _onMapCreated(GoogleMapController controller) async {
     mapController = controller;
+    await Future.delayed(const Duration(seconds: 1)); // Wait for map to render
+    setState(() {
+      // update or change markers
+    });
   }
 
   void _showBottomSheet() {
@@ -495,205 +508,218 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          GoogleMap(
-            myLocationButtonEnabled: false,
-            myLocationEnabled: true,
-            onMapCreated: _onMapCreated,
-            initialCameraPosition: CameraPosition(
-              target: _center,
-              zoom: 15.0,
-            ),
-            markers: _busMarker != null ? {..._markers, _busMarker!} : _markers,
-            polylines: _createPolylines(),
-          ),
-          if (_selectedRouteIndex == null)
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: GestureDetector(
-                onTap: _showBottomSheet,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(18.0),
-                        topRight: Radius.circular(18.0)),
-                  ),
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          const Icon(Icons.arrow_back_ios_new,
-                              color: primaryColor),
-                          Text(
-                            AppLocalizations.of(context)!.chooseLine,
-                            style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: primaryColor),
-                          ),
-                          const Icon(Icons.arrow_forward_ios_outlined,
-                              color: primaryColor),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                    ],
-                  ),
-                ),
+    return SafeArea(
+      maintainBottomViewPadding: true,
+      child: Scaffold(
+        body: Stack(
+          children: [
+            GoogleMap(
+              myLocationButtonEnabled: true,
+              myLocationEnabled: true,
+              onMapCreated: _onMapCreated,
+              initialCameraPosition: CameraPosition(
+                target: _center,
+                zoom: 15.0,
               ),
+              markers: _busMarker != null ? {..._markers, _busMarker!} : _markers,
+              polylines: _createPolylines(),
             ),
-          if (_selectedRouteIndex != null)
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: GestureDetector(
-                onTap: _showBottomSheet,
-                child: Container(
-                  // height: 200,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(18.0)),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
+            if (_selectedRouteIndex == null)
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: GestureDetector(
+                  onTap: _showBottomSheet,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(18.0),
+                          topRight: Radius.circular(18.0)),
+                    ),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: List.generate(busRoutes.length, (index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _selectedRouteIndex = index;
-                                  });
-                                  // Navigator.pop(context);
-                                },
-                                child: Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      vertical: 0, horizontal: 8),
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 8.0, horizontal: 10.0),
-                                  decoration: BoxDecoration(
-                                    color: _selectedRouteIndex == index
-                                        ? primaryColor
-                                        : Colors.grey[300],
-                                    borderRadius: BorderRadius.circular(16.0),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        width: 30,
-                                        height: 30,
-                                        decoration: BoxDecoration(
-                                          color: busRoutes[index].color,
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            (index + 1).toString(),
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20.0,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(width: 8.0),
-                                      Text(
-                                        routeNames[index],
-                                        style: TextStyle(
-                                          color: _selectedRouteIndex == index
-                                              ? Colors.white
-                                              : Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            }),
-                          ),
+                        const SizedBox(
+                          height: 10,
                         ),
-                        const SizedBox(height: 16),
-                        if (_selectedRouteIndex != null) ...[
-                          const Divider(),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                AppLocalizations.of(context)!.currentStation,
-                                style: const TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                current,
-                                style: const TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold),
-                              )
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                AppLocalizations.of(context)!.nextStation,
-                                style: const TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                next,
-                                style: const TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold),
-                              )
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                AppLocalizations.of(context)!.estimatedTime,
-                                style: const TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                time,
-                                style: const TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold),
-                              )
-                            ],
-                          ),
-                          const Divider(),
-                          _buildBusStateIndicator(people),
-                        ],
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            const Icon(Icons.arrow_back_ios_new,
+                                color: primaryColor),
+                            Text(
+                              AppLocalizations.of(context)!.chooseLine,
+                              style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: primaryColor),
+                            ),
+                            const Icon(Icons.arrow_forward_ios_outlined,
+                                color: primaryColor),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
                       ],
                     ),
                   ),
                 ),
               ),
-            ),
-        ],
+            if (_selectedRouteIndex != null)
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: GestureDetector(
+                  onTap: _showBottomSheet,
+                  child: Container(
+                    // height: 200,
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(18.0)),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: List.generate(busRoutes.length, (index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _selectedRouteIndex = index;
+                                    });
+                                    // Navigator.pop(context);
+                                  },
+                                  child: Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 0, horizontal: 8),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8.0, horizontal: 10.0),
+                                    decoration: BoxDecoration(
+                                      color: _selectedRouteIndex == index
+                                          ? primaryColor
+                                          : Colors.grey[300],
+                                      borderRadius: BorderRadius.circular(16.0),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          width: 30,
+                                          height: 30,
+                                          decoration: BoxDecoration(
+                                            color: busRoutes[index].color,
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              (index + 1).toString(),
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20.0,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 8.0),
+                                        Text(
+                                          routeNames[index],
+                                          style: TextStyle(
+                                            color: _selectedRouteIndex == index
+                                                ? Colors.white
+                                                : Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }),
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          if (_selectedRouteIndex != null) ...[
+                            const Divider(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                      AppLocalizations.of(context)!.currentStation,
+                                      style: const TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  current == ''
+                                    ? const CircularProgressIndicator.adaptive()
+                                    :
+                                Text(
+                                  current,
+                                  style: const TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.bold),
+                                )
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                      AppLocalizations.of(context)!.nextStation,
+                                      style: const TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    next == ''
+                                    ? const CircularProgressIndicator()
+                                    :
+                                Text(
+                                  next,
+                                  style: const TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.bold),
+                                )
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                      AppLocalizations.of(context)!.estimatedTime,
+                                      style: const TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  time == ''
+                                    ? const CircularProgressIndicator()
+                                    :Text(
+                                  time,
+                                  style: const TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.bold),
+                                )
+                              ],
+                            ),
+                            const Divider(),
+                            people == 0
+                            ? const Center(child: CircularProgressIndicator())
+                            :_buildBusStateIndicator(people),
+                          ],
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }

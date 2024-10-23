@@ -39,5 +39,8 @@
     "thxforfeedback": "geri bildiriminiz için teşekkür ederiz!",
     "entercomplaint": "şikayetinizi girin",
     "enterlocname": "Konum adını girin",
-    "plsenterlocnameerror": "Lokasyon adı girmelisiniz"
+    "plsenterlocnameerror": "Lokasyon adı girmelisiniz",
+    "announcements": "duyurular",
+    "enablenotifications": "Bildirimleri etkinleştir",
+    "selectbus": "Seçin ki, otobüs yöntemi"
   }

@@ -12,10 +12,11 @@
     </queries>
 
     <application
+        android:icon="@mipmap/ic_launcher"
         android:label="My Bus"
         android:name="${applicationName}"
         android:enableOnBackInvokedCallback="true"
-        android:icon="@mipmap/launcher_icon">
+        >
 
         <!-- Added map API key -->
         <meta-data

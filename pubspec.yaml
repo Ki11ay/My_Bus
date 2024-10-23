@@ -35,12 +35,6 @@ dependencies:
   geolocator: ^13.0.1
   geocoding: ^3.0.0
   dio: ^5.5.0+1
-  # location: ^5.0.0
-  # firebase_core: ^2.5.0
-  # firebase_database: ^10.1.0
-  # flutter_polyline_points: ^0.2.6
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
   flutter_svg: ^2.0.10+1
   shared_preferences: ^2.3.2
@@ -68,14 +62,15 @@ dev_dependencies:
   flutter_launcher_icons: "^0.14.1"
 
 flutter_launcher_icons:
-  android: "launcher_icon"
+  android: true
   ios: true
   image_path: "assets/icons/bus_icon.png"
   remove_alpha_ios: true
-  flutter_icons:
-    android: true
-    ios: true
-    image_path: "assets/icons/bus_icon.png"
+# flutter_icons:
+#   android: true
+#   ios: true
+#   remove_alpha_ios: true # iOS icons don't allow transparency
+#   image_path: "assets/icons/bus_icon.png"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -99,6 +94,7 @@ flutter:
   assets:
    - assets/images/
    - assets/l10n/
+   - assets/icons/bus_icon.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

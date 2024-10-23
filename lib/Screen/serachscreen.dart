@@ -18,6 +18,7 @@ class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _locationController = TextEditingController();
   LatLng? _location;
   LatLng? _nearestBusStopLocation;
+  // ignore: unused_field
   late GoogleMapController _mapController;
   late BitmapDescriptor _busStopIcon;
 
@@ -327,8 +328,8 @@ Future<void> _loadBusStopIcon() async {
                     ),
                     onSubmitted: (_) => _geocode(),
                   ),
-                  if (_location != null)
-                    Text('Geopoint: (${_location!.latitude}, ${_location!.longitude})'),
+                  // if (_location != null)
+                  //   Text('Geopoint: (${_location!.latitude}, ${_location!.longitude})'),
                 ],
               ),
             ),
@@ -338,11 +339,12 @@ Future<void> _loadBusStopIcon() async {
                   // Handle the press action here
                 },
                 child: Container(
-                  padding: const EdgeInsets.all(8.0),
+                  margin: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10.0),
                   color: Colors.blueAccent,
                   child: Text(
                     _nearestBusStop,
-                    style: const TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white, fontSize: 16.0),
                   ),
                 ),
               ),

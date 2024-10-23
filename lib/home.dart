@@ -155,37 +155,43 @@ class _StartedState extends State<Started> {
           const SizedBox(
             height: 20,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              TextButton(
-                  style: const ButtonStyle(
-                      elevation: WidgetStatePropertyAll(30),
-                      visualDensity: VisualDensity.comfortable),
-                  onPressed: () {
-                    toggleNotification();
-                  },
-                  child: Text(
-                    AppLocalizations.of(context)!.notifications,
-                    style: TextStyle(
-                        color: notification ? primaryColor : Colors.grey,
-                        fontSize: 25,
-                        fontWeight: FontWeight.w800),
-                  )),
-              TextButton(
-                  onPressed: () {
-                    toggleSchedule();
-                  },
-                  style:
-                      const ButtonStyle(visualDensity: VisualDensity.comfortable),
-                  child: Text(
-                    AppLocalizations.of(context)!.busschedule,
-                    style: TextStyle(
-                        color: notification ? Colors.grey : primaryColor,
-                        fontSize: 25,
-                        fontWeight: FontWeight.w800),
-                  )),
-            ],
+          SingleChildScrollView(
+            // padding: const EdgeInsets.all(30),
+            scrollDirection: Axis.horizontal,
+            child: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  TextButton(
+                      style: const ButtonStyle(
+                          elevation: WidgetStatePropertyAll(30),
+                          visualDensity: VisualDensity.comfortable),
+                      onPressed: () {
+                        toggleNotification();
+                      },
+                      child: Text(
+                        AppLocalizations.of(context)!.announcements,
+                        style: TextStyle(
+                            color: notification ? primaryColor : Colors.grey,
+                            fontSize: 25,
+                            fontWeight: FontWeight.w800),
+                      )),
+                  TextButton(
+                      onPressed: () {
+                        toggleSchedule();
+                      },
+                      style:
+                          const ButtonStyle(visualDensity: VisualDensity.comfortable),
+                      child: Text(
+                        AppLocalizations.of(context)!.busschedule,
+                        style: TextStyle(
+                            color: notification ? Colors.grey : primaryColor,
+                            fontSize: 25,
+                            fontWeight: FontWeight.w800),
+                      )),
+                ],
+              ),
+            ),
           ),
           const SizedBox(
             height: 20,
@@ -275,7 +281,7 @@ class _StartedState extends State<Started> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       scheduleUrl != ''
-                      ?Image(image: NetworkImage(scheduleUrl!),width: sh * 0.8,)
+                      ?Image(image: NetworkImage(scheduleUrl!))
                       : const CircularProgressIndicator(),
                       const SizedBox(
                         height: 20,

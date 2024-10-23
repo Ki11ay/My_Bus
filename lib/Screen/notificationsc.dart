@@ -222,18 +222,21 @@ class _NotificationscreenState extends State<Notificationscreen> {
       ),
       body: Column(
         children: [
+          SizedBox(height:MediaQuery.of(context).size.height/15,),
           SwitchListTile(
-            title: const Text('Enable notifications'),
+            title: Text(AppLocalizations.of(context)!.enablenotifications),
             value: _notificationsEnabled,
+            activeColor: primaryColor,
             onChanged: _toggleNotifications,
           ),
+          SizedBox(height:MediaQuery.of(context).size.height/30,),
           ListTile(
-            title: const Text('Select your bus stop'),
+            title: Text(AppLocalizations.of(context)!.selectbus),
             subtitle: Text(_selectedBusStop ?? 'No bus stop selected'),
             onTap: _showBusStopSelector,
           ),
           
-          // Text(next),
+          // Text(status),
           // Text(es),
         ],
       ),

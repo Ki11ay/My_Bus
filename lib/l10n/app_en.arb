@@ -39,5 +39,8 @@
     "thxforfeedback": "Thank you for your feedback!",
     "entercomplaint": "Enter your complaint",
     "enterlocname": "Enter location name",
-    "plsenterlocnameerror": "Please enter location name"
+    "plsenterlocnameerror": "Please enter location name",
+    "announcements": "Announcements",
+    "enablenotifications": "Enable notifications",
+    "selectbus": "Select your bus Stop"
   }

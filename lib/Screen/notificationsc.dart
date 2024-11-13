@@ -29,22 +29,22 @@ class _NotificationscreenState extends State<Notificationscreen> {
       FlutterLocalNotificationsPlugin();
 
   @override
-  void initState() {
-    super.initState();
-    // _checkNextStop();
-    _initializeFirebaseMessaging(); // Initialize FCM
-    _initializeNotifications();
-    _fetchBusStops();
-    _loadPreferences();
-    nextStopRef = FirebaseDatabase.instance.ref().child('gps_locations');
-    nextStopRef.onValue.listen((event) {
-      final data = Map<String, dynamic>.from(event.snapshot.value as Map);
-      setState(() {
-        next = data['next_stop'];
-        es = data['estimated'];
-      });
+void initState() {
+  super.initState();
+  _initializeFirebaseMessaging();
+  _initializeNotifications();
+  _fetchBusStops();
+  _loadPreferences();
+  nextStopRef = FirebaseDatabase.instance.ref().child('gps_locations');
+  nextStopRef.onValue.listen((event) {
+    final data = Map<String, dynamic>.from(event.snapshot.value as Map);
+    setState(() {
+      next = data['next_stop'];
+      es = data['estimated'];
     });
-  }
+    checking(); // Call the checking() function here
+  });
+}
 
   // Initialize Firebase Messaging for notifications
   void _initializeFirebaseMessaging() async {
@@ -162,13 +162,15 @@ class _NotificationscreenState extends State<Notificationscreen> {
   }
 
   void checking() {
-    if (_selectedBusStop != null && _notificationsEnabled && _selectedBusStop == next) {
-      // ignore: use_build_context_synchronously
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('The bus will arrive to $next in $es minutes.'),
-      ));
-    }
+  if (_selectedBusStop != null &&
+      _notificationsEnabled &&
+      _selectedBusStop == next) {
+    _showNotification(
+      'Arriving at $_selectedBusStop!',
+      'The bus will arrive in $es minutes.',
+    );
   }
+}
   // Show bus stop selection
   void _showBusStopSelector() {
     showModalBottomSheet(
@@ -198,10 +200,6 @@ class _NotificationscreenState extends State<Notificationscreen> {
     setState(() {
       _notificationsEnabled = !_notificationsEnabled;
       _saveNotificationStatus(status);
-      _showNotification(
-        'Arriving at $_selectedBusStop!',
-        'The bus will arrive in $es minutes.',
-      );
     });
     _saveNotificationStatus(status);
   }

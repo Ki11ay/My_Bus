@@ -16,12 +16,13 @@ class _testscreenState extends State<testscreen> {
   late String next;
   late String es;
 
+  @override
   void initState() {
     super.initState();
     storage.ref().child('images').listAll().then((value) {
-      value.items.forEach((element) {
+      for (var element in value.items) {
         print(element.fullPath);
-      });
+      }
     });
     _fetchScheduleUrl();
 
@@ -55,14 +56,14 @@ class _testscreenState extends State<testscreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('test'),
+          title: const Text('test'),
         ),
         body: Center(
           child: Column(
             children: [
               ScheduleUrl != null
                   ? Image(image: NetworkImage(ScheduleUrl!))
-                  : CircularProgressIndicator(),
+                  : const CircularProgressIndicator(),
               Text(next),
               Text(es),
               // if (next != '' && _selectedBusStop != null) Text(next),

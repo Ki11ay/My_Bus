@@ -53,6 +53,7 @@ dependencies:
   firebase_storage: ^12.3.3
   permission_handler: ^10.2.0
   flutter_lints: ^4.0.0
+  flutter_riverpod: ^2.6.1
   
 
 dev_dependencies:

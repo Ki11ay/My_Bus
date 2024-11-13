@@ -117,7 +117,7 @@ class _StartedState extends State<Started> {
       });
     }
 
-    double sh = MediaQuery.of(context).size.height;
+    // double sh = MediaQuery.of(context).size.height;
     return Padding(
       
       padding: const EdgeInsets.only(top: 50),
@@ -158,39 +158,40 @@ class _StartedState extends State<Started> {
           SingleChildScrollView(
             // padding: const EdgeInsets.all(30),
             scrollDirection: Axis.horizontal,
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  TextButton(
-                      style: const ButtonStyle(
-                          elevation: WidgetStatePropertyAll(30),
-                          visualDensity: VisualDensity.comfortable),
-                      onPressed: () {
-                        toggleNotification();
-                      },
-                      child: Text(
-                        AppLocalizations.of(context)!.announcements,
-                        style: TextStyle(
-                            color: notification ? primaryColor : Colors.grey,
-                            fontSize: 25,
-                            fontWeight: FontWeight.w800),
-                      )),
-                  TextButton(
-                      onPressed: () {
-                        toggleSchedule();
-                      },
-                      style:
-                          const ButtonStyle(visualDensity: VisualDensity.comfortable),
-                      child: Text(
-                        AppLocalizations.of(context)!.busschedule,
-                        style: TextStyle(
-                            color: notification ? Colors.grey : primaryColor,
-                            fontSize: 25,
-                            fontWeight: FontWeight.w800),
-                      )),
-                ],
-              ),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width / 25,),
+                TextButton(
+                    style: const ButtonStyle(
+                        elevation: WidgetStatePropertyAll(30),
+                        visualDensity: VisualDensity.comfortable),
+                    onPressed: () {
+                      toggleNotification();
+                    },
+                    child: Text(
+                      AppLocalizations.of(context)!.announcements,
+                      style: TextStyle(
+                          color: notification ? primaryColor : Colors.grey,
+                          fontSize: 25,
+                          fontWeight: FontWeight.w800),
+                    )),
+                TextButton(
+                    onPressed: () {
+                      toggleSchedule();
+                    },
+                    style:
+                        const ButtonStyle(visualDensity: VisualDensity.comfortable),
+                    child: Text(
+                      AppLocalizations.of(context)!.busschedule,
+                      style: TextStyle(
+                          color: notification ? Colors.grey : primaryColor,
+                          fontSize: 25,
+                          fontWeight: FontWeight.w800),
+                    )),
+              ],
             ),
           ),
           const SizedBox(

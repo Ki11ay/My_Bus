@@ -45,18 +45,20 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Stack(
-          alignment: Alignment.topCenter,
-          children: [
-            Positioned(child: Image.asset('assets/images/splash.png')),
-            const SizedBox(height: 2),
-            Positioned(
-              top: 400,
-              child: Text(AppLocalizations.of(context)!.splash),
-            ),
-          ],
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              Positioned(child: Image.asset('assets/images/splash.png')),
+              const SizedBox(height: 2),
+              Positioned(
+                top: 400,
+                child: Text(AppLocalizations.of(context)!.splash),
+              ),
+            ],
+          ),
         ),
       ),
     );

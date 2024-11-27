@@ -8,6 +8,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 
 class Notificationscreen extends StatefulWidget {
   const Notificationscreen({super.key});
@@ -24,6 +25,7 @@ class _NotificationscreenState extends State<Notificationscreen> {
   late DatabaseReference nextStopRef;
   late String next = '';
   late String es;
+  late FirebaseRemoteConfig remoteConfig;
 
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -33,6 +35,7 @@ void initState() {
   super.initState();
   _initializeFirebaseMessaging();
   _initializeNotifications();
+  _initializeRemoteConfig(); // Add this
   _fetchBusStops();
   _loadPreferences();
   nextStopRef = FirebaseDatabase.instance.ref().child('gps_locations');
@@ -161,16 +164,62 @@ void initState() {
     await prefs.setBool('notificationsEnabled', status);
   }
 
-  void checking() {
-  if (_selectedBusStop != null &&
-      _notificationsEnabled &&
-      _selectedBusStop == next) {
-    _showNotification(
-      'Arriving at $_selectedBusStop!',
-      'The bus will arrive in $es minutes.',
-    );
+  Future<void> _initializeRemoteConfig() async {
+    remoteConfig = FirebaseRemoteConfig.instance;
+    await remoteConfig.setConfigSettings(RemoteConfigSettings(
+      fetchTimeout: const Duration(minutes: 1),
+      minimumFetchInterval: const Duration(hours: 1),
+    ));
+
+    await remoteConfig.setDefaults({
+      'message_title': 'Bus Alert',
+      'message_body': 'Your bus is arriving soon!',
+    });
+
+    try {
+      await remoteConfig.fetchAndActivate();
+    } catch (e) {
+      // Handle any errors
+      debugPrint('Error fetching remote config: $e');
+    }
   }
-}
+
+  void checking() {
+    if (_selectedBusStop != null &&
+        _notificationsEnabled &&
+        _selectedBusStop == next) {
+      _showNotificationWithRemoteConfig();
+    }
+  }
+
+  // Modified notification method to use Remote Config values
+  Future<void> _showNotificationWithRemoteConfig() async {
+    try {
+      // Fetch the latest config values
+      await remoteConfig.fetchAndActivate();
+      
+      // Get the message title and body from Remote Config
+      String messageTitle = remoteConfig.getString('message_title');
+      String messageBody = remoteConfig.getString('message_body');
+      
+      // Replace placeholders in the messages if they exist
+      messageTitle = messageTitle.replaceAll('{bus_stop}', _selectedBusStop ?? '');
+      messageBody = messageBody.replaceAll('{estimated_time}', es);
+      
+      // Show the notification with Remote Config values
+      await _showNotification(
+        messageTitle.isEmpty ? 'Arriving at $_selectedBusStop!' : messageTitle,
+        messageBody.isEmpty ? 'The bus will arrive in $es minutes.' : messageBody,
+      );
+    } catch (e) {
+      // Fallback to default notification if Remote Config fails
+      await _showNotification(
+        'Arriving at $_selectedBusStop!',
+        'The bus will arrive in $es minutes.',
+      );
+      debugPrint('Error showing notification with remote config: $e');
+    }
+  }
   // Show bus stop selection
   void _showBusStopSelector() {
     showModalBottomSheet(
@@ -206,37 +255,39 @@ void initState() {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: primaryColor,
-        title: Text(
-          AppLocalizations.of(context)!.notifications,
-            style: const TextStyle(color: Colors.white)),
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.of(context).pop(),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: primaryColor,
+          title: Text(
+            AppLocalizations.of(context)!.notifications,
+              style: const TextStyle(color: Colors.white)),
+          centerTitle: true,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
         ),
-      ),
-      body: Column(
-        children: [
-          SizedBox(height:MediaQuery.of(context).size.height/15,),
-          SwitchListTile(
-            title: Text(AppLocalizations.of(context)!.enablenotifications),
-            value: _notificationsEnabled,
-            activeColor: primaryColor,
-            onChanged: _toggleNotifications,
-          ),
-          SizedBox(height:MediaQuery.of(context).size.height/30,),
-          ListTile(
-            title: Text(AppLocalizations.of(context)!.selectbus),
-            subtitle: Text(_selectedBusStop ?? 'No bus stop selected'),
-            onTap: _showBusStopSelector,
-          ),
-          
-          // Text(status),
-          // Text(es),
-        ],
+        body: Column(
+          children: [
+            SizedBox(height:MediaQuery.of(context).size.height/15,),
+            SwitchListTile(
+              title: Text(AppLocalizations.of(context)!.enablenotifications),
+              value: _notificationsEnabled,
+              activeColor: primaryColor,
+              onChanged: _toggleNotifications,
+            ),
+            SizedBox(height:MediaQuery.of(context).size.height/30,),
+            ListTile(
+              title: Text(AppLocalizations.of(context)!.selectbus),
+              subtitle: Text(_selectedBusStop ?? 'No bus stop selected'),
+              onTap: _showBusStopSelector,
+            ),
+            
+            // Text(status),
+            // Text(es),
+          ],
+        ),
       ),
     );
   }

@@ -28,196 +28,15 @@ class _MapScreenState extends State<MapScreen> {
   late BitmapDescriptor _busIcon;
   late BitmapDescriptor _busStopIcon;
 
-  final List<String> routeNames = [
-    "SALAMIS ROAD",
-    "MARAS",
-    "EMU BEACH CLUB",
-    "MILITARY HOUSES",
-    "NICOSIA ROAD"
-  ];
+  // final List<String> routeNames = [
+  //   "SALAMIS ROAD",
+  //   "MARAS",
+  //   "EMU BEACH CLUB",
+  //   "MILITARY HOUSES",
+  //   "NICOSIA ROAD"
+  // ];
 
-  final List<BusRoute> busRoutes = [
-    BusRoute([
-      const LatLng(35.141695, 33.907058),
-      const LatLng(35.1413521, 33.9067915),
-      const LatLng(35.1410285, 33.9079375),
-      const LatLng(35.1411117, 33.9093016),
-      const LatLng(35.1412717, 33.9094250),
-      const LatLng(35.1413954, 33.9096082),
-      const LatLng(35.1433140, 33.9095636),
-      const LatLng(35.1443407, 33.9097638),
-      const LatLng(35.1446982, 33.9097567),
-      const LatLng(35.1466625, 33.9087918),
-      const LatLng(35.1468399, 33.9086567),
-      const LatLng(35.1471700, 33.9091063),
-      const LatLng(35.1467798, 33.9096380),
-      const LatLng(35.1447048, 33.9115474),
-      const LatLng(35.1445740, 33.9116215),
-      const LatLng(35.1440241, 33.9118810),
-      const LatLng(35.1436079, 33.9120819),
-      const LatLng(35.1432273, 33.9124228),
-      const LatLng(35.1426686, 33.9130186),
-      const LatLng(35.1418382, 33.9135849),
-      const LatLng(35.1402214, 33.9106284),
-      const LatLng(35.1392752, 33.9118492),
-      const LatLng(35.1381725, 33.9125942),
-      const LatLng(35.1344140, 33.9175090),
-      const LatLng(35.1346953, 33.9178785),
-      const LatLng(35.1342023, 33.9188270),
-      const LatLng(35.1341738, 33.9190177),
-      const LatLng(35.1321055, 33.9229364),
-      const LatLng(35.1313956, 33.9245639),
-      const LatLng(35.1312220, 33.9253331),
-      const LatLng(35.1313740, 33.9255536),
-      const LatLng(35.1293248, 33.9293013),
-      const LatLng(35.1293248, 33.9293013),
-      const LatLng(35.1287929, 33.9302468),
-      const LatLng(35.1231097, 33.9353698),
-      const LatLng(35.1215811, 33.9376591),
-      const LatLng(35.120484, 33.938396),
-    ], Colors.orange),
-    BusRoute([
-      const LatLng(35.141695, 33.907058),
-      const LatLng(35.1413521, 33.9067915),
-      const LatLng(35.1410285, 33.9079375),
-      const LatLng(35.1411117, 33.9093016),
-      const LatLng(35.1412717, 33.9094250),
-      const LatLng(35.1413954, 33.9096082),
-      const LatLng(35.1433140, 33.9095636),
-      const LatLng(35.1443407, 33.9097638),
-      const LatLng(35.1446982, 33.9097567),
-      const LatLng(35.1466625, 33.9087918),
-      const LatLng(35.1468399, 33.9086567),
-      const LatLng(35.1471700, 33.9091063),
-      const LatLng(35.1467798, 33.9096380),
-      const LatLng(35.1447048, 33.9115474),
-      const LatLng(35.1445740, 33.9116215),
-      const LatLng(35.1440241, 33.9118810),
-      const LatLng(35.1436079, 33.9120819),
-      const LatLng(35.1432273, 33.9124228),
-      const LatLng(35.1426686, 33.9130186),
-      const LatLng(35.1418382, 33.9135849),
-      const LatLng(35.1399634, 33.9100977),
-      const LatLng(35.1375433, 33.9119763),
-      const LatLng(35.1373881, 33.9119079),
-      const LatLng(35.1308256, 33.9180729),
-      const LatLng(35.1281413, 33.9213475),
-      const LatLng(35.1255865, 33.9264658),
-      const LatLng(35.1209087, 33.9354221),
-      const LatLng(35.1205763, 33.9366184),
-      const LatLng(35.1204658, 33.9380882),
-      const LatLng(35.1206649, 33.9396389),
-      const LatLng(35.1205438, 33.9407558),
-      const LatLng(35.1199546, 33.9409475),
-      const LatLng(35.1173296, 33.9433755),
-      const LatLng(35.1147867, 33.9459771),
-      const LatLng(35.1132701, 33.9444796),
-      const LatLng(35.1126357, 33.9447049),
-      const LatLng(35.1122419, 33.9454459),
-      const LatLng(35.1109789, 33.9463773),
-      const LatLng(35.1090845, 33.9474153),
-    ], Colors.blue),
-    BusRoute([
-      const LatLng(35.1414035, 33.9129289),
-      const LatLng(35.1402225, 33.9106070),
-      const LatLng(35.1410612, 33.9096090),
-      const LatLng(35.1413482, 33.9096035),
-      const LatLng(35.1432803, 33.9095566),
-      const LatLng(35.1445743, 33.9097822),
-      const LatLng(35.1466726, 33.9088032),
-      const LatLng(35.1468355, 33.9086513),
-      const LatLng(35.1473037, 33.9092495),
-      const LatLng(35.1475321, 33.9091784),
-      const LatLng(35.1481127, 33.9088351),
-      const LatLng(35.1483800, 33.9089843),
-      const LatLng(35.1487767, 33.9085809),
-      const LatLng(35.1496504, 33.9079385),
-      const LatLng(35.1546568, 33.9050028),
-      const LatLng(35.1576231, 33.9029060),
-      const LatLng(35.1619789, 33.9011924),
-      const LatLng(35.1648834, 33.8998131),
-      const LatLng(35.1650451, 33.9004947),
-      const LatLng(35.1653628, 33.9021761),
-      const LatLng(35.1654848, 33.9029858),
-      const LatLng(35.1657608, 33.9055772),
-      const LatLng(35.1668905, 33.9077649),
-    ], Colors.green),
-    BusRoute([
-      const LatLng(35.141695, 33.907058),
-      const LatLng(35.1413521, 33.9067915),
-      const LatLng(35.1410285, 33.9079375),
-      const LatLng(35.1411117, 33.9093016),
-      const LatLng(35.1412717, 33.9094250),
-      const LatLng(35.1413954, 33.9096082),
-      const LatLng(35.1433140, 33.9095636),
-      const LatLng(35.1443407, 33.9097638),
-      const LatLng(35.1446982, 33.9097567),
-      const LatLng(35.1466625, 33.9087918),
-      const LatLng(35.1468399, 33.9086567),
-      const LatLng(35.1471700, 33.9091063),
-      const LatLng(35.1467798, 33.9096380),
-      const LatLng(35.1447048, 33.9115474),
-      const LatLng(35.1445740, 33.9116215),
-      const LatLng(35.1440241, 33.9118810),
-      const LatLng(35.1436079, 33.9120819),
-      const LatLng(35.1432273, 33.9124228),
-      const LatLng(35.1426686, 33.9130186),
-      const LatLng(35.1418382, 33.9135849),
-      const LatLng(35.1402214, 33.9106284),
-      const LatLng(35.1392752, 33.9118492),
-      const LatLng(35.1381725, 33.9125942),
-      const LatLng(35.1344140, 33.9175090),
-      const LatLng(35.1346953, 33.9178785),
-      const LatLng(35.1342023, 33.9188270),
-      const LatLng(35.1341738, 33.9190177),
-      const LatLng(35.1321055, 33.9229364),
-      const LatLng(35.1313956, 33.9245639),
-      const LatLng(35.1312220, 33.9253331),
-      const LatLng(35.1313740, 33.9255536),
-      const LatLng(35.1293248, 33.9293013),
-      const LatLng(35.1293248, 33.9293013),
-      const LatLng(35.1287929, 33.9302468),
-      const LatLng(35.1231097, 33.9353698),
-      const LatLng(35.1215811, 33.9376591),
-      const LatLng(35.120484, 33.938396),
-      const LatLng(35.1206589, 33.9396258),
-      const LatLng(35.1205089, 33.9414212),
-      const LatLng(35.1206175, 33.9441998),
-      const LatLng(35.1213615, 33.9463823),
-      const LatLng(35.1224539, 33.9484115),
-    ], Colors.purpleAccent),
-    BusRoute([
-      const LatLng(35.141695, 33.907058),
-      const LatLng(35.1413521, 33.9067915),
-      const LatLng(35.1410285, 33.9079375),
-      const LatLng(35.1411117, 33.9093016),
-      const LatLng(35.1412717, 33.9094250),
-      const LatLng(35.1413954, 33.9096082),
-      const LatLng(35.1433140, 33.9095636),
-      const LatLng(35.1443407, 33.9097638),
-      const LatLng(35.1446982, 33.9097567),
-      const LatLng(35.1466625, 33.9087918),
-      const LatLng(35.1468399, 33.9086567),
-      const LatLng(35.1471700, 33.9091063),
-      const LatLng(35.1467798, 33.9096380),
-      const LatLng(35.1447048, 33.9115474),
-      const LatLng(35.1445740, 33.9116215),
-      const LatLng(35.1440241, 33.9118810),
-      const LatLng(35.1436079, 33.9120819),
-      const LatLng(35.1432273, 33.9124228),
-      const LatLng(35.1426686, 33.9130186),
-      const LatLng(35.1418382, 33.9135849),
-      const LatLng(35.1399634, 33.9100977),
-      const LatLng(35.1375433, 33.9119763),
-      const LatLng(35.1373881, 33.9119079),
-      const LatLng(35.1308256, 33.9180729),
-      const LatLng(35.1281413, 33.9213475),
-      const LatLng(35.1255865, 33.9264658),
-      const LatLng(35.1209087, 33.9354221),
-      const LatLng(35.1205763, 33.9366184),
-      const LatLng(35.1204658, 33.9380882),
-    ], Colors.red),
-  ];
+  List<BusRoute> busRoutes = [];
 
   @override
   void initState() {
@@ -225,6 +44,7 @@ class _MapScreenState extends State<MapScreen> {
     _fetchBusStops();
     _loadBusStopIcon();
     _loadBusIcon();
+    _fetchBusRoutes();
     _busLocationRef = FirebaseDatabase.instance.ref().child('gps_locations');
     _busLocationRef.onValue.listen((event) {
       final data = Map<String, dynamic>.from(event.snapshot.value as Map);
@@ -242,21 +62,61 @@ class _MapScreenState extends State<MapScreen> {
     });
   }
 
-  // void _onMapInitialized(GoogleMapController mapController) async {
-  //   mapController = mapController;
-  //   await Future.delayed(const Duration(seconds: 1)); // Wait for map to render
-  //   setState(() {
-  //     // update or change markers
-  //   });
-  // }
+  Future<void> _fetchBusRoutes() async {
+    List<BusRoute> result = await _getBusRoutes();
+    setState(() {
+      busRoutes = result;
+    });
+  }
+
+  Future<List<BusRoute>> _getBusRoutes() async {
+    List<BusRoute> busRoutes1 = [];
+
+    try {
+      CollectionReference routes =
+          FirebaseFirestore.instance.collection('routes');
+      QuerySnapshot querySnapshot = await routes.orderBy('routeId').get();
+      List<QueryDocumentSnapshot> documents = querySnapshot.docs;
+
+      for (var doc in documents) {
+        List<GeoPoint> geoPoints = List<GeoPoint>.from(doc['routeCoordinates']);
+        List<LatLng> latLngPoints = geoPoints
+            .map((geoPoint) => LatLng(geoPoint.latitude, geoPoint.longitude))
+            .toList();
+
+        String routeColorString = doc['routeColor'];
+        Color routeColor = Color(int.parse(routeColorString.replaceFirst('#', '0xff')));
+        String routeName = doc['routeName'];
+        String id = doc['routeId'];
+
+        Polyline polyline = Polyline(
+          polylineId: PolylineId(doc.id),
+          points: latLngPoints,
+          color: routeColor,
+          width: 5,
+        );
+
+        busRoutes1.add(BusRoute(
+          latLngPoints,  // points
+          routeColor,    // color
+          routeName,     // name
+          id         // id
+        ));
+      }
+    } catch (e) {
+      _showError('Error fetching bus routes: $e');
+    }
+
+    return busRoutes1;
+  }
+
+  void _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
+  }
 
   void _updateBusLocation(LatLng position) {
-    // only show the info of the selected bus route
-    // if (num - 1 == _selectedRouteIndex) {
-    //   print('object');
-    // } else {
-    //   print('fail');
-    // }
     setState(() {
       _busMarker = Marker(
           onTap: () {
@@ -311,7 +171,7 @@ class _MapScreenState extends State<MapScreen> {
       return Marker(
           onTap: () {
             setState(() {
-              _selectedRouteIndex = busStop.lines.first - 1;
+              // _selectedRouteIndex = busStop.lines.first - 1;
               _showBottomSheet();
             });
             // _buildBusStateIndicator(busStop.lines.first);
@@ -328,7 +188,9 @@ class _MapScreenState extends State<MapScreen> {
 
   Set<Polyline> _createPolylines() {
     if (_selectedRouteIndex == null) return {};
-    BusRoute selectedRoute = busRoutes[_selectedRouteIndex!];
+    String selectedRouteId = busRoutes[_selectedRouteIndex!].id;
+    BusRoute selectedRoute = busRoutes.firstWhere((route) => route.id == selectedRouteId, orElse: () => busRoutes.first);
+
     return {
       Polyline(
         polylineId: PolylineId('route$_selectedRouteIndex'),
@@ -407,7 +269,7 @@ class _MapScreenState extends State<MapScreen> {
                                       ),
                                       child: Center(
                                         child: Text(
-                                          (index + 1).toString(),
+                                          busRoutes[index].id,
                                           style: const TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
@@ -417,7 +279,7 @@ class _MapScreenState extends State<MapScreen> {
                                     ),
                                     const SizedBox(width: 8.0),
                                     Text(
-                                      routeNames[index],
+                                      busRoutes[index].name,
                                       style: TextStyle(
                                         color: _selectedRouteIndex == index
                                             ? Colors.white
@@ -521,7 +383,8 @@ class _MapScreenState extends State<MapScreen> {
                 target: _center,
                 zoom: 15.0,
               ),
-              markers: _busMarker != null ? {..._markers, _busMarker!} : _markers,
+              markers:
+                  _busMarker != null ? {..._markers, _busMarker!} : _markers,
               polylines: _createPolylines(),
             ),
             if (_selectedRouteIndex == null)
@@ -589,7 +452,8 @@ class _MapScreenState extends State<MapScreen> {
                             scrollDirection: Axis.horizontal,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: List.generate(busRoutes.length, (index) {
+                              children:
+                                  List.generate(busRoutes.length, (index) {
                                 return GestureDetector(
                                   onTap: () {
                                     setState(() {
@@ -619,7 +483,7 @@ class _MapScreenState extends State<MapScreen> {
                                           ),
                                           child: Center(
                                             child: Text(
-                                              (index + 1).toString(),
+                                              busRoutes[index].id,
                                               style: const TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.bold,
@@ -630,7 +494,7 @@ class _MapScreenState extends State<MapScreen> {
                                         ),
                                         const SizedBox(width: 8.0),
                                         Text(
-                                          routeNames[index],
+                                          busRoutes[index].name,
                                           style: TextStyle(
                                             color: _selectedRouteIndex == index
                                                 ? Colors.white
@@ -652,65 +516,64 @@ class _MapScreenState extends State<MapScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                      AppLocalizations.of(context)!.currentStation,
-                                      style: const TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  current == ''
+                                  AppLocalizations.of(context)!.currentStation,
+                                  style: const TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                current == ''
                                     ? const CircularProgressIndicator.adaptive()
-                                    :
-                                Text(
-                                  current,
-                                  style: const TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold),
-                                )
+                                    : Text(
+                                        current,
+                                        style: const TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold),
+                                      )
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                      AppLocalizations.of(context)!.nextStation,
-                                      style: const TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    next == ''
-                                    ? const CircularProgressIndicator()
-                                    :
-                                Text(
-                                  next,
+                                  AppLocalizations.of(context)!.nextStation,
                                   style: const TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.bold),
-                                )
+                                ),
+                                next == ''
+                                    ? const CircularProgressIndicator()
+                                    : Text(
+                                        next,
+                                        style: const TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold),
+                                      )
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                      AppLocalizations.of(context)!.estimatedTime,
-                                      style: const TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  time == ''
-                                    ? const CircularProgressIndicator()
-                                    :Text(
-                                  time,
+                                  AppLocalizations.of(context)!.estimatedTime,
                                   style: const TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.bold),
-                                )
+                                ),
+                                time == ''
+                                    ? const CircularProgressIndicator()
+                                    : Text(
+                                        time,
+                                        style: const TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold),
+                                      )
                               ],
                             ),
                             const Divider(),
                             people == 0
-                            ? const Center(child: CircularProgressIndicator())
-                            :_buildBusStateIndicator(people),
+                                ? const Center(
+                                    child: CircularProgressIndicator())
+                                : _buildBusStateIndicator(people),
                           ],
                         ],
                       ),
@@ -736,6 +599,8 @@ class BusStop {
 class BusRoute {
   final List<LatLng> points;
   final Color color;
+  final String name;
+  final String id;
 
-  BusRoute(this.points, this.color);
+  BusRoute(this.points, this.color, this.name, this.id);
 }

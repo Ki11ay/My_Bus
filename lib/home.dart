@@ -80,26 +80,28 @@ class _StartedState extends State<Started> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: [home(),  const SearchScreen(), const MapScreen(), const Setting()][currentPageIndex],
-      bottomNavigationBar: NavigationBar(
-        // shadowColor: Colors.black,
-        backgroundColor: Colors.transparent,
-        destinations: [
-          NavigationDestination(icon: const Icon(Icons.home,size: 30,color: primaryColor, ),label: AppLocalizations.of(context)!.home),
-          NavigationDestination(icon: const Icon(Icons.search,size: 30,color: primaryColor,), label: AppLocalizations.of(context)!.search),
-          NavigationDestination(icon: const Icon(Icons.map,size: 30,color: primaryColor,), label: AppLocalizations.of(context)!.map),
-          NavigationDestination(icon: const Icon(Icons.settings,size: 30,color: primaryColor,), label: AppLocalizations.of(context)!.settings),
-        ],
-        selectedIndex: currentPageIndex,
-        onDestinationSelected: (int index) {
-          setState(() {
-            currentPageIndex = index;
-          });
-        },
-        indicatorColor: Colors.white,
-        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: [home(),  const SearchScreen(), const MapScreen(), const Setting()][currentPageIndex],
+        bottomNavigationBar: NavigationBar(
+          // shadowColor: Colors.black,
+          backgroundColor: Colors.transparent,
+          destinations: [
+            NavigationDestination(icon: const Icon(Icons.home,size: 30,color: primaryColor, ),label: AppLocalizations.of(context)!.home),
+            NavigationDestination(icon: const Icon(Icons.search,size: 30,color: primaryColor,), label: AppLocalizations.of(context)!.search),
+            NavigationDestination(icon: const Icon(Icons.map,size: 30,color: primaryColor,), label: AppLocalizations.of(context)!.map),
+            NavigationDestination(icon: const Icon(Icons.settings,size: 30,color: primaryColor,), label: AppLocalizations.of(context)!.settings),
+          ],
+          selectedIndex: currentPageIndex,
+          onDestinationSelected: (int index) {
+            setState(() {
+              currentPageIndex = index;
+            });
+          },
+          indicatorColor: Colors.white,
+          labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+        ),
       ),
     );
   }
@@ -175,7 +177,7 @@ class _StartedState extends State<Started> {
                       AppLocalizations.of(context)!.announcements,
                       style: TextStyle(
                           color: notification ? primaryColor : Colors.grey,
-                          fontSize: 25,
+                          fontSize: 22,
                           fontWeight: FontWeight.w800),
                     )),
                 TextButton(
@@ -188,7 +190,7 @@ class _StartedState extends State<Started> {
                       AppLocalizations.of(context)!.busschedule,
                       style: TextStyle(
                           color: notification ? Colors.grey : primaryColor,
-                          fontSize: 25,
+                          fontSize: 22,
                           fontWeight: FontWeight.w800),
                     )),
               ],
@@ -288,6 +290,7 @@ class _StartedState extends State<Started> {
                         height: 20,
                       ),
                       Container(
+                        
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),

@@ -10,24 +10,6 @@ import 'package:permission_handler/permission_handler.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  // final messaging = FirebaseMessaging.instance;
-  // // Request permission to display notifications
-  // final settings = await messaging.requestPermission(
-  //   alert: true,
-  //   announcement: false,
-  //   badge: true,
-  //   carPlay: false,
-  //   criticalAlert: false,
-  //   provisional: false,
-  //   sound: true,
-  // );
-  // if (kDebugMode) {
-  //   print('Permission granted: ${settings.authorizationStatus}');
-  // }
-  // String? token = await messaging.getToken();
-  // if (kDebugMode) {
-  //   print('Registration Token=$token');
-  // }
   if (await Permission.location.isDenied) {
     await Permission.location.request();
   }
@@ -60,16 +42,12 @@ class _MyAppState extends State<MyApp> {
       _locale = locale;
     });
   }
-  // This widget is the root of your application.ajak
   @override
   Widget build(BuildContext context) {
       return MaterialApp(
         supportedLocales: AppLocalizations.supportedLocales,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         debugShowCheckedModeBanner: false,
-        // theme: ThemeData(
-        //   useMaterial3: true,
-        // ),
         locale: _locale, // Default locale
         home: const Splash(),
       );

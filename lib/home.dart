@@ -18,6 +18,8 @@ class Started extends StatefulWidget {
 }
 
 class _StartedState extends State<Started> {
+  late double screenWidth = MediaQuery.of(context).size.width;
+
   int currentPageIndex = 0;
   bool notification = true;
   String? _url;
@@ -80,7 +82,9 @@ class _StartedState extends State<Started> {
 
   @override
   Widget build(BuildContext context) {
+
     return SafeArea(
+      
       child: Scaffold(
         backgroundColor: Colors.white,
         body: [home(),  const SearchScreen(), const MapScreen(), const Setting()][currentPageIndex],
@@ -88,10 +92,10 @@ class _StartedState extends State<Started> {
           // shadowColor: Colors.black,
           backgroundColor: Colors.transparent,
           destinations: [
-            NavigationDestination(icon: const Icon(Icons.home,size: 30,color: primaryColor, ),label: AppLocalizations.of(context)!.home),
-            NavigationDestination(icon: const Icon(Icons.search,size: 30,color: primaryColor,), label: AppLocalizations.of(context)!.search),
-            NavigationDestination(icon: const Icon(Icons.map,size: 30,color: primaryColor,), label: AppLocalizations.of(context)!.map),
-            NavigationDestination(icon: const Icon(Icons.settings,size: 30,color: primaryColor,), label: AppLocalizations.of(context)!.settings),
+            NavigationDestination(icon:  Icon(Icons.home,size: screenWidth * 0.08,color: primaryColor, ),label: AppLocalizations.of(context)!.home),
+            NavigationDestination(icon: Icon(Icons.search,size: screenWidth * 0.08,color: primaryColor,), label: AppLocalizations.of(context)!.search),
+            NavigationDestination(icon: Icon(Icons.map,size: screenWidth * 0.08,color: primaryColor,), label: AppLocalizations.of(context)!.map),
+            NavigationDestination(icon: Icon(Icons.settings,size: screenWidth * 0.08,color: primaryColor,), label: AppLocalizations.of(context)!.settings),
           ],
           selectedIndex: currentPageIndex,
           onDestinationSelected: (int index) {
@@ -112,6 +116,7 @@ class _StartedState extends State<Started> {
         notification = true;
       });
     }
+
 
     void toggleSchedule() {
       setState(() {
@@ -137,19 +142,19 @@ class _StartedState extends State<Started> {
                 Text(
                   notification ? AppLocalizations.of(context)!.findyour : AppLocalizations.of(context)!.never,
                   style:
-                      const TextStyle(fontWeight: FontWeight.w500, fontSize: 40),
+                      TextStyle(fontWeight: FontWeight.w500, fontSize: screenWidth * 0.12),
                 ),
                 Text(
                   notification ? AppLocalizations.of(context)!.way : AppLocalizations.of(context)!.miss,
                   style:
-                      const TextStyle(fontWeight: FontWeight.w700, fontSize: 40),
+                       TextStyle(fontWeight: FontWeight.w700, fontSize: screenWidth * 0.12),
                 ),
                 Text(
                   notification ? AppLocalizations.of(context)!.effectively : AppLocalizations.of(context)!.urride,
-                  style: const TextStyle(
+                  style:  TextStyle(
                       fontWeight: FontWeight.w700,
                       color: Color(0xFFFFC107),
-                      fontSize: 40),
+                      fontSize: screenWidth * 0.12),
                 ),
               ],
             ),
@@ -158,42 +163,41 @@ class _StartedState extends State<Started> {
             height: 20,
           ),
           SingleChildScrollView(
-            // padding: const EdgeInsets.all(30),
             scrollDirection: Axis.horizontal,
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width / 25,),
-                TextButton(
-                    style: const ButtonStyle(
-                        elevation: WidgetStatePropertyAll(30),
-                        visualDensity: VisualDensity.comfortable),
-                    onPressed: () {
-                      toggleNotification();
-                    },
-                    child: Text(
-                      AppLocalizations.of(context)!.announcements,
-                      style: TextStyle(
-                          color: notification ? primaryColor : Colors.grey,
-                          fontSize: 22,
-                          fontWeight: FontWeight.w800),
-                    )),
-                TextButton(
-                    onPressed: () {
-                      toggleSchedule();
-                    },
-                    style:
-                        const ButtonStyle(visualDensity: VisualDensity.comfortable),
-                    child: Text(
-                      AppLocalizations.of(context)!.busschedule,
-                      style: TextStyle(
-                          color: notification ? Colors.grey : primaryColor,
-                          fontSize: 22,
-                          fontWeight: FontWeight.w800),
-                    )),
-              ],
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                      style: const ButtonStyle(
+                          elevation: WidgetStatePropertyAll(30),
+                          visualDensity: VisualDensity.comfortable),
+                      onPressed: () {
+                        toggleNotification();
+                      },
+                      child: Text(
+                        AppLocalizations.of(context)!.announcements,
+                        style: TextStyle(
+                            color: notification ? primaryColor : Colors.grey,
+                            fontSize: screenWidth * 0.06,
+                            fontWeight: FontWeight.w800),
+                      )),
+                  TextButton(
+                      onPressed: () {
+                        toggleSchedule();
+                      },
+                      style:
+                          const ButtonStyle(visualDensity: VisualDensity.comfortable),
+                      child: Text(
+                        AppLocalizations.of(context)!.busschedule,
+                        style: TextStyle(
+                            color: notification ? Colors.grey : primaryColor,
+                            fontSize: screenWidth * 0.06,
+                            fontWeight: FontWeight.w800),
+                      )),
+                ],
+              ),
             ),
           ),
           const SizedBox(
@@ -224,18 +228,8 @@ class _StartedState extends State<Started> {
                               margin: const EdgeInsets.symmetric(vertical: 10),
                               padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
-                                // color: Colors.white,
-                                // border: Border.all(color: primaryColor, width: 2),
                                 color: Colors.transparent,
                                 borderRadius: BorderRadius.circular(16),
-                                // boxShadow: [
-                                //   BoxShadow(
-                                //     color: Colors.grey.withOpacity(0.5),
-                                //     spreadRadius: 3,
-                                //     blurRadius: 4,
-                                //     offset: const Offset(0, 3),
-                                //   ),
-                                // ],
                               ),
                               child: Row(
                                 children: [
@@ -277,10 +271,9 @@ class _StartedState extends State<Started> {
                   ),
                 )
               : SingleChildScrollView(
-                  // height: sh * 0.48,
                   padding: const EdgeInsets.all(8),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       scheduleUrl != ''
@@ -290,14 +283,12 @@ class _StartedState extends State<Started> {
                         height: 20,
                       ),
                       Container(
-                        
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
                             color: Colors.transparent,
                             border: Border.all(color: primaryColor, width: 3)),
                         child: TextButton(
-                          
                           onPressed: () {
                             _launchURL(context);
                           },

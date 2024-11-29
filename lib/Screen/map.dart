@@ -27,15 +27,6 @@ class _MapScreenState extends State<MapScreen> {
   late int num;
   late BitmapDescriptor _busIcon;
   late BitmapDescriptor _busStopIcon;
-
-  // final List<String> routeNames = [
-  //   "SALAMIS ROAD",
-  //   "MARAS",
-  //   "EMU BEACH CLUB",
-  //   "MILITARY HOUSES",
-  //   "NICOSIA ROAD"
-  // ];
-
   List<BusRoute> busRoutes = [];
 
   @override
@@ -88,13 +79,6 @@ class _MapScreenState extends State<MapScreen> {
         Color routeColor = Color(int.parse(routeColorString.replaceFirst('#', '0xff')));
         String routeName = doc['routeName'];
         String id = doc['routeId'];
-
-        Polyline polyline = Polyline(
-          polylineId: PolylineId(doc.id),
-          points: latLngPoints,
-          color: routeColor,
-          width: 5,
-        );
 
         busRoutes1.add(BusRoute(
           latLngPoints,  // points

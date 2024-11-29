@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_bus/Screen/aboutus.dart';
 import 'package:my_bus/Screen/languagesc.dart';
 import 'package:my_bus/Screen/helpcentersc.dart';
 import 'package:my_bus/Screen/notificationsc.dart';
@@ -125,16 +126,10 @@ class _SettingState extends State<Setting> {
           ),
           InkWell(
             highlightColor: Colors.transparent,
-            //TODO: navigate to the about us page
             onTap: () {
-              // Navigator.of(context).push(MaterialPageRoute(
-              //   builder: (context) => const MapScreen2(),
-              // ));
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Coming Soon'),
-                ),  
-              ) ;
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const Aboutus(),
+              ));
             },
             child: Ink(
               padding: const EdgeInsets.all(20),

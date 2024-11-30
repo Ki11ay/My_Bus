@@ -4,6 +4,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_bus/components/color.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -35,24 +36,6 @@ class _SearchScreenState extends State<SearchScreen> {
     });
 }
 
-  Future<Position> _getCurrentPosition() async {
-    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      return Future.error('Location services are disabled.');
-    }
-    LocationPermission permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
-      }
-    }
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
-    }
-    return await Geolocator.getCurrentPosition();
-  }
 
   Future<void> _loadBusStopIcon() async {
     _busStopIcon = await BitmapDescriptor.asset(
@@ -61,20 +44,6 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  Set<Polyline> _createPolylines(List<BusRoute> busRoutes) {
-    return busRoutes.asMap().entries.map((entry) {
-      int idx = entry.key;
-      BusRoute route = entry.value;
-      return Polyline(
-        polylineId: PolylineId('route$idx'),
-        points: route.lines
-            .map((point) => LatLng(point.latitude, point.longitude))
-            .toList(),
-        color: route.color,
-        width: 5,
-      );
-    }).toSet();
-  }
 
   Future<Set<Polyline>> _getBusRoutes() async {
     Set<Polyline> polylines = {};
@@ -173,12 +142,13 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double sw = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
         body: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(sw * 0.035),
               child: Column(
                 children: [
                   TextField(
@@ -199,10 +169,10 @@ class _SearchScreenState extends State<SearchScreen> {
                 child: Container(
                   margin: const EdgeInsets.all(10),
                   padding: const EdgeInsets.all(10.0),
-                  color: Colors.blueAccent,
+                  color: Colors.transparent,
                   child: Text(
                     _nearestBusStop,
-                    style: const TextStyle(color: Colors.white, fontSize: 16.0),
+                    style: TextStyle(color: primaryColor, fontSize: sw * 0.035),
                   ),
                 ),
               ),

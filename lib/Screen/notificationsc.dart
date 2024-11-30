@@ -255,39 +255,38 @@ void initState() {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: primaryColor,
-          title: Text(
-            AppLocalizations.of(context)!.notifications,
-              style: const TextStyle(color: Colors.white)),
-          centerTitle: true,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () => Navigator.of(context).pop(),
+    double sh = MediaQuery.of(context).size.height;
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: primaryColor,
+        title: Text(
+          AppLocalizations.of(context)!.notifications,
+            style: const TextStyle(color: Colors.white)),
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
+      body: Column(
+        children: [
+          SizedBox(height:sh/15,),
+          SwitchListTile(
+            title: Text(AppLocalizations.of(context)!.enablenotifications , style: TextStyle(color: primaryColor, fontSize: sh * 0.025)),
+            value: _notificationsEnabled,
+            activeColor: primaryColor,
+            onChanged: _toggleNotifications,
           ),
-        ),
-        body: Column(
-          children: [
-            SizedBox(height:MediaQuery.of(context).size.height/15,),
-            SwitchListTile(
-              title: Text(AppLocalizations.of(context)!.enablenotifications),
-              value: _notificationsEnabled,
-              activeColor: primaryColor,
-              onChanged: _toggleNotifications,
-            ),
-            SizedBox(height:MediaQuery.of(context).size.height/30,),
-            ListTile(
-              title: Text(AppLocalizations.of(context)!.selectbus),
-              subtitle: Text(_selectedBusStop ?? 'No bus stop selected'),
-              onTap: _showBusStopSelector,
-            ),
-            
-            // Text(status),
-            // Text(es),
-          ],
-        ),
+          SizedBox(height:MediaQuery.of(context).size.height/30,),
+          ListTile(
+            title: Text(AppLocalizations.of(context)!.selectbus, style: TextStyle(color: primaryColor, fontSize: sh * 0.025)),
+            subtitle: Text(_selectedBusStop ?? 'No bus stop selected' , style: TextStyle(color: primaryColor, fontSize: sh * 0.02)),
+            onTap: _showBusStopSelector,
+          ),
+          
+          // Text(status),
+          // Text(es),
+        ],
       ),
     );
   }

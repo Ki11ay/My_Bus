@@ -1,4 +1,3 @@
-// ignore_for_file: deprecated_member_use
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -70,6 +69,7 @@ class _StartedState extends State<Started> {
   }
 
   void _launchURL(BuildContext context) async {
+    // ignore: deprecated_member_use
     if (_url != null && await canLaunch(_url!)) {
       await launchUrl(Uri.parse(_url!), mode: LaunchMode.externalApplication);
     } else {
@@ -82,9 +82,7 @@ class _StartedState extends State<Started> {
 
   @override
   Widget build(BuildContext context) {
-
     return SafeArea(
-      
       child: Scaffold(
         backgroundColor: Colors.white,
         body: [home(),  const SearchScreen(), const MapScreen(), const Setting()][currentPageIndex],
@@ -123,18 +121,15 @@ class _StartedState extends State<Started> {
         notification = false;
       });
     }
-
-    // double sh = MediaQuery.of(context).size.height;
+    double sh = MediaQuery.of(context).size.height;
     return Padding(
-      
-      padding: const EdgeInsets.only(top: 50),
+      padding: EdgeInsets.only(top: sh * 0.045, bottom: sh * 0.02),
       child: Column(
         // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SingleChildScrollView(
-            // height: sh / 5,
-            padding: const EdgeInsets.all(30),
+            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,25 +137,22 @@ class _StartedState extends State<Started> {
                 Text(
                   notification ? AppLocalizations.of(context)!.findyour : AppLocalizations.of(context)!.never,
                   style:
-                      TextStyle(fontWeight: FontWeight.w500, fontSize: screenWidth * 0.12),
+                      TextStyle(fontWeight: FontWeight.w500, fontSize: screenWidth * 0.11),
                 ),
                 Text(
                   notification ? AppLocalizations.of(context)!.way : AppLocalizations.of(context)!.miss,
                   style:
-                       TextStyle(fontWeight: FontWeight.w700, fontSize: screenWidth * 0.12),
+                       TextStyle(fontWeight: FontWeight.w700, fontSize: screenWidth * 0.11),
                 ),
                 Text(
                   notification ? AppLocalizations.of(context)!.effectively : AppLocalizations.of(context)!.urride,
                   style:  TextStyle(
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFFFFC107),
-                      fontSize: screenWidth * 0.12),
+                      color: const Color(0xFFFFC107),
+                      fontSize: screenWidth * 0.11),
                 ),
               ],
             ),
-          ),
-          const SizedBox(
-            height: 20,
           ),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
@@ -170,8 +162,8 @@ class _StartedState extends State<Started> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextButton(
-                      style: const ButtonStyle(
-                          elevation: WidgetStatePropertyAll(30),
+                      style: ButtonStyle(
+                          elevation: WidgetStatePropertyAll(screenWidth * 0.02),
                           visualDensity: VisualDensity.comfortable),
                       onPressed: () {
                         toggleNotification();
@@ -200,8 +192,8 @@ class _StartedState extends State<Started> {
               ),
             ),
           ),
-          const SizedBox(
-            height: 20,
+          SizedBox(
+            height: sh * 0.02,
           ),
           notification
               ? Expanded(
@@ -234,7 +226,7 @@ class _StartedState extends State<Started> {
                               child: Row(
                                 children: [
                                   const SizedBox(width: 10),
-                                  const Icon(Icons.announcement ,size: 30,color: primaryColor,),
+                                  Icon(Icons.announcement ,size: screenWidth * 0.07 ,color: primaryColor,),
                                   const SizedBox(width: 10),
                                   Flexible(
                                     fit: FlexFit.loose,
@@ -270,19 +262,20 @@ class _StartedState extends State<Started> {
                     ),
                   ),
                 )
-              : SingleChildScrollView(
-                  padding: const EdgeInsets.all(8),
+              : Expanded(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       scheduleUrl != ''
-                      ?Image(image: NetworkImage(scheduleUrl!))
+                      ?Image(image: NetworkImage(scheduleUrl!), width: screenWidth * 0.95,)
                       : const CircularProgressIndicator(),
-                      const SizedBox(
-                        height: 20,
+                      SizedBox(
+                        height: screenWidth * 0.035,
                       ),
                       Container(
+                        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+                        margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
@@ -294,10 +287,10 @@ class _StartedState extends State<Started> {
                           },
                           child: Text(
                             AppLocalizations.of(context)!.downloadthepdf,
-                            style: const TextStyle(
+                            style: TextStyle(
                                 color: primaryColor,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 20),
+                                fontSize: screenWidth * 0.05),
                           ),
                         ),
                       ),

@@ -13,6 +13,8 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
+  late double sh;
+  late double sw;
   late GoogleMapController mapController;
   final LatLng _center = const LatLng(35.1407311, 33.9155663);
   Set<Marker> _markers = {};
@@ -76,16 +78,17 @@ class _MapScreenState extends State<MapScreen> {
             .toList();
 
         String routeColorString = doc['routeColor'];
-        Color routeColor = Color(int.parse(routeColorString.replaceFirst('#', '0xff')));
+        Color routeColor =
+            Color(int.parse(routeColorString.replaceFirst('#', '0xff')));
         String routeName = doc['routeName'];
         String id = doc['routeId'];
 
         busRoutes1.add(BusRoute(
-          latLngPoints,  // points
-          routeColor,    // color
-          routeName,     // name
-          id         // id
-        ));
+            latLngPoints, // points
+            routeColor, // color
+            routeName, // name
+            id // id
+            ));
       }
     } catch (e) {
       _showError('Error fetching bus routes: $e');
@@ -117,7 +120,7 @@ class _MapScreenState extends State<MapScreen> {
 
   Future<void> _loadBusIcon() async {
     _busIcon = await BitmapDescriptor.asset(
-      const ImageConfiguration(size: Size(40, 40)),
+      const ImageConfiguration(size: Size(40,40)),
       'assets/images/bus.png',
     );
   }
@@ -155,7 +158,7 @@ class _MapScreenState extends State<MapScreen> {
       return Marker(
           onTap: () {
             setState(() {
-              // _selectedRouteIndex = busStop.lines.first - 1;
+              _selectedRouteIndex = busStop.lines.first - 1;
               _showBottomSheet();
             });
             // _buildBusStateIndicator(busStop.lines.first);
@@ -173,7 +176,9 @@ class _MapScreenState extends State<MapScreen> {
   Set<Polyline> _createPolylines() {
     if (_selectedRouteIndex == null) return {};
     String selectedRouteId = busRoutes[_selectedRouteIndex!].id;
-    BusRoute selectedRoute = busRoutes.firstWhere((route) => route.id == selectedRouteId, orElse: () => busRoutes.first);
+    BusRoute selectedRoute = busRoutes.firstWhere(
+        (route) => route.id == selectedRouteId,
+        orElse: () => busRoutes.first);
 
     return {
       Polyline(
@@ -215,7 +220,7 @@ class _MapScreenState extends State<MapScreen> {
               child: SingleChildScrollView(
                 controller: scrollController,
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: EdgeInsets.all(sw * 0.035),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -240,13 +245,13 @@ class _MapScreenState extends State<MapScreen> {
                                   color: _selectedRouteIndex == index
                                       ? primaryColor
                                       : Colors.grey[300],
-                                  borderRadius: BorderRadius.circular(16.0),
+                                  borderRadius: BorderRadius.circular(sw * 0.035),
                                 ),
                                 child: Row(
                                   children: [
                                     Container(
-                                      width: 30,
-                                      height: 30,
+                                      width: sw * 0.1,
+                                      height: sh * 0.04,
                                       decoration: BoxDecoration(
                                         color: busRoutes[index].color,
                                         shape: BoxShape.circle,
@@ -261,7 +266,6 @@ class _MapScreenState extends State<MapScreen> {
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(width: 8.0),
                                     Text(
                                       busRoutes[index].name,
                                       style: TextStyle(
@@ -269,6 +273,7 @@ class _MapScreenState extends State<MapScreen> {
                                             ? Colors.white
                                             : Colors.black,
                                         fontWeight: FontWeight.bold,
+                                        fontSize: sw * 0.037,
                                       ),
                                     ),
                                   ],
@@ -297,10 +302,10 @@ class _MapScreenState extends State<MapScreen> {
         ? primaryColor
         : Colors.grey;
     Color fullColor = passengerCount >= 70 ? primaryColor : Colors.grey;
-    double seatsize = passengerCount < 35 ? 35 : 20;
+    double seatsize = passengerCount < 35 ? sw * 0.1 : sw * 0.05;
     double standingsize =
-        (passengerCount >= 35 && passengerCount < 70) ? 30 : 20;
-    double fullsize = passengerCount >= 70 ? 35 : 20;
+        (passengerCount >= 35 && passengerCount < 70) ? sw * 0.1 : 20;
+    double fullsize = passengerCount >= 70 ? sw * 0.1 : sw * 0.05;
     return Row(
       children: [
         Expanded(
@@ -354,6 +359,8 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
+    sh = MediaQuery.of(context).size.height;
+    sw = MediaQuery.of(context).size.width;
     return SafeArea(
       maintainBottomViewPadding: true,
       child: Scaffold(
@@ -422,13 +429,12 @@ class _MapScreenState extends State<MapScreen> {
                 child: GestureDetector(
                   onTap: _showBottomSheet,
                   child: Container(
-                    // height: 200,
                     decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(18.0)),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: EdgeInsets.all(sw * 0.035),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -443,7 +449,6 @@ class _MapScreenState extends State<MapScreen> {
                                     setState(() {
                                       _selectedRouteIndex = index;
                                     });
-                                    // Navigator.pop(context);
                                   },
                                   child: Container(
                                     margin: const EdgeInsets.symmetric(
@@ -454,13 +459,13 @@ class _MapScreenState extends State<MapScreen> {
                                       color: _selectedRouteIndex == index
                                           ? primaryColor
                                           : Colors.grey[300],
-                                      borderRadius: BorderRadius.circular(16.0),
+                                      borderRadius: BorderRadius.circular(sw * 0.035),
                                     ),
                                     child: Row(
                                       children: [
                                         Container(
-                                          width: 30,
-                                          height: 30,
+                                          width: sw * 0.1,
+                                          height: sh * 0.04,
                                           decoration: BoxDecoration(
                                             color: busRoutes[index].color,
                                             shape: BoxShape.circle,
@@ -468,15 +473,14 @@ class _MapScreenState extends State<MapScreen> {
                                           child: Center(
                                             child: Text(
                                               busRoutes[index].id,
-                                              style: const TextStyle(
+                                              style: TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 20.0,
+                                                fontSize: sw * 0.04,
                                               ),
                                             ),
                                           ),
                                         ),
-                                        const SizedBox(width: 8.0),
                                         Text(
                                           busRoutes[index].name,
                                           style: TextStyle(
@@ -484,6 +488,7 @@ class _MapScreenState extends State<MapScreen> {
                                                 ? Colors.white
                                                 : Colors.black,
                                             fontWeight: FontWeight.bold,
+                                            fontSize: sw * 0.037,
                                           ),
                                         ),
                                       ],
@@ -493,7 +498,6 @@ class _MapScreenState extends State<MapScreen> {
                               }),
                             ),
                           ),
-                          const SizedBox(height: 16),
                           if (_selectedRouteIndex != null) ...[
                             const Divider(),
                             Row(
@@ -501,16 +505,16 @@ class _MapScreenState extends State<MapScreen> {
                               children: [
                                 Text(
                                   AppLocalizations.of(context)!.currentStation,
-                                  style: const TextStyle(
-                                      fontSize: 16.0,
+                                  style: TextStyle(
+                                      fontSize: sw * 0.04,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 current == ''
                                     ? const CircularProgressIndicator.adaptive()
                                     : Text(
                                         current,
-                                        style: const TextStyle(
-                                            fontSize: 16.0,
+                                        style: TextStyle(
+                                            fontSize: sw * 0.04,
                                             fontWeight: FontWeight.bold),
                                       )
                               ],
@@ -520,16 +524,16 @@ class _MapScreenState extends State<MapScreen> {
                               children: [
                                 Text(
                                   AppLocalizations.of(context)!.nextStation,
-                                  style: const TextStyle(
-                                      fontSize: 16.0,
+                                  style: TextStyle(
+                                      fontSize: sw * 0.04,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 next == ''
                                     ? const CircularProgressIndicator()
                                     : Text(
                                         next,
-                                        style: const TextStyle(
-                                            fontSize: 16.0,
+                                        style: TextStyle(
+                                            fontSize: sw * 0.04,
                                             fontWeight: FontWeight.bold),
                                       )
                               ],
@@ -539,16 +543,16 @@ class _MapScreenState extends State<MapScreen> {
                               children: [
                                 Text(
                                   AppLocalizations.of(context)!.estimatedTime,
-                                  style: const TextStyle(
-                                      fontSize: 16.0,
+                                  style: TextStyle(
+                                      fontSize: sw * 0.04,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 time == ''
                                     ? const CircularProgressIndicator()
                                     : Text(
                                         time,
-                                        style: const TextStyle(
-                                            fontSize: 16.0,
+                                        style: TextStyle(
+                                            fontSize: sw * 0.04,
                                             fontWeight: FontWeight.bold),
                                       )
                               ],

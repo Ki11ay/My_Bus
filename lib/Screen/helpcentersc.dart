@@ -72,6 +72,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
             TextField(
               controller: _feedbackController,
               maxLines: 5,
+              style: TextStyle(fontSize: MediaQuery.of(context).size.height * 0.025),
               decoration: InputDecoration(
                 labelText: AppLocalizations.of(context)!.entercomplaint,
                 border: const OutlineInputBorder(),
@@ -94,10 +95,10 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
               child: TextButton(
                 onPressed: _submitFeedback,
                 child: Text(AppLocalizations.of(context)!.submit,
-                  style: const TextStyle(
+                  style: TextStyle(
                       color: primaryColor,
                       fontWeight: FontWeight.bold,
-                      fontSize: 20),
+                      fontSize: MediaQuery.of(context).size.height * 0.025,)
                 ),
               ),
             ),

@@ -13,7 +13,7 @@ class Languagesc extends StatelessWidget {
         backgroundColor: primaryColor,
         title: Text(
           AppLocalizations.of(context)!.languages,
-            style: const TextStyle(color: Colors.white)),
+            style: TextStyle(color: Colors.white, fontSize: MediaQuery.of(context).size.height * 0.025)),
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -30,8 +30,12 @@ class Languagesc extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Image.asset('assets/images/LOGO1.png'),
-                  const Text('Please select your language')
+                  Image.asset('assets/images/LOGO1.png', height: MediaQuery.of(context).size.height * 0.25,),
+                  Text('Please select your language',
+                      style: TextStyle(
+                          color: primaryColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: MediaQuery.of(context).size.height * 0.025)),
                 ],
               ),
             ),
@@ -52,12 +56,12 @@ class Languagesc extends StatelessWidget {
                         MyApp.setLocale(context, newLocale);
                         Navigator.pop(context);
                       },
-                      child: const Text(
+                      child: Text(
                         "Turkish",
                         style: TextStyle(
                             color: primaryColor,
                             fontWeight: FontWeight.bold,
-                            fontSize: 20),
+                            fontSize: MediaQuery.of(context).size.height * 0.025,)
                       ),
                     ),
                   ),
@@ -75,12 +79,12 @@ class Languagesc extends StatelessWidget {
                         MyApp.setLocale(context, newLocale);
                         Navigator.pop(context);
                       },
-                      child: const Text(
+                      child: Text(
                         "English",
                         style: TextStyle(
                             color: primaryColor,
                             fontWeight: FontWeight.bold,
-                            fontSize: 20),
+                            fontSize: MediaQuery.of(context).size.height * 0.025,),
                       ),
                     ),
                   ),

@@ -1,5 +1,7 @@
 // ignore_for_file: unused_field
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:my_bus/components/color.dart';
@@ -29,25 +31,68 @@ class _NotificationscreenState extends State<Notificationscreen> {
 
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
+  StreamSubscription? _nextStopSubscription;
 
   @override
 void initState() {
   super.initState();
   _initializeFirebaseMessaging();
   _initializeNotifications();
-  _initializeRemoteConfig(); // Add this
+  _initializeRemoteConfig();
   _fetchBusStops();
   _loadPreferences();
-  nextStopRef = FirebaseDatabase.instance.ref().child('gps_locations');
-  nextStopRef.onValue.listen((event) {
-    final data = Map<String, dynamic>.from(event.snapshot.value as Map);
-    setState(() {
-      next = data['next_stop'];
-      es = data['estimated'];
-    });
-    checking(); // Call the checking() function here
-  });
+
+  _setupNextStopListener();
 }
+
+  void _setupNextStopListener() {
+    nextStopRef = FirebaseDatabase.instance.ref().child('gps_locations');
+    _nextStopSubscription = nextStopRef.onValue.listen((event) {
+      final data = Map<String, dynamic>.from(event.snapshot.value as Map);
+      setState(() {
+        next = data['next_stop'];
+        es = data['estimated'];
+      });
+      
+      // Check conditions and send notification
+      _checkAndSendNotification();
+    });
+  }
+
+  void _checkAndSendNotification() {
+    // Conditions for sending notification
+    if (_selectedBusStop != null &&
+        _notificationsEnabled &&
+        _selectedBusStop == next) {
+      // Send notification using Firebase Cloud Messaging
+      _sendFCMNotification();
+    }
+  }
+
+  Future<void> _sendFCMNotification() async {
+    try {
+      // Get the latest Remote Config values
+      await remoteConfig.fetchAndActivate();
+      
+      // Prepare notification payload
+      await FirebaseMessaging.instance.sendMessage(
+        data: {
+          'title': remoteConfig.getString('message_title').replaceAll('{bus_stop}', _selectedBusStop ?? ''),
+          'body': remoteConfig.getString('message_body')
+            .replaceAll('{bus_stop}', _selectedBusStop ?? '')
+            .replaceAll('{estimated_time}', es),
+        },
+      );
+    } catch (e) {
+      debugPrint('Error sending FCM notification: $e');
+    }
+  }
+
+  @override
+  void dispose() {
+    _nextStopSubscription?.cancel();
+    super.dispose();
+  }
 
   // Initialize Firebase Messaging for notifications
   void _initializeFirebaseMessaging() async {
@@ -173,7 +218,7 @@ void initState() {
 
     await remoteConfig.setDefaults({
       'message_title': 'Bus Alert',
-      'message_body': 'Your bus is arriving soon!',
+      'message_body': 'Your bus is arriving soon at $_selectedBusStop after $es minutes!',
     });
 
     try {

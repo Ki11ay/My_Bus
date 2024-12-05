@@ -55,7 +55,10 @@ class _AboutusState extends State<Aboutus> {
             Center(
                 child: Text(
               "Our Team",
-              style: TextStyle(fontSize: sw * 0.05, fontWeight: FontWeight.bold, color: primaryColor),
+              style: TextStyle(
+                  fontSize: sw * 0.05,
+                  fontWeight: FontWeight.bold,
+                  color: primaryColor),
             )),
             SizedBox(height: sw * 0.0350),
             Container(
@@ -96,20 +99,19 @@ class _AboutusState extends State<Aboutus> {
                   ),
                   const SizedBox(height: 16.0),
                   TextButton(
-                    onPressed: () => _launchUrl("https://scholar.google.com/citations?user=HADY_hcAAAAJ&hl=en"),
-                    child: Text(
-                    "Professor Dr. Hasan Demirel",
-                    style: TextStyle(
-                      fontSize: sw * 0.05,
-                      fontWeight: FontWeight.bold,
-                      color: primaryColor
-                    ),)
-                  ),
+                      onPressed: () => _launchUrl(
+                          "https://scholar.google.com/citations?user=HADY_hcAAAAJ&hl=en"),
+                      child: Text(
+                        "Professor Dr. Hasan Demirel",
+                        style: TextStyle(
+                            fontSize: sw * 0.05,
+                            fontWeight: FontWeight.bold,
+                            color: primaryColor),
+                      )),
                   const SizedBox(height: 8.0),
                   Text(
                     'SuperVisor',
-                    style: TextStyle(fontSize: sw * 0.035,
-                    color: primaryColor),
+                    style: TextStyle(fontSize: sw * 0.035, color: primaryColor),
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -142,18 +144,16 @@ class _AboutusState extends State<Aboutus> {
                     Text(
                       'Mohamed Ali',
                       style: TextStyle(
-                        fontSize: sw * 0.035,
-                        fontWeight: FontWeight.bold,
-                        color: primaryColor
-                      ),
+                          fontSize: sw * 0.035,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor),
                     ),
                     Text(
                       'Idris Abubaker',
                       style: TextStyle(
-                        fontSize: sw * 0.035,
-                        fontWeight: FontWeight.bold,
-                        color: primaryColor
-                      ),
+                          fontSize: sw * 0.035,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor),
                     ),
                     const SizedBox(height: 8.0),
                     Row(
@@ -163,7 +163,8 @@ class _AboutusState extends State<Aboutus> {
                           onPressed: () => _launchUrl(
                               'https://www.linkedin.com/in/mohamed-abubaker-baa87916a/'),
                           icon: Image(
-                            image: const AssetImage('assets/images/linkedin.png'),
+                            image:
+                                const AssetImage('assets/images/linkedin.png'),
                             height: sw * 0.07,
                           ),
                         ),
@@ -180,7 +181,7 @@ class _AboutusState extends State<Aboutus> {
                 ),
               ),
               const SizedBox(width: 8.0),
-    
+
               // mohammed elfadil r. h. elkhidir
               Container(
                 width: sw * 0.45,
@@ -206,18 +207,16 @@ class _AboutusState extends State<Aboutus> {
                     Text(
                       "Mohammed Elfadil",
                       style: TextStyle(
-                        fontSize: sw * 0.035,
-                        fontWeight: FontWeight.bold,
-                        color: primaryColor
-                      ),
+                          fontSize: sw * 0.035,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor),
                     ),
                     Text(
                       "Rabie Hassan Elkhid",
                       style: TextStyle(
-                        fontSize: sw * 0.035,
-                        fontWeight: FontWeight.bold,
-                        color: primaryColor
-                      ),
+                          fontSize: sw * 0.035,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor),
                     ),
                     const SizedBox(height: 8.0),
                     Row(
@@ -226,7 +225,8 @@ class _AboutusState extends State<Aboutus> {
                         IconButton(
                           onPressed: () => _launchUrl(linkedin[2]),
                           icon: Image(
-                            image: const AssetImage('assets/images/linkedin.png'),
+                            image:
+                                const AssetImage('assets/images/linkedin.png'),
                             height: sw * 0.07,
                           ),
                         ),
@@ -271,18 +271,16 @@ class _AboutusState extends State<Aboutus> {
                     Text(
                       "Mohamed Amin",
                       style: TextStyle(
-                        fontSize: sw * 0.035,
-                        fontWeight: FontWeight.bold,
-                        color: primaryColor
-                      ),
+                          fontSize: sw * 0.035,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor),
                     ),
                     Text(
                       "Osman Yousif",
                       style: TextStyle(
-                        fontSize: sw * 0.035,
-                        fontWeight: FontWeight.bold,
-                        color: primaryColor
-                      ),
+                          fontSize: sw * 0.035,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor),
                     ),
                     const SizedBox(height: 8.0),
                     Row(
@@ -291,13 +289,14 @@ class _AboutusState extends State<Aboutus> {
                         IconButton(
                           onPressed: () => _launchUrl(linkedin[3]),
                           icon: Image(
-                            image: const AssetImage('assets/images/linkedin.png'),
+                            image:
+                                const AssetImage('assets/images/linkedin.png'),
                             height: sw * 0.07,
                           ),
                         ),
                         IconButton(
                           onPressed: () => _launchUrl(github[3]),
-                          icon:  Image(
+                          icon: Image(
                             image: const AssetImage('assets/images/github.png'),
                             height: sw * 0.07,
                           ),
@@ -308,7 +307,7 @@ class _AboutusState extends State<Aboutus> {
                 ),
               ),
               const SizedBox(width: 8.0),
-    
+
               // mohammad m. a. mohamedahmed
               Container(
                 width: sw * 0.45,
@@ -327,25 +326,23 @@ class _AboutusState extends State<Aboutus> {
                 child: Column(
                   children: [
                     Image.asset(
-                      'assets/images/mubark.JPG',
+                      'assets/images/mubark.jpeg',
                       height: sw * 0.33,
                     ),
                     SizedBox(height: sw * 0.035),
                     Text(
-                      "Mohammad Mubark",
+                      "Mohamad Mubarak",
                       style: TextStyle(
-                        fontSize: sw * 0.035,
-                        fontWeight: FontWeight.bold,
-                        color: primaryColor
-                      ),
+                          fontSize: sw * 0.035,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor),
                     ),
                     Text(
                       "A. Mohamedahmed",
                       style: TextStyle(
-                        fontSize: sw * 0.035,
-                        fontWeight: FontWeight.bold,
-                        color: primaryColor
-                      ),
+                          fontSize: sw * 0.035,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor),
                     ),
                     const SizedBox(height: 8.0),
                     Row(
@@ -354,7 +351,8 @@ class _AboutusState extends State<Aboutus> {
                         IconButton(
                           onPressed: null,
                           icon: Image(
-                            image: const AssetImage('assets/images/linkedin.png'),
+                            image:
+                                const AssetImage('assets/images/linkedin.png'),
                             height: sw * 0.07,
                           ),
                         ),
@@ -376,31 +374,35 @@ class _AboutusState extends State<Aboutus> {
               child: Text(
                 "Special Thanks to",
                 style: TextStyle(
-                  fontSize: sw * 0.035,
-                  fontWeight: FontWeight.bold,
-                  color: primaryColor
-                ),
+                    fontSize: sw * 0.035,
+                    fontWeight: FontWeight.bold,
+                    color: primaryColor),
               ),
             ),
             SizedBox(height: sw * 0.018),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                      Text("Amjed Mohamed Babiker", style: TextStyle(fontSize: sw * 0.04, fontWeight: FontWeight.bold, color: primaryColor)),
-                      IconButton(
-                          onPressed: () => _launchUrl('https://www.linkedin.com/in/amjed-mohamed-0b1b3b1b1/'),
-                          icon: Image(
-                            image: const AssetImage('assets/images/linkedin.png'),
-                            height: sw * 0.07,
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () => _launchUrl('https://github.com/Amjed201'),
-                          icon: Image(
-                            image: const AssetImage('assets/images/github.png'),
-                            height: sw * 0.07,
-                          ),
-                        ),
+                Text("Amjed Mohamed Babiker",
+                    style: TextStyle(
+                        fontSize: sw * 0.04,
+                        fontWeight: FontWeight.bold,
+                        color: primaryColor)),
+                IconButton(
+                  onPressed: () => _launchUrl(
+                      'https://www.linkedin.com/in/amjed-mohamed-0b1b3b1b1/'),
+                  icon: Image(
+                    image: const AssetImage('assets/images/linkedin.png'),
+                    height: sw * 0.07,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () => _launchUrl('https://github.com/Amjed201'),
+                  icon: Image(
+                    image: const AssetImage('assets/images/github.png'),
+                    height: sw * 0.07,
+                  ),
+                ),
               ],
             )
           ],

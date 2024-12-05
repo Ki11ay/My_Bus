@@ -42,15 +42,15 @@ class _MyAppState extends State<MyApp> {
       _locale = locale;
     });
   }
+
   @override
   Widget build(BuildContext context) {
-      return MaterialApp(
-        supportedLocales: AppLocalizations.supportedLocales,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        debugShowCheckedModeBanner: false,
-        locale: _locale, // Default locale
-        home: const Splash(),
-      );
-    
+    return MaterialApp(
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      debugShowCheckedModeBanner: false,
+      locale: _locale, // Default locale
+      home: const Splash(),
+    );
   }
 }

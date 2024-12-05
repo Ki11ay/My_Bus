@@ -207,6 +207,7 @@ class _MapScreenState extends State<MapScreen> {
       isScrollControlled: true,
       builder: (BuildContext context) {
         return DraggableScrollableSheet(
+          minChildSize: 0.3,
           expand: false,
           initialChildSize: 0.3,
           builder: (BuildContext context, ScrollController scrollController) {
@@ -368,6 +369,7 @@ class _MapScreenState extends State<MapScreen> {
           children: [
             GoogleMap(
               myLocationButtonEnabled: true,
+              zoomControlsEnabled: false,
               myLocationEnabled: true,
               onMapCreated: _onMapCreated,
               initialCameraPosition: CameraPosition(

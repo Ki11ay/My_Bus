@@ -137,19 +137,19 @@ class _StartedState extends State<Started> {
                 Text(
                   notification ? AppLocalizations.of(context)!.findyour : AppLocalizations.of(context)!.never,
                   style:
-                      TextStyle(fontWeight: FontWeight.w500, fontSize: screenWidth * 0.11),
+                      TextStyle(fontWeight: FontWeight.w500, fontSize: screenWidth * 0.09),
                 ),
                 Text(
                   notification ? AppLocalizations.of(context)!.way : AppLocalizations.of(context)!.miss,
                   style:
-                       TextStyle(fontWeight: FontWeight.w700, fontSize: screenWidth * 0.11),
+                       TextStyle(fontWeight: FontWeight.w700, fontSize: screenWidth * 0.09),
                 ),
                 Text(
                   notification ? AppLocalizations.of(context)!.effectively : AppLocalizations.of(context)!.urride,
                   style:  TextStyle(
                       fontWeight: FontWeight.w700,
                       color: const Color(0xFFFFC107),
-                      fontSize: screenWidth * 0.11),
+                      fontSize: screenWidth * 0.09),
                 ),
               ],
             ),
@@ -159,7 +159,7 @@ class _StartedState extends State<Started> {
             child: SizedBox(
               width: MediaQuery.of(context).size.width,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   TextButton(
                       style: ButtonStyle(
@@ -172,7 +172,7 @@ class _StartedState extends State<Started> {
                         AppLocalizations.of(context)!.announcements,
                         style: TextStyle(
                             color: notification ? primaryColor : Colors.grey,
-                            fontSize: screenWidth * 0.06,
+                            fontSize: screenWidth * 0.055,
                             fontWeight: FontWeight.w800),
                       )),
                   TextButton(
@@ -185,7 +185,7 @@ class _StartedState extends State<Started> {
                         AppLocalizations.of(context)!.busschedule,
                         style: TextStyle(
                             color: notification ? Colors.grey : primaryColor,
-                            fontSize: screenWidth * 0.06,
+                            fontSize: screenWidth * 0.055,
                             fontWeight: FontWeight.w800),
                       )),
                 ],

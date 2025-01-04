@@ -120,8 +120,8 @@ class _MapScreenState extends State<MapScreen> {
 
   Future<void> _loadBusIcon() async {
     _busIcon = await BitmapDescriptor.asset(
-      const ImageConfiguration(size: Size(40,40)),
-      'assets/images/bus.png',
+      const ImageConfiguration(size: Size(40, 40)),
+      'assets/images/buaas.png',
     );
   }
 
@@ -246,7 +246,8 @@ class _MapScreenState extends State<MapScreen> {
                                   color: _selectedRouteIndex == index
                                       ? primaryColor
                                       : Colors.grey[300],
-                                  borderRadius: BorderRadius.circular(sw * 0.035),
+                                  borderRadius:
+                                      BorderRadius.circular(sw * 0.035),
                                 ),
                                 child: Row(
                                   children: [
@@ -461,7 +462,8 @@ class _MapScreenState extends State<MapScreen> {
                                       color: _selectedRouteIndex == index
                                           ? primaryColor
                                           : Colors.grey[300],
-                                      borderRadius: BorderRadius.circular(sw * 0.035),
+                                      borderRadius:
+                                          BorderRadius.circular(sw * 0.035),
                                     ),
                                     child: Row(
                                       children: [
